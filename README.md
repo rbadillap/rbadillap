@@ -1,16 +1,17 @@
-### Hi there 👋
+### Hello World 👋
 
-<!--
-**rbadillap/rbadillap** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+[![hello](https://github.com/rbadillap/rbadillap/raw/main/assets/hello.gif)](https://github.com/rbadillap)
 
-Here are some ideas to get you started:
+#### My name is Ronny Badilla from Costa Rica 🇨🇷 
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+Coding for more than 10 years, exploring new areas of the technology every day, and learning like the first day
+
+I'm the owner of my first company [SynerOps](https://github.com/synerops) where you can find me working almost the whole day
+
+[![SynerOps](https://github.com/rbadillap/rbadillap/raw/main/assets/synerops-cover.jpg)](https://github.com/synerops)
+
+Feel free to reach me out in the following socials:
+
+[![twitter](https://github.com/rbadillap/rbadillap/raw/main/assets/twitter.png)](https://twitter.com/rbadillap) |
+[![linkedin](https://github.com/rbadillap/rbadillap/raw/main/assets/linkedin.png)](https://linkedin.com/rbadillap) |
+[![upwork](https://github.com/rbadillap/rbadillap/raw/main/assets/upwork.png)](https://upwork.com/fl/ronnybadilla)
