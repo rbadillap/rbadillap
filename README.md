@@ -6,10 +6,6 @@
 
 Coding for more than 15 years, exploring new areas of technology every day, and learning from the first day
 
-I'm the owner of my first company [SynerOps](https://github.com/synerops), where you can find me working almost the whole day
-
-[![SynerOps](https://github.com/rbadillap/rbadillap/raw/main/assets/synerops-cover.jpg)](https://github.com/synerops)
-
 Feel free to reach out in the following socials:
 
 [twitter](https://twitter.com/rbadillap) |
