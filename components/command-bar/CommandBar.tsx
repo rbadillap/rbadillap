@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { useTheme } from "@/components/layout/ThemeProvider"
 import {
   HomeIcon, 
@@ -9,16 +9,14 @@ import {
   FolderIcon, 
   CodeIcon, 
   MailIcon, 
-  GithubIcon, 
-  LinkedinIcon, 
   SunIcon, 
   MoonIcon, 
   LaptopIcon,
   SearchIcon,
   ExternalLinkIcon,
   DownloadIcon,
-  TwitterIcon
 } from "lucide-react"
+import { SocialIcon } from "@/components/ui/social-icon"
 
 type CommandItem = {
   id: string
@@ -122,7 +120,7 @@ export function CommandBar() {
     {
       id: "github",
       label: "GitHub Profile",
-      icon: <GithubIcon />,
+      icon: <SocialIcon type="github" size={18} />,
       section: "External",
       keywords: ["github", "code", "repository", "open source"],
       onSelect: () => {
@@ -133,7 +131,7 @@ export function CommandBar() {
     {
       id: "linkedin",
       label: "LinkedIn Profile",
-      icon: <LinkedinIcon />,
+      icon: <SocialIcon type="linkedin" size={18} />,
       section: "External",
       keywords: ["linkedin", "social", "professional", "network"],
       onSelect: () => {
@@ -144,7 +142,7 @@ export function CommandBar() {
     {
       id: "twitter",
       label: "X / Twitter",
-      icon: <TwitterIcon />,
+      icon: <SocialIcon type="twitter" size={18} />,
       section: "External",
       keywords: ["twitter", "x", "social", "tweet"],
       onSelect: () => {
@@ -317,12 +315,13 @@ export function CommandBar() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[520px] p-0">
+        <DialogTitle className="sr-only">Command Menu</DialogTitle>
         <div className="flex items-center border-b border-border p-4">
           <SearchIcon className="h-4 w-4 mr-2 text-muted-foreground" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type a command or search..."
+            placeholder="Search or select a navigation option..."
             className="flex-1 bg-transparent border-none outline-none text-base"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -346,7 +345,8 @@ export function CommandBar() {
         >
           {Object.keys(groupedCommands).length === 0 ? (
             <div className="px-4 py-8 text-center text-muted-foreground">
-              No commands found. Try a different search.
+              <p>No navigation options found.</p>
+              <p className="text-xs mt-2">Try different keywords or browse the sections below.</p>
             </div>
           ) : (
             Object.entries(groupedCommands).map(([section, commands]) => (
