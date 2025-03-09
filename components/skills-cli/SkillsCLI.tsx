@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { skillsData } from '@/lib/data/skills';
+import { skillsData, Skill, SkillCategory } from '@/lib/data/skills';
 import { Badge } from '@/components/ui/badge';
-import { Terminal as TerminalIcon, X } from 'lucide-react';
+import { Terminal as TerminalIcon, Folder, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '@/components/layout/ThemeProvider';
 
 type HistoryItem = {
   type: string;
@@ -12,30 +13,248 @@ type HistoryItem = {
   data?: any;
 };
 
+type Path = {
+  category?: string;
+  area?: string;
+  areaKeyword?: string;
+  skill?: string;
+};
+
+// Add more specific types for the directory contents
+type CategoryContent = {
+  type: 'categories';
+  items: SkillCategory[];
+};
+
+type AreaContent = {
+  type: 'areas';
+  category: SkillCategory;
+  items: Skill[];
+};
+
+type SkillContent = {
+  type: 'skills';
+  category: SkillCategory;
+  area: Skill;
+  items: Skill[];
+};
+
+type SkillItemContent = {
+  type: 'skill-item';
+  category: SkillCategory;
+  area: Skill;
+  skill: Skill;
+};
+
+type DirectoryContent = CategoryContent | AreaContent | SkillContent | SkillItemContent | null;
+
+// Add keyword mapping for each area
+const areaKeywords: Record<string, Record<string, string>> = {
+  devops: {
+    'Containers / Serverless': 'containers',
+    'Infrastructure as Code': 'iac',
+    'CI/CD': 'ci-cd',
+    'Monitoring': 'monitoring',
+    'Cloud Providers': 'cloud-providers'
+  },
+  genai: {
+    'Large Language Models': 'llm',
+    'Image Generation': 'image',
+    'Prompt Engineering': 'prompt',
+    'Agentic Frameworks': 'agents',
+    'Cloud AI Solutions': 'cloud-ai',
+    'AI Tools': 'tools'
+  },
+  dev: {
+    'Frontend': 'frontend',
+    'Backend': 'backend',
+    'Fullstack': 'fullstack'
+  },
+  architecture: {
+    'Cloud Architecture': 'cloud',
+    'System Design': 'system'
+  }
+};
+
+// Add descriptive reverse mapping for display
+const keywordDescriptions: Record<string, Record<string, string>> = {
+  devops: {
+    'containers': 'Containers / Serverless',
+    'iac': 'Infrastructure as Code',
+    'ci-cd': 'CI/CD',
+    'monitoring': 'Monitoring',
+    'cloud-providers': 'Cloud Providers'
+  },
+  genai: {
+    'llm': 'Large Language Models',
+    'image': 'Image Generation',
+    'prompt': 'Prompt Engineering',
+    'agents': 'Agentic Frameworks',
+    'cloud-ai': 'Cloud AI Solutions',
+    'tools': 'AI Tools'
+  },
+  dev: {
+    'frontend': 'Frontend',
+    'backend': 'Backend',
+    'fullstack': 'Fullstack'
+  },
+  architecture: {
+    'cloud': 'Cloud Architecture',
+    'system': 'System Design'
+  }
+};
+
 export default function SkillsCLI() {
+  const { theme } = useTheme();
   const [history, setHistory] = useState<HistoryItem[]>([
-    { type: 'system', content: 'Welcome to Ronny Badilla\'s CLI.' },
-    { type: 'system', content: 'Type "help" to see available commands.' },
+    { type: 'system', content: 'Welcome to the Skills CLI.' },
+    { type: 'system', content: 'Type "help" for available commands or try "ls" to view categories.' },
   ]);
   const [input, setInput] = useState('');
   const [previousCommands, setPreviousCommands] = useState<string[]>([]);
   const [commandIndex, setCommandIndex] = useState(-1);
+  const [currentPath, setCurrentPath] = useState<Path>({});
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Get current directory string representation using keywords
+  const getCurrentDirString = () => {
+    if (!currentPath.category) return '/';
+    if (!currentPath.areaKeyword) return `/${currentPath.category}`;
+    if (!currentPath.skill) return `/${currentPath.category}/${currentPath.areaKeyword}`;
+    return `/${currentPath.category}/${currentPath.areaKeyword}/${currentPath.skill}`;
+  };
+  
+  // Get current prompt
+  const getPrompt = () => {
+    const dir = getCurrentDirString();
+    return `skills:${dir}$`;
+  };
+  
+  // Find a category by name (case insensitive)
+  const findCategory = (name: string): SkillCategory | undefined => {
+    const categoryId = Object.keys(skillsData).find(
+      id => id.toLowerCase() === name.toLowerCase()
+    );
+    return categoryId ? skillsData[categoryId] : undefined;
+  };
+  
+  // Find an area in a category by keyword or name
+  const findArea = (category: SkillCategory, areaKey: string): {area: Skill, keyword: string} | undefined => {
+    const areas = category.skills as Skill[];
+    
+    // Try to find by exact area name first (case insensitive)
+    const directMatch = areas.find(area => 
+      area.name.toLowerCase() === areaKey.toLowerCase()
+    );
+    
+    if (directMatch) {
+      const keyword = getAreaKeyword(category.id, directMatch.name);
+      return { area: directMatch, keyword };
+    }
+    
+    // Try to find by keyword mapping
+    if (keywordDescriptions[category.id] && keywordDescriptions[category.id][areaKey]) {
+      const fullName = keywordDescriptions[category.id][areaKey];
+      const area = areas.find(area => area.name === fullName);
+      if (area) {
+        return { area, keyword: areaKey };
+      }
+    }
+    
+    return undefined;
+  };
+  
+  // Get area keyword for display
+  const getAreaKeyword = (categoryId: string, areaName: string): string => {
+    if (areaKeywords[categoryId] && areaKeywords[categoryId][areaName]) {
+      return areaKeywords[categoryId][areaName];
+    }
+    // Fallback to lowercase with no spaces if not in mapping
+    return areaName.toLowerCase().replace(/\s+/g, '-');
+  };
+  
+  // Find a skill in an area by name (case insensitive)
+  const findSkill = (area: Skill, skillName: string): Skill | undefined => {
+    if (!area.subitems) return undefined;
+    return area.subitems.find(skill => skill.name.toLowerCase() === skillName.toLowerCase());
+  };
+  
+  // Get current directory content
+  const getCurrentContent = (): DirectoryContent => {
+    // Root level - show categories
+    if (!currentPath.category) {
+      return {
+        type: 'categories',
+        items: Object.values(skillsData)
+      };
+    }
+    
+    // Find category (case insensitive)
+    const category = findCategory(currentPath.category);
+    if (!category) return null;
+    
+    if (!currentPath.area) {
+      return {
+        type: 'areas',
+        category,
+        items: category.skills as Skill[]
+      };
+    }
+    
+    // Find area (case insensitive)
+    const areaMatch = findArea(category, currentPath.areaKeyword || '');
+    if (!areaMatch) return null;
+    
+    const area = areaMatch.area;
+    
+    if (!currentPath.skill) {
+      // No skill specified, show all skills in this area
+      if (!area.subitems || area.subitems.length === 0) {
+        return {
+          type: 'skills',
+          category,
+          area,
+          items: []
+        };
+      }
+      
+      return {
+        type: 'skills',
+        category,
+        area,
+        items: area.subitems
+      };
+    }
+    
+    // Find specific skill (case insensitive)
+    const skill = findSkill(area, currentPath.skill);
+    if (!skill) return null;
+    
+    return {
+      type: 'skill-item',
+      category,
+      area,
+      skill
+    };
+  };
   
   const commands = {
     help: {
       description: 'List available commands',
       execute: () => {
         return [
-          { type: 'heading', content: 'Available Commands' },
-          { type: 'command-item', content: 'help', data: 'Show this help menu' },
-          { type: 'command-item', content: 'about', data: 'Display information about me' },
-          { type: 'command-item', content: 'skills', data: 'List all skill categories' },
-          { type: 'command-item', content: 'skills <category>', data: 'Show details about a category' },
-          { type: 'command-item', content: 'skills <category>/<subcategory>', data: 'Show details about a subcategory' },
-          { type: 'command-item', content: 'contact', data: 'Show contact information' },
-          { type: 'command-item', content: 'clear', data: 'Clear the terminal' },
+          { type: 'command-list', content: '', data: [
+            { command: 'help', description: 'Show available commands' },
+            { command: 'about', description: 'Brief introduction' },
+            { command: 'skills', description: 'List or explore skills' },
+            { command: 'skills <category>', description: 'View a category' },
+            { command: 'skills <category> <keyword>', description: 'View skills in an area' },
+            { command: 'ls', description: 'List items in current directory' },
+            { command: 'cd <path>', description: 'Navigate to a directory' },
+            { command: 'pwd', description: 'Show current path' },
+            { command: 'clear', description: 'Clear the terminal' }
+          ]}
         ];
       }
     },
@@ -43,10 +262,7 @@ export default function SkillsCLI() {
       description: 'Display basic information about me',
       execute: () => {
         return [
-          { type: 'heading', content: 'Ronny Badilla' },
-          { type: 'paragraph', content: 'Software Developer, DevOps Engineer, and Cloud Architect with a focus on creating modern, interoperable systems.' },
-          { type: 'paragraph', content: 'With over a decade of experience in software development, I\'ve evolved my practice to embrace the intersection of development, operations, and cloud infrastructure.' },
-          { type: 'paragraph', content: 'My approach combines technical excellence with a focus on user experience and system design.' },
+          { type: 'about', content: 'Ronny Badilla', data: 'Software Developer & DevOps Engineer focused on modern, interoperable systems with minimal design and exceptional user experience.' }
         ];
       }
     },
@@ -55,80 +271,305 @@ export default function SkillsCLI() {
       execute: (args: string[]) => {
         if (args.length === 0) {
           return [
-            { type: 'heading', content: 'Skill Categories' },
-            ...Object.values(skillsData).map(category => ({
-              type: 'category-item',
-              content: category.id,
-              data: category
-            })),
-            { type: 'tip', content: 'Try "skills <category>" to see details about a specific category.' },
+            { type: 'directory-list', content: 'Categories', data: Object.values(skillsData).map(cat => ({
+              name: cat.name,
+              path: cat.id,
+              keyword: cat.id,
+              count: cat.count,
+              isDirectory: true
+            }))},
+            { type: 'tip', content: 'Use "skills <category> <keyword>" (e.g., "skills devops ci-cd")' }
           ];
         }
         
-        const path = args[0].split('/');
-        const categoryId = path[0];
-        const subcategoryId = path[1];
-        
-        const category = skillsData[categoryId];
+        // First argument is category
+        const categoryName = args[0];
+        const category = findCategory(categoryName);
         
         if (!category) {
-          return [{ type: 'error', content: `Category not found: ${categoryId}` }];
+          return [{ type: 'error', content: `Category not found: ${categoryName}` }];
         }
         
-        if (!subcategoryId) {
-          // Show category details
-          const result: HistoryItem[] = [
-            { type: 'heading', content: category.name },
-            { type: 'paragraph', content: category.description },
-            { type: 'level', content: `Level: ${category.level}` }
+        if (args.length === 1) {
+          // Show category and its areas with keywords
+          return [
+            { type: 'category-detail', content: category.name, data: {
+              id: category.id,
+              description: category.description,
+              count: category.count,
+              areas: (category.skills as Skill[]).map(skill => ({
+                name: skill.name,
+                keyword: getAreaKeyword(category.id, skill.name),
+                count: skill.subitems?.length || 0
+              }))
+            }},
+            { type: 'tip', content: `Use "skills ${category.id} <keyword>" to view specific skills` }
           ];
+        }
+        
+        // Second argument is area keyword
+        const areaKey = args[1];
+        const areaMatch = findArea(category, areaKey);
+        
+        if (!areaMatch) {
+          // Generate a helpful error message with available keywords
+          const availableKeywords = Object.keys(keywordDescriptions[category.id] || {})
+            .map(key => `"${key}"`)
+            .join(', ');
           
-          if (Array.isArray(category.skills)) {
-            result.push({ type: 'skill-list', content: '', data: category.skills });
-          } else {
-            result.push({ type: 'subheading', content: 'Subcategories' });
-            Object.values(category.skills).forEach(subcat => {
-              result.push({
-                type: 'category-item',
-                content: subcat.id,
-                data: subcat
-              });
-            });
-            result.push({ type: 'tip', content: `Try "skills ${categoryId}/<subcategory>" to explore a specific area.` });
-          }
-          
-          return result;
+          return [
+            { type: 'error', content: `Area not found: ${areaKey}` },
+            { type: 'tip', content: `Available keywords for ${category.name}: ${availableKeywords}` }
+          ];
         }
         
-        // Show subcategory details
-        if (Array.isArray(category.skills)) {
-          return [{ type: 'error', content: `No subcategories in ${category.name}` }];
-        }
+        const area = areaMatch.area;
         
-        const subcategory = category.skills[subcategoryId];
-        
-        if (!subcategory) {
-          return [{ type: 'error', content: `Subcategory not found: ${subcategoryId}` }];
-        }
-        
+        // Show area and its skills
         return [
-          { type: 'heading', content: subcategory.name },
-          { type: 'paragraph', content: subcategory.description },
-          { type: 'level', content: `Level: ${subcategory.level}` },
-          { type: 'skill-list', content: '', data: subcategory.skills }
+          { type: 'area-detail', content: area.name, data: {
+            description: area.description,
+            skills: area.subitems || []
+          }}
         ];
       }
     },
-    contact: {
-      description: 'Show contact information',
+    pwd: {
+      description: 'Show current directory',
       execute: () => {
         return [
-          { type: 'heading', content: 'Contact Information' },
-          { type: 'contact-item', content: 'Email', data: 'info@ronnybadilla.com' },
-          { type: 'contact-item', content: 'GitHub', data: 'github.com/rbadillap' },
-          { type: 'contact-item', content: 'LinkedIn', data: 'linkedin.com/in/ronnybadilla' },
-          { type: 'contact-item', content: 'Twitter', data: 'twitter.com/rbadillap' },
+          { type: 'system', content: getCurrentDirString() }
         ];
+      }
+    },
+    ls: {
+      description: 'List contents of current directory',
+      execute: () => {
+        const content = getCurrentContent();
+        
+        if (!content) {
+          return [{ type: 'error', content: 'Invalid path' }];
+        }
+        
+        if (content.type === 'categories') {
+          return [
+            { 
+              type: 'directory-list', 
+              content: 'Categories', 
+              data: content.items.map((cat) => ({
+                name: cat.name,
+                path: cat.id,
+                keyword: cat.id,
+                count: cat.count,
+                isDirectory: true
+              }))
+            }
+          ];
+        }
+        
+        if (content.type === 'areas') {
+          return [
+            { 
+              type: 'directory-list', 
+              content: 'Areas of Expertise', 
+              data: content.items.map((area) => ({
+                name: area.name,
+                keyword: getAreaKeyword(content.category.id, area.name),
+                count: area.subitems?.length || 0,
+                isDirectory: true
+              }))
+            },
+            { type: 'tip', content: `For areas with spaces, use keywords: ${Object.keys(keywordDescriptions[content.category.id] || {}).join(', ')}` }
+          ];
+        }
+        
+        if (content.type === 'skills') {
+          return [
+            { 
+              type: 'directory-list', 
+              content: 'Skills & Technologies', 
+              data: content.items.map((skill) => ({
+                name: skill.name,
+                description: skill.description,
+                isDirectory: false
+              }))
+            }
+          ];
+        }
+        
+        if (content.type === 'skill-item') {
+          return [
+            {
+              type: 'skill-detail',
+              content: content.skill.name,
+              data: content.skill
+            }
+          ];
+        }
+        
+        return [{ type: 'error', content: 'Unknown directory type' }];
+      }
+    },
+    cd: {
+      description: 'Change directory',
+      execute: (args: string[]) => {
+        if (args.length === 0) {
+          // cd with no args goes to root
+          setCurrentPath({});
+          return [{ type: 'system', content: 'Changed to root directory' }];
+        }
+        
+        const path = args[0];
+        
+        if (path === '/') {
+          // Go to root
+          setCurrentPath({});
+          return [{ type: 'system', content: 'Changed to root directory' }];
+        }
+        
+        if (path === '..') {
+          // Go up one level
+          if (currentPath.skill) {
+            setCurrentPath({ 
+              category: currentPath.category, 
+              area: currentPath.area,
+              areaKeyword: currentPath.areaKeyword
+            });
+            return [{ type: 'system', content: `Changed to /${currentPath.category}/${currentPath.areaKeyword}` }];
+          } else if (currentPath.area) {
+            setCurrentPath({ category: currentPath.category });
+            return [{ type: 'system', content: `Changed to /${currentPath.category}` }];
+          } else if (currentPath.category) {
+            setCurrentPath({});
+            return [{ type: 'system', content: 'Changed to root directory' }];
+          } else {
+            return [{ type: 'system', content: 'Already at root directory' }];
+          }
+        }
+        
+        // Handle absolute paths
+        if (path.startsWith('/')) {
+          const segments = path.split('/').filter(Boolean);
+          
+          if (segments.length === 0) {
+            setCurrentPath({});
+            return [{ type: 'system', content: 'Changed to root directory' }];
+          }
+          
+          if (segments.length > 3) {
+            return [{ type: 'error', content: 'Path too deep. Maximum depth is 3 levels.' }];
+          }
+          
+          // First segment is category
+          const categoryName = segments[0];
+          const category = findCategory(categoryName);
+          
+          if (!category) {
+            return [{ type: 'error', content: `Category not found: ${categoryName}` }];
+          }
+          
+          if (segments.length === 1) {
+            setCurrentPath({ category: category.id });
+            return [{ type: 'system', content: `Changed to /${category.id}` }];
+          }
+          
+          // Second segment is area keyword
+          const areaKey = segments[1];
+          const areaMatch = findArea(category, areaKey);
+          
+          if (!areaMatch) {
+            return [{ type: 'error', content: `Area not found: ${areaKey}` }];
+          }
+          
+          if (segments.length === 2) {
+            setCurrentPath({ 
+              category: category.id, 
+              area: areaMatch.area.name,
+              areaKeyword: areaMatch.keyword
+            });
+            return [{ type: 'system', content: `Changed to /${category.id}/${areaMatch.keyword}` }];
+          }
+          
+          // Third segment is skill
+          const skillName = segments[2];
+          const skill = findSkill(areaMatch.area, skillName);
+          
+          if (!skill) {
+            return [{ type: 'error', content: `Skill not found: ${skillName}` }];
+          }
+          
+          setCurrentPath({ 
+            category: category.id, 
+            area: areaMatch.area.name,
+            areaKeyword: areaMatch.keyword,
+            skill: skill.name 
+          });
+          return [{ type: 'system', content: `Changed to /${category.id}/${areaMatch.keyword}/${skill.name}` }];
+        }
+        
+        // Handle relative paths
+        if (!currentPath.category) {
+          // At root, try to cd to a category
+          const category = findCategory(path);
+          
+          if (!category) {
+            return [{ type: 'error', content: `Category not found: ${path}` }];
+          }
+          
+          setCurrentPath({ category: category.id });
+          return [{ type: 'system', content: `Changed to /${category.id}` }];
+        }
+        
+        if (!currentPath.area) {
+          // At category level, try to cd to an area
+          const category = skillsData[currentPath.category!];
+          const areaMatch = findArea(category, path);
+          
+          if (!areaMatch) {
+            // Generate a helpful error message with available keywords
+            const availableKeywords = Object.keys(keywordDescriptions[currentPath.category!] || {})
+              .map(key => `"${key}"`)
+              .join(', ');
+            
+            return [
+              { type: 'error', content: `Area not found: ${path}` },
+              { type: 'tip', content: `Available keywords: ${availableKeywords}` }
+            ];
+          }
+          
+          setCurrentPath({ 
+            category: currentPath.category, 
+            area: areaMatch.area.name,
+            areaKeyword: areaMatch.keyword
+          });
+          return [{ type: 'system', content: `Changed to /${currentPath.category}/${areaMatch.keyword}` }];
+        }
+        
+        if (!currentPath.skill) {
+          // At area level, try to cd to a skill
+          const category = skillsData[currentPath.category!];
+          const areaMatch = findArea(category, currentPath.areaKeyword!);
+          
+          if (!areaMatch) {
+            return [{ type: 'error', content: `Current area not found` }];
+          }
+          
+          const skill = findSkill(areaMatch.area, path);
+          
+          if (!skill) {
+            return [{ type: 'error', content: `Skill not found: ${path}` }];
+          }
+          
+          setCurrentPath({ 
+            category: currentPath.category, 
+            area: currentPath.area,
+            areaKeyword: currentPath.areaKeyword,
+            skill: skill.name 
+          });
+          return [{ type: 'system', content: `Changed to /${currentPath.category}/${currentPath.areaKeyword}/${skill.name}` }];
+        }
+        
+        return [{ type: 'error', content: 'Already at maximum depth. Use "cd .." to go up.' }];
       }
     },
     clear: {
@@ -147,7 +588,7 @@ export default function SkillsCLI() {
     const cmd = args.shift()?.toLowerCase() || '';
     
     // Add user input to history
-    setHistory(prev => [...prev, { type: 'input', content: cmdStr }]);
+    setHistory(prev => [...prev, { type: 'input', content: `${getPrompt()} ${cmdStr}` }]);
     
     // Add to command history
     setPreviousCommands(prev => [cmdStr, ...prev].slice(0, 10));
@@ -158,7 +599,7 @@ export default function SkillsCLI() {
       const output = commands[cmd as keyof typeof commands].execute(args);
       setHistory(prev => [...prev, ...output]);
     } else if (cmd) {
-      setHistory(prev => [...prev, { type: 'error', content: `Command not found: ${cmd}. Type "help" to see available commands.` }]);
+      setHistory(prev => [...prev, { type: 'error', content: `Command not found: ${cmd}. Type "help" for available commands.` }]);
     }
     
     setInput('');
@@ -189,17 +630,72 @@ export default function SkillsCLI() {
       
       if (!input) return;
       
-      // Simple command completion
-      const cmdStart = input.split(' ')[0];
-      const matches = Object.keys(commands).filter(cmd => cmd.startsWith(cmdStart));
+      const parts = input.split(' ').filter(Boolean);
       
-      if (matches.length === 1) {
-        if (input.includes(' ')) {
-          // Only replace the command part
-          setInput(matches[0] + input.substring(input.indexOf(' ')));
-        } else {
+      // Case 1: Complete command name
+      if (parts.length === 1) {
+        const cmdStart = parts[0];
+        const matches = Object.keys(commands).filter(cmd => 
+          cmd.toLowerCase().startsWith(cmdStart.toLowerCase())
+        );
+        
+        if (matches.length === 1) {
           setInput(matches[0] + ' ');
         }
+        return;
+      }
+      
+      // Case 2: Complete category name for 'skills' or 'cd' command
+      if ((parts[0] === 'skills' || parts[0] === 'cd') && parts.length === 2) {
+        const categoryStart = parts[1];
+        const matches = Object.keys(skillsData).filter(cat => 
+          cat.toLowerCase().startsWith(categoryStart.toLowerCase())
+        );
+        
+        if (matches.length === 1) {
+          setInput(`${parts[0]} ${matches[0]} `);
+        }
+        return;
+      }
+      
+      // Case 3: Complete area keyword for 'skills' command
+      if (parts[0] === 'skills' && parts.length === 3) {
+        const categoryName = parts[1];
+        const areaStart = parts[2];
+        
+        // Find the category
+        const category = findCategory(categoryName);
+        if (!category) return;
+        
+        // Find matching area keywords
+        const areaKeywords = Object.keys(keywordDescriptions[category.id] || {});
+        const matches = areaKeywords.filter(keyword => 
+          keyword.toLowerCase().startsWith(areaStart.toLowerCase())
+        );
+        
+        if (matches.length === 1) {
+          setInput(`${parts[0]} ${parts[1]} ${matches[0]}`);
+        }
+        return;
+      }
+      
+      // Case 4: Complete area keyword for 'cd' command when in a category directory
+      if (parts[0] === 'cd' && parts.length === 2 && currentPath.category) {
+        const areaStart = parts[1];
+        
+        // Only if we're at the category level
+        if (!currentPath.area) {
+          // Find matching area keywords
+          const areaKeywords = Object.keys(keywordDescriptions[currentPath.category] || {});
+          const matches = areaKeywords.filter(keyword => 
+            keyword.toLowerCase().startsWith(areaStart.toLowerCase())
+          );
+          
+          if (matches.length === 1) {
+            setInput(`${parts[0]} ${matches[0]}`);
+          }
+        }
+        return;
       }
     }
   };
@@ -231,80 +727,144 @@ export default function SkillsCLI() {
   // Render different types of history items
   const renderHistoryItem = (item: HistoryItem, idx: number) => {
     switch (item.type) {
+      case 'system':
+        return (
+          <div key={idx} className="text-muted-foreground">{item.content}</div>
+        );
       case 'input':
         return (
-          <div key={idx} className="flex items-center text-gray-300 font-mono">
-            <span className="mr-2 text-purple-500">$</span>
-            <span>{item.content}</span>
-          </div>
+          <div key={idx} className="text-primary font-bold">{item.content}</div>
         );
       case 'error':
         return (
-          <div key={idx} className="text-red-400 font-mono">{item.content}</div>
+          <div key={idx} className="text-destructive font-mono">{item.content}</div>
         );
-      case 'system':
+      case 'command-list':
         return (
-          <div key={idx} className="text-gray-400 font-mono">{item.content}</div>
-        );
-      case 'heading':
-        return (
-          <div key={idx} className="text-xl font-bold mb-2 text-purple-500 font-mono">{item.content}</div>
-        );
-      case 'subheading':
-        return (
-          <div key={idx} className="text-lg font-semibold my-1 text-gray-300 font-mono">{item.content}</div>
-        );
-      case 'paragraph':
-        return (
-          <div key={idx} className="mb-3 text-gray-300 font-mono">{item.content}</div>
-        );
-      case 'command-item':
-        return (
-          <div key={idx} className="ml-4 font-mono flex items-start mb-1">
-            <span className="text-purple-500 font-mono w-24 inline-block">{item.content}</span>
-            <span className="text-gray-400 flex-1">{item.data}</span>
+          <div key={idx} className="mt-2 mb-2">
+            <div className="grid grid-cols-1 gap-1">
+              {item.data.map((cmd: any, i: number) => (
+                <div key={i} className="flex items-center font-mono">
+                  <span className="text-primary font-bold mr-4 w-32">{cmd.command}</span>
+                  <span className="text-muted-foreground">{cmd.description}</span>
+                </div>
+              ))}
+            </div>
           </div>
         );
-      case 'level':
+      case 'about':
         return (
-          <div key={idx} className="mb-3 flex items-center font-mono">
-            <Badge className="bg-purple-500 text-white font-mono">{item.content}</Badge>
+          <div key={idx} className="mt-2 mb-4">
+            <div className="text-2xl font-bold text-primary font-mono mb-2">{item.content}</div>
+            <div className="text-foreground font-mono">{item.data}</div>
           </div>
         );
-      case 'category-item':
+      case 'directory-list':
         return (
-          <div key={idx} className="ml-4 font-mono flex items-center mb-1">
-            <span className="text-purple-500 mr-2">•</span>
-            <span className="text-gray-400 mr-2 font-mono">{item.data.id}:</span>
-            <span className="text-white font-mono">{item.data.name}</span>
-            <Badge className="ml-2 bg-purple-500 text-white font-mono">{item.data.level}</Badge>
+          <div key={idx} className="mt-2 mb-2">
+            <div className="text-lg font-mono text-primary mb-2">{item.content}</div>
+            {item.data.length === 0 ? (
+              <div className="text-muted-foreground font-mono italic">Empty directory</div>
+            ) : (
+              <div className="grid grid-cols-1 gap-1">
+                {item.data.map((entry: any, i: number) => (
+                  <div key={i} className="flex items-center font-mono hover:bg-muted/50 p-1 rounded transition-colors">
+                    {entry.isDirectory ? (
+                      <Folder size={16} className="text-primary mr-2" />
+                    ) : (
+                      <FileText size={16} className="text-secondary mr-2" />
+                    )}
+                    <span className={`${entry.isDirectory ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      {entry.name}
+                    </span>
+                    {entry.keyword && (
+                      <span className="ml-2 text-muted-foreground text-xs">[{entry.keyword}]</span>
+                    )}
+                    {entry.count !== undefined && (
+                      <Badge variant="outline" className="ml-2 text-xs">{entry.count}</Badge>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mt-3 italic text-muted-foreground font-mono text-sm">
+              {item.data.some((entry: any) => entry.isDirectory) && 
+                `Use "cd <keyword>" to navigate to a directory.`}
+            </div>
           </div>
         );
-      case 'contact-item':
+      case 'skill-detail':
         return (
-          <div key={idx} className="ml-4 font-mono flex items-center mb-1">
-            <span className="text-purple-500 mr-2 font-mono w-20 inline-block">{item.content}:</span>
-            <span className="text-white font-mono">{item.data}</span>
+          <div key={idx} className="mt-2 mb-2">
+            <div className="text-xl font-bold text-primary font-mono mb-1">{item.content}</div>
+            {item.data.description && (
+              <div className="text-foreground font-mono mb-3 px-2 py-1 bg-muted/40 rounded border-l-2 border-primary">
+                {item.data.description}
+              </div>
+            )}
           </div>
         );
-      case 'skill-list':
+      case 'category-detail':
         return (
-          <div key={idx} className="grid grid-cols-2 gap-2 mb-3 mt-2">
-            {item.data.map((skill: any, i: number) => (
-              <Badge 
-                key={i} 
-                variant="outline" 
-                className="bg-purple-900/20 border-purple-700 text-purple-300 font-mono"
-              >
-                {skill.name}
-                {skill.level && <span className="ml-2 text-xs opacity-75">{skill.level}</span>}
-              </Badge>
+          <div key={idx} className="mt-2 mb-2">
+            <div className="text-2xl font-bold text-primary font-mono mb-1">{item.content}</div>
+            <div className="text-foreground font-mono mb-3">{item.data.description}</div>
+            
+            <Badge className="mb-4 bg-primary/80 text-primary-foreground font-mono">{item.data.count} items</Badge>
+            
+            <div className="text-lg font-mono text-foreground mb-2">Areas of Expertise</div>
+            
+            {item.data.areas.map((area: any, i: number) => (
+              <div key={i} className="flex items-center mt-1 font-mono p-1 hover:bg-muted/50 rounded transition-colors">
+                <Folder size={16} className="text-primary mr-2" />
+                <span className="text-foreground">{area.name}</span>
+                <span className="ml-2 text-muted-foreground text-xs">[{area.keyword}]</span>
+                {area.count > 0 && (
+                  <Badge variant="outline" className="ml-2">{area.count}</Badge>
+                )}
+              </div>
             ))}
+            
+            <div className="mt-3 italic text-muted-foreground font-mono text-sm">
+              Try "skills {item.data.id} &lt;keyword&gt;" to view specific skills.
+            </div>
+          </div>
+        );
+      case 'area-detail':
+        return (
+          <div key={idx} className="mt-2 mb-2">
+            <div className="text-xl font-bold text-primary font-mono mb-1">{item.content}</div>
+            {item.data.description && (
+              <div className="text-foreground font-mono mb-3">{item.data.description}</div>
+            )}
+            
+            {item.data.skills.length > 0 ? (
+              <>
+                <div className="text-lg font-mono text-foreground mb-2">Skills & Technologies</div>
+                <div className="grid grid-cols-2 gap-2">
+                  {item.data.skills.map((skill: any, i: number) => (
+                    <div 
+                      key={i}
+                      className="bg-muted/50 border border-border rounded p-2 hover:border-primary transition-colors"
+                    >
+                      <div className="font-mono text-primary">{skill.name}</div>
+                      {skill.description && (
+                        <div className="text-xs text-muted-foreground font-mono mt-1 line-clamp-1">
+                          {skill.description}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="text-muted-foreground font-mono">No specific skills listed for this area.</div>
+            )}
           </div>
         );
       case 'tip':
         return (
-          <div key={idx} className="mt-2 text-gray-400 italic font-mono text-sm">{item.content}</div>
+          <div key={idx} className="mt-2 text-muted-foreground italic font-mono text-sm">{item.content}</div>
         );
       default:
         return (
@@ -314,23 +874,23 @@ export default function SkillsCLI() {
   };
 
   return (
-    <div className="border border-gray-800 rounded-lg overflow-hidden bg-gray-950 shadow-lg">
+    <div className="border border-border rounded-lg overflow-hidden bg-card shadow-lg">
       {/* Terminal header */}
-      <div className="bg-gray-900 px-4 py-2 flex items-center">
+      <div className="bg-muted px-4 py-2 flex items-center">
         <div className="flex space-x-2 mr-4">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
-        <div className="flex-1 text-center text-gray-400 text-sm font-mono">about.cli</div>
-        <TerminalIcon className="h-4 w-4 text-gray-400" />
+        <div className="flex-1 text-center text-muted-foreground text-sm font-mono">skills.cli</div>
+        <TerminalIcon className="h-4 w-4 text-muted-foreground" />
       </div>
       
       {/* Terminal content */}
       <AnimatePresence>
         <motion.div 
           ref={terminalRef}
-          className="p-4 h-[400px] overflow-y-auto font-mono text-gray-200 text-sm"
+          className="p-4 h-[400px] overflow-y-auto font-mono text-foreground text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -339,7 +899,7 @@ export default function SkillsCLI() {
           
           {/* Current input line */}
           <div className="flex items-center mt-2">
-            <span className="text-purple-500 mr-2 font-mono">$</span>
+            <span className="text-primary mr-2 font-mono">{getPrompt()}</span>
             <motion.span className="relative flex-1">
               <input
                 ref={inputRef}
@@ -347,14 +907,14 @@ export default function SkillsCLI() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="bg-transparent outline-none border-none text-gray-200 font-mono w-full"
+                className="bg-transparent outline-none border-none text-foreground font-mono w-full"
                 aria-label="Command input"
                 autoComplete="off"
                 spellCheck="false"
               />
               {/* Cursor */}
               <motion.div 
-                className="absolute right-0 top-1 w-1.5 h-4 bg-gray-400"
+                className="absolute right-0 top-1 w-1.5 h-4 bg-foreground/70"
                 animate={{ opacity: [1, 0, 1] }}
                 transition={{ repeat: Infinity, duration: 1 }}
               />
@@ -364,12 +924,12 @@ export default function SkillsCLI() {
       </AnimatePresence>
       
       {/* Terminal footer */}
-      <div className="bg-gray-900 px-4 py-2 text-xs text-gray-500 font-mono flex justify-between items-center">
-        <span>Try: help, about, skills, contact</span>
+      <div className="bg-muted px-4 py-2 text-xs text-muted-foreground font-mono flex justify-between items-center">
+        <span>Try: skills devops ci-cd, skills genai llm, help</span>
         <span className="text-xs">
-          <kbd className="px-1 py-0.5 bg-gray-800 rounded text-gray-400 font-mono">Tab</kbd>
+          <kbd className="px-1 py-0.5 bg-card rounded text-foreground font-mono">Tab</kbd>
           <span className="mx-1">to autocomplete</span>
-          <kbd className="px-1 py-0.5 bg-gray-800 rounded text-gray-400 font-mono">↑↓</kbd>
+          <kbd className="px-1 py-0.5 bg-card rounded text-foreground font-mono">↑↓</kbd>
           <span className="ml-1">for history</span>
         </span>
       </div>

@@ -7,8 +7,8 @@ import dynamic from 'next/dynamic';
 const SkillsCLI = dynamic(() => import('./SkillsCLI'), {
   ssr: false,
   loading: () => (
-    <div className="border border-gray-800 rounded-lg overflow-hidden bg-gray-950 shadow-lg h-[400px] flex items-center justify-center">
-      <div className="text-gray-400 font-mono text-sm">Loading CLI interface...</div>
+    <div className="border border-border rounded-lg overflow-hidden bg-card shadow-lg h-[400px] flex items-center justify-center">
+      <div className="text-muted-foreground font-mono text-sm">Loading CLI interface...</div>
     </div>
   )
 });

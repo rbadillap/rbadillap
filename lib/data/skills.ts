@@ -1,18 +1,15 @@
 export interface Skill {
   name: string;
-  level?: number;
   description?: string;
-  years?: number;
-  related?: string[];
-  projects?: string[];
+  subitems?: Skill[];
 }
 
 export interface SkillCategory {
   id: string;
   name: string;
-  level: number;
   description: string;
-  skills: Skill[] | Record<string, SkillCategory>;
+  count: number;
+  skills: Skill[];
 }
 
 export type SkillsData = Record<string, SkillCategory>;
@@ -21,201 +18,199 @@ export const skillsData: SkillsData = {
   dev: {
     id: "dev",
     name: "Software Development",
-    level: 13,
-    description: "Building modern applications with a focus on performance, maintainability, and user experience.",
-    skills: {
-      frontend: {
-        id: "frontend",
+    count: 13,
+    description: "Languages, frameworks, and tools for building modern applications",
+    skills: [
+      {
         name: "Frontend",
-        level: 15,
-        description: "Creating responsive, accessible, and beautiful user interfaces.",
-        skills: [
-          { name: "React", level: 17, years: 5, related: ["Next.js", "Remix"] },
-          { name: "TypeScript", level: 16, years: 4 },
-          { name: "CSS/Tailwind", level: 14, years: 8 },
-          { name: "Performance Optimization", level: 13, years: 3 },
-          { name: "Accessibility", level: 12, years: 2 },
-          { name: "Animation/Framer Motion", level: 10, years: 2 }
+        description: "UI frameworks and libraries",
+        subitems: [
+          { name: "React", description: "Component-based UI library" },
+          { name: "Tailwind CSS", description: "Utility-first CSS framework" },
+          { name: "shadcn/ui", description: "UI component collection for React" },
+          { name: "Vite", description: "Next-generation frontend tooling" }
         ]
       },
-      backend: {
-        id: "backend",
+      {
         name: "Backend",
-        level: 14,
-        description: "Developing robust, scalable APIs and services.",
-        skills: [
-          { name: "Node.js", level: 15, years: 6 },
-          { name: "Python", level: 14, years: 8 },
-          { name: "Go", level: 11, years: 3 },
-          { name: "API Design", level: 16, years: 5 },
-          { name: "Database Design", level: 13, years: 7 }
+        description: "Server-side technologies and frameworks",
+        subitems: [
+          { name: "Node.js", description: "JavaScript runtime" },
+          { name: "Express", description: "Minimal Node.js web framework" },
+          { name: "NestJS", description: "Progressive Node.js framework with TypeScript" },
+          { name: "Python", description: "General-purpose programming language" },
+          { name: "Golang", description: "Statically typed compiled language" },
+          { name: "PHP", description: "Server-side scripting language" },
+          { name: "Laravel", description: "PHP web application framework" }
         ]
       },
-      architecture: {
-        id: "architecture",
-        name: "Architecture",
-        level: 12,
-        description: "Designing systems with scalability and maintainability in mind.",
-        skills: [
-          { name: "Microservices", level: 13, years: 4 },
-          { name: "Event-Driven Architecture", level: 12, years: 3 },
-          { name: "Domain-Driven Design", level: 11, years: 2 },
-          { name: "API Gateway Patterns", level: 10, years: 3 }
+      {
+        name: "Fullstack",
+        description: "End-to-end application development",
+        subitems: [
+          { name: "React + Tailwind + Vite", description: "Modern web stack" },
+          { name: "Next.js", description: "React framework for production" },
+          { name: "T3 Stack", description: "TypeScript, tRPC, Tailwind, Next.js" }
         ]
       }
-    }
+    ]
+  },
+  architecture: {
+    id: "architecture",
+    name: "Solutions Architecture",
+    count: 5,
+    description: "Designing scalable and maintainable system architectures",
+    skills: [
+      {
+        name: "Cloud Architecture",
+        description: "Designing cloud-native solutions",
+        subitems: [
+          { name: "AWS Solutions Architect Professional", description: "Professional level AWS certification" },
+          { name: "Cloud Migration", description: "Moving applications to cloud environments" },
+          { name: "Cost Optimization", description: "Efficient resource allocation and usage" },
+          { name: "FedRAMP / SOC 2 Experience", description: "Compliance frameworks for cloud systems" }
+        ]
+      },
+      {
+        name: "System Design",
+        description: "Architectural patterns and approaches",
+        subitems: [
+          { name: "Microservices", description: "Distributed architecture pattern" },
+          { name: "Event-Driven Architecture", description: "Asynchronous communication pattern" },
+          { name: "API Design", description: "RESTful and GraphQL API design principles" },
+          { name: "Domain-Driven Design", description: "Software development approach" }
+        ]
+      }
+    ]
   },
   devops: {
     id: "devops",
     name: "DevOps / Infrastructure",
-    level: 23,
-    description: "Implementing CI/CD pipelines, infrastructure as code, and observability solutions.",
-    skills: {
-      container: {
-        id: "container",
-        name: "Containerization",
-        level: 25,
-        description: "Managing applications with container technologies.",
-        skills: [
-          { name: "Docker", level: 24, years: 6 },
-          { name: "Kubernetes", level: 22, years: 5 },
-          { name: "Helm", level: 18, years: 3 },
-          { name: "Service Mesh", level: 16, years: 2 }
+    count: 23,
+    description: "Tools and practices for reliable deployment and operations",
+    skills: [
+      {
+        name: "Containers / Serverless",
+        description: "Technologies for application deployment",
+        subitems: [
+          { name: "Docker", description: "Containerization platform" },
+          { name: "Kubernetes (EKS)", description: "Container orchestration" },
+          { name: "ECS / Fargate", description: "AWS container services" },
+          { name: "AWS Lambda", description: "Serverless compute service" },
+          { name: "API Gateway", description: "API management service" },
+          { name: "CloudFront", description: "Content delivery network" }
         ]
       },
-      cicd: {
-        id: "cicd",
-        name: "CI/CD",
-        level: 24,
-        description: "Building and deploying applications automatically.",
-        skills: [
-          { name: "GitHub Actions", level: 25, years: 4 },
-          { name: "GitLab CI", level: 20, years: 3 },
-          { name: "Jenkins", level: 18, years: 5 },
-          { name: "ArgoCD", level: 22, years: 2 }
-        ]
-      },
-      iac: {
-        id: "iac",
+      {
         name: "Infrastructure as Code",
-        level: 22,
-        description: "Defining and managing infrastructure programmatically.",
-        skills: [
-          { name: "Terraform", level: 23, years: 5 },
-          { name: "CloudFormation", level: 18, years: 4 },
-          { name: "Pulumi", level: 20, years: 2 },
-          { name: "Ansible", level: 19, years: 6 }
+        description: "Provisioning and managing infrastructure programmatically",
+        subitems: [
+          { name: "Terraform", description: "Infrastructure as code tool" },
+          { name: "CloudFormation", description: "AWS infrastructure templating" },
+          { name: "Ansible", description: "Automation tool" }
         ]
       },
-      observability: {
-        id: "observability",
-        name: "Observability",
-        level: 21,
-        description: "Monitoring and understanding system behavior.",
-        skills: [
-          { name: "Prometheus", level: 22, years: 4 },
-          { name: "Grafana", level: 23, years: 4 },
-          { name: "ELK Stack", level: 20, years: 5 },
-          { name: "Distributed Tracing", level: 18, years: 3 }
+      {
+        name: "CI/CD",
+        description: "Continuous integration and deployment pipelines",
+        subitems: [
+          { name: "GitHub Actions", description: "CI/CD platform integrated with GitHub" },
+          { name: "GitLab CI", description: "CI/CD capabilities built into GitLab" },
+          { name: "Bitbucket Pipelines", description: "CI/CD service for Bitbucket" },
+          { name: "ArgoCD", description: "GitOps continuous delivery for Kubernetes" },
+          { name: "Flux / Flagger", description: "GitOps operators for Kubernetes" }
+        ]
+      },
+      {
+        name: "Monitoring",
+        description: "Observability and monitoring solutions",
+        subitems: [
+          { name: "Prometheus / Grafana", description: "Monitoring and visualization" },
+          { name: "Loki", description: "Log aggregation system" },
+          { name: "OpenSearch", description: "Search and analytics suite" },
+          { name: "Fluentd", description: "Open source data collector" },
+          { name: "ELK Stack", description: "Elasticsearch, Logstash, Kibana" },
+          { name: "AWS CloudWatch", description: "Monitoring service for AWS resources" },
+          { name: "Datadog", description: "Cloud monitoring as a service" }
+        ]
+      },
+      {
+        name: "Cloud Providers",
+        description: "Cloud platforms and hosting services",
+        subitems: [
+          { name: "AWS", description: "Amazon Web Services cloud platform" },
+          { name: "Cloudflare", description: "Web performance and security" },
+          { name: "Vercel", description: "Frontend deployment platform" }
         ]
       }
-    }
+    ]
   },
   genai: {
     id: "genai",
     name: "Generative AI",
-    level: 27,
-    description: "Leveraging AI to build smarter applications and tools.",
-    skills: {
-      implementation: {
-        id: "implementation",
-        name: "AI Implementation",
-        level: 26,
-        description: "Integrating AI models into applications.",
-        skills: [
-          { name: "LLM API Integration", level: 28, years: 2 },
-          { name: "Vector Databases", level: 24, years: 1 },
-          { name: "Embeddings", level: 25, years: 1 },
-          { name: "RAG Patterns", level: 26, years: 1 }
+    count: 27,
+    description: "AI models, techniques, and tools for generating content",
+    skills: [
+      {
+        name: "Large Language Models",
+        description: "LLM technologies and capabilities",
+        subitems: [
+          { name: "OpenAI o3 family", description: "GPT-4o, GPT-4o mini, etc." },
+          { name: "DeepSeek R1", description: "Open-weight large language model" },
+          { name: "Perplexity AI", description: "AI-powered answer engine" },
+          { name: "Claude", description: "Anthropic's conversational AI assistant" }
         ]
       },
-      engineering: {
-        id: "engineering",
+      {
+        name: "Image Generation",
+        description: "AI image creation tools",
+        subitems: [
+          { name: "Midjourney", description: "AI image generation tool" },
+          { name: "Leonardo.AI", description: "AI image generation platform" },
+          { name: "OpenAI Sora", description: "Text-to-video model" }
+        ]
+      },
+      {
         name: "Prompt Engineering",
-        level: 29,
-        description: "Crafting effective prompts for AI models.",
-        skills: [
-          { name: "System Prompts", level: 30, years: 2 },
-          { name: "Chain-of-Thought", level: 27, years: 1 },
-          { name: "Function Calling", level: 28, years: 1 }
+        description: "Techniques for effective AI prompting",
+        subitems: [
+          { name: "ReAct Technique", description: "Reasoning and action generation" },
+          { name: "Prompt Chaining", description: "Multi-step prompting process" },
+          { name: "RAG", description: "Retrieval Augmented Generation" },
+          { name: "Knowledge Bases", description: "Structured information for LLMs" },
+          { name: "Temporary Memory", description: "Context retention techniques" }
         ]
       },
-      adaptation: {
-        id: "adaptation",
-        name: "Model Adaptation",
-        level: 25,
-        description: "Customizing models for specific use cases.",
-        skills: [
-          { name: "Fine-tuning", level: 23, years: 1 },
-          { name: "RLHF", level: 20, years: 0.5 },
-          { name: "Model Evaluation", level: 24, years: 1 }
+      {
+        name: "Agentic Frameworks",
+        description: "Tools for building AI agents and workflows",
+        subitems: [
+          { name: "CrewAI", description: "Framework for orchestrating role-based agents" },
+          { name: "Pydantic AI", description: "Data validation for AI systems" },
+          { name: "Phidata", description: "Framework for AI applications" },
+          { name: "AgentOps", description: "Autonomous AI systems platform" },
+          { name: "LangChain / LangStudio", description: "Framework for LLM applications" }
+        ]
+      },
+      {
+        name: "Cloud AI Solutions",
+        description: "Cloud-based AI services",
+        subitems: [
+          { name: "AWS Bedrock", description: "Managed service for foundation models" },
+          { name: "AWS SageMaker Studio", description: "Machine learning service" }
+        ]
+      },
+      {
+        name: "AI Tools",
+        description: "Specialized tools for AI workflows",
+        subitems: [
+          { name: "Firecrawl", description: "Web crawling for AI training" },
+          { name: "mem0", description: "AI memory and knowledge management" },
+          { name: "Stripe", description: "Payment processing integration" },
+          { name: "Browserbase", description: "Browser automation for AI" }
         ]
       }
-    }
-  },
-  cloud: {
-    id: "cloud",
-    name: "Cloud Architecture",
-    level: 20,
-    description: "Designing and implementing cloud-native solutions.",
-    skills: {
-      aws: {
-        id: "aws",
-        name: "AWS",
-        level: 22,
-        description: "Building on Amazon Web Services.",
-        skills: [
-          { name: "EC2/ECS/EKS", level: 24, years: 6 },
-          { name: "Lambda", level: 21, years: 5 },
-          { name: "S3/DynamoDB", level: 23, years: 6 },
-          { name: "CloudFront/Route53", level: 22, years: 5 }
-        ]
-      },
-      gcp: {
-        id: "gcp",
-        name: "GCP",
-        level: 18,
-        description: "Leveraging Google Cloud Platform.",
-        skills: [
-          { name: "GKE", level: 19, years: 3 },
-          { name: "Cloud Functions", level: 17, years: 2 },
-          { name: "BigQuery", level: 18, years: 3 }
-        ]
-      },
-      azure: {
-        id: "azure",
-        name: "Azure",
-        level: 16,
-        description: "Working with Microsoft Azure.",
-        skills: [
-          { name: "AKS", level: 17, years: 2 },
-          { name: "Azure Functions", level: 16, years: 2 },
-          { name: "Cosmos DB", level: 15, years: 1 }
-        ]
-      },
-      patterns: {
-        id: "patterns",
-        name: "Cloud Patterns",
-        level: 21,
-        description: "Implementing cloud-native design patterns.",
-        skills: [
-          { name: "Serverless", level: 22, years: 4 },
-          { name: "Multi-Cloud", level: 19, years: 3 },
-          { name: "Cloud Security", level: 20, years: 5 },
-          { name: "Cost Optimization", level: 21, years: 4 }
-        ]
-      }
-    }
+    ]
   }
 };
 
@@ -224,33 +219,34 @@ export function flattenSkills(): Record<string, { path: string[], data: Skill | 
   const result: Record<string, { path: string[], data: Skill | SkillCategory }> = {};
   
   function traverse(
-    obj: Record<string, SkillCategory> | Record<string, any>, 
+    obj: Record<string, SkillCategory>, 
     currentPath: string[] = []
   ) {
     if (!obj) return;
     
-    Object.entries(obj).forEach(([key, value]) => {
-      if (value && typeof value === 'object' && 'id' in value) {
-        // This is a SkillCategory
-        const category = value as SkillCategory;
-        result[category.id] = { path: [...currentPath], data: category };
+    Object.entries(obj).forEach(([key, category]) => {
+      // Add the category
+      result[category.id] = { path: [...currentPath], data: category };
+      
+      // Process category skills
+      category.skills.forEach((skill, idx) => {
+        const skillKey = `${category.id}-skill-${idx}`;
+        result[skillKey] = { 
+          path: [...currentPath, category.id], 
+          data: skill 
+        };
         
-        if (Array.isArray(category.skills)) {
-          // These are leaf node skills
-          category.skills.forEach((skill, index) => {
-            result[`${category.id}-${index}`] = { 
-              path: [...currentPath, category.id], 
-              data: skill 
+        // Process subitems if they exist
+        if (skill.subitems) {
+          skill.subitems.forEach((subitem, subIdx) => {
+            const subitemKey = `${category.id}-skill-${idx}-subitem-${subIdx}`;
+            result[subitemKey] = {
+              path: [...currentPath, category.id, skillKey],
+              data: subitem
             };
           });
-        } else if (category.skills && typeof category.skills === 'object') {
-          // These are nested categories
-          traverse(
-            category.skills as Record<string, SkillCategory>, 
-            [...currentPath, category.id]
-          );
         }
-      }
+      });
     });
   }
   
@@ -260,26 +256,33 @@ export function flattenSkills(): Record<string, { path: string[], data: Skill | 
 
 // Get category by path
 export function getSkillByPath(path: string[]): SkillCategory | Skill | null {
-  let current: any = { ...skillsData };
+  if (!path || path.length === 0) return null;
   
-  for (let i = 0; i < path.length; i++) {
-    const segment = path[i];
-    if (!current[segment]) {
-      return null;
-    }
-    
-    current = current[segment];
-    
-    // If we hit skills array, we've reached the end
-    if (Array.isArray(current.skills)) {
-      return current as SkillCategory;
-    }
-    
-    // Move to the skills object for the next iteration
-    if (i < path.length - 1) {
-      current = current.skills as Record<string, SkillCategory>;
-    }
-  }
+  // Get the top level category
+  const category = skillsData[path[0]];
+  if (!category) return null;
   
-  return current as SkillCategory;
+  // Return the category if only the first path segment is provided
+  if (path.length === 1) return category;
+  
+  // Parse the skill index from the second path segment
+  const skillMatch = path[1].match(/skill-(\d+)/);
+  if (!skillMatch) return null;
+  
+  const skillIndex = parseInt(skillMatch[1], 10);
+  if (isNaN(skillIndex) || skillIndex >= category.skills.length) return null;
+  
+  const skill = category.skills[skillIndex];
+  
+  // Return the skill if only two path segments are provided
+  if (path.length === 2) return skill;
+  
+  // Parse the subitem index from the third path segment
+  const subitemMatch = path[2].match(/subitem-(\d+)/);
+  if (!subitemMatch || !skill.subitems) return null;
+  
+  const subitemIndex = parseInt(subitemMatch[1], 10);
+  if (isNaN(subitemIndex) || subitemIndex >= skill.subitems.length) return null;
+  
+  return skill.subitems[subitemIndex];
 } 
