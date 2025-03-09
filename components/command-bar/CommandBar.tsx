@@ -15,8 +15,10 @@ import {
   SearchIcon,
   ExternalLinkIcon,
   DownloadIcon,
+  PlusIcon
 } from "lucide-react"
 import { SocialIcon } from "@/components/ui/social-icon"
+import { cn } from "@/lib/utils"
 
 type CommandItem = {
   id: string
@@ -25,7 +27,33 @@ type CommandItem = {
   onSelect: () => void
   keywords?: string[]
   section: string
+  shortcut?: string | React.ReactNode
 }
+
+// CSS para la barra de desplazamiento personalizada
+const scrollbarStyles = `
+  /* Estilo para la pista de la barra de desplazamiento */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Estilo para el "thumb" de la barra de desplazamiento (la parte que se puede arrastrar) */
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--secondary) / 0.3);
+    border-radius: 5px;
+  }
+  
+  /* Estilo para el "thumb" al pasar el cursor por encima */
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--secondary) / 0.5);
+  }
+  
+  /* Estilo para la pista de fondo */
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;
 
 export function CommandBar() {
   const [open, setOpen] = React.useState(false)
@@ -57,6 +85,27 @@ export function CommandBar() {
     setSelectedItemIndex(-1)
   }, [open])
 
+  // Agregar estilos de barra de desplazamiento personalizada
+  React.useEffect(() => {
+    // Crear elemento de estilo
+    const styleElement = document.createElement('style');
+    styleElement.textContent = scrollbarStyles;
+    document.head.appendChild(styleElement);
+    
+    // Limpiar al desmontar
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
+
+  const ShortcutKey = ({ children }: { children: React.ReactNode }) => {
+    return (
+      <kbd className="px-1.5 py-0.5 bg-secondary/50 text-secondary-foreground/70 rounded font-medium text-xs">
+        {children}
+      </kbd>
+    )
+  }
+
   // Commands data
   const allCommands = React.useMemo(() => [
     // Navigation
@@ -66,6 +115,7 @@ export function CommandBar() {
       icon: <HomeIcon />,
       section: "Navigation",
       keywords: ["home", "main", "index"],
+      shortcut: <ShortcutKey>H</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/"
         setOpen(false)
@@ -77,6 +127,7 @@ export function CommandBar() {
       icon: <UserIcon />,
       section: "Navigation",
       keywords: ["about", "bio", "profile", "resume"],
+      shortcut: <ShortcutKey>A</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/about"
         setOpen(false)
@@ -88,6 +139,7 @@ export function CommandBar() {
       icon: <FolderIcon />,
       section: "Navigation",
       keywords: ["projects", "portfolio", "work"],
+      shortcut: <ShortcutKey>P</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/projects"
         setOpen(false)
@@ -99,6 +151,7 @@ export function CommandBar() {
       icon: <CodeIcon />,
       section: "Navigation",
       keywords: ["api", "interoperability", "integration", "developer"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>A</ShortcutKey><span>then</span><ShortcutKey>I</ShortcutKey></div>,
       onSelect: () => {
         window.location.href = "/api"
         setOpen(false)
@@ -110,6 +163,7 @@ export function CommandBar() {
       icon: <MailIcon />,
       section: "Navigation",
       keywords: ["contact", "email", "message", "get in touch"],
+      shortcut: <ShortcutKey>C</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/contact"
         setOpen(false)
@@ -118,11 +172,24 @@ export function CommandBar() {
     
     // External Links
     {
+      id: "twitter",
+      label: "X / Twitter",
+      icon: <SocialIcon type="twitter" size={18} />,
+      section: "External",
+      keywords: ["twitter", "x", "social", "tweet"],
+      shortcut: <ShortcutKey>T</ShortcutKey>,
+      onSelect: () => {
+        window.open("https://x.com/rbadillap", "_blank")
+        setOpen(false)
+      }
+    },
+    {
       id: "github",
-      label: "GitHub Profile",
+      label: "GitHub",
       icon: <SocialIcon type="github" size={18} />,
       section: "External",
       keywords: ["github", "code", "repository", "open source"],
+      shortcut: <ShortcutKey>G</ShortcutKey>,
       onSelect: () => {
         window.open("https://github.com/rbadillap", "_blank")
         setOpen(false)
@@ -130,23 +197,13 @@ export function CommandBar() {
     },
     {
       id: "linkedin",
-      label: "LinkedIn Profile",
+      label: "LinkedIn",
       icon: <SocialIcon type="linkedin" size={18} />,
       section: "External",
       keywords: ["linkedin", "social", "professional", "network"],
+      shortcut: <ShortcutKey>L</ShortcutKey>,
       onSelect: () => {
         window.open("https://linkedin.com/in/rbadillap", "_blank")
-        setOpen(false)
-      }
-    },
-    {
-      id: "twitter",
-      label: "X / Twitter",
-      icon: <SocialIcon type="twitter" size={18} />,
-      section: "External",
-      keywords: ["twitter", "x", "social", "tweet"],
-      onSelect: () => {
-        window.open("https://x.com/rbadillap", "_blank")
         setOpen(false)
       }
     },
@@ -158,6 +215,7 @@ export function CommandBar() {
       icon: <MailIcon />,
       section: "Actions",
       keywords: ["email", "contact", "message"],
+      shortcut: <ShortcutKey>E</ShortcutKey>,
       onSelect: () => {
         window.location.href = "mailto:info@ronnybadilla.com"
         setOpen(false)
@@ -169,6 +227,7 @@ export function CommandBar() {
       icon: <DownloadIcon />,
       section: "Actions",
       keywords: ["cv", "resume", "download", "pdf"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>D</ShortcutKey><span>then</span><ShortcutKey>C</ShortcutKey></div>,
       onSelect: () => {
         window.open("/api/cv?format=pdf", "_blank")
         setOpen(false)
@@ -180,6 +239,7 @@ export function CommandBar() {
       icon: <DownloadIcon />,
       section: "Actions",
       keywords: ["vcard", "contact", "card", "download"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>D</ShortcutKey><span>then</span><ShortcutKey>V</ShortcutKey></div>,
       onSelect: () => {
         window.open("/api/contact?format=vcard", "_blank")
         setOpen(false)
@@ -193,6 +253,7 @@ export function CommandBar() {
       icon: <SunIcon />,
       section: "Theme",
       keywords: ["theme", "light", "mode", "bright"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>L</ShortcutKey></div>,
       onSelect: () => {
         setTheme("light")
         setOpen(false)
@@ -204,6 +265,7 @@ export function CommandBar() {
       icon: <MoonIcon />,
       section: "Theme",
       keywords: ["theme", "dark", "mode", "night"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>D</ShortcutKey></div>,
       onSelect: () => {
         setTheme("dark")
         setOpen(false)
@@ -215,6 +277,7 @@ export function CommandBar() {
       icon: <LaptopIcon />,
       section: "Theme",
       keywords: ["theme", "system", "auto", "default"],
+      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>S</ShortcutKey></div>,
       onSelect: () => {
         setTheme("system")
         setOpen(false)
@@ -314,38 +377,50 @@ export function CommandBar() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[520px] p-0">
+      <DialogContent className="sm:max-w-[520px] p-0 border border-border/30 bg-background/90 backdrop-blur-sm shadow-lg overflow-hidden">
         <DialogTitle className="sr-only">Command Menu</DialogTitle>
-        <div className="flex items-center border-b border-border p-4">
-          <SearchIcon className="h-4 w-4 mr-2 text-muted-foreground" />
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder="Search or select a navigation option..."
-            className="flex-1 bg-transparent border-none outline-none text-base"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
-            aria-label="Command search"
-            role="combobox"
-            aria-expanded={open}
-            aria-controls="command-list"
-          />
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-            <kbd className="px-1.5 py-0.5 bg-muted rounded font-mono">ESC</kbd>
-            <span>to close</span>
+        <div className="flex flex-col border-b border-border/50">
+          <div className="flex items-center px-4 pt-4 pb-2">
+            <div className="flex-1 flex items-center">
+              <SearchIcon className="h-4 w-4 mr-3 text-muted-foreground" />
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Type a command or search..."
+                className="flex-1 bg-transparent border-none outline-none text-base placeholder:text-muted-foreground/70"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={handleKeyDown}
+                aria-label="Command search"
+                role="combobox"
+                aria-expanded={open}
+                aria-controls="command-list"
+              />
+            </div>
+            <div className="flex items-center gap-1 text-xs text-muted-foreground/70">
+              <kbd className="px-1.5 py-0.5 bg-secondary/50 rounded font-medium">ESC</kbd>
+              <span>to close</span>
+            </div>
+          </div>
+          <div className="px-4 pb-2 text-xs text-muted-foreground/70">
+            <span>Pro tip: Press </span>
+            <kbd className="px-1.5 py-0.5 bg-secondary/50 rounded font-medium">⌘K</kbd>
+            <span> at any time to open this menu</span>
           </div>
         </div>
         <div 
           ref={commandsListRef}
-          className="max-h-[60vh] overflow-y-auto py-2"
+          className={cn(
+            "max-h-[60vh] overflow-y-auto py-2 custom-scrollbar",
+            "scrollbar-thin scrollbar-thumb-secondary/30 scrollbar-track-transparent"
+          )}
           role="listbox"
           id="command-list"
           tabIndex={-1}
         >
           {Object.keys(groupedCommands).length === 0 ? (
             <div className="px-4 py-8 text-center text-muted-foreground">
-              <p>No navigation options found.</p>
+              <p>No commands found.</p>
               <p className="text-xs mt-2">Try different keywords or browse the sections below.</p>
             </div>
           ) : (
@@ -353,7 +428,7 @@ export function CommandBar() {
               <div key={section} className="mb-4" role="group" aria-labelledby={`section-${section}`}>
                 <div 
                   id={`section-${section}`}
-                  className="px-4 text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2"
+                  className="px-4 mb-1 text-xs font-medium text-muted-foreground uppercase tracking-wider"
                 >
                   {section}
                 </div>
@@ -367,8 +442,8 @@ export function CommandBar() {
                       <button
                         id={`command-item-${globalIndex}`}
                         key={command.id}
-                        className={`w-full flex items-center px-4 py-2.5 text-sm hover:bg-muted text-left ${
-                          isSelected ? 'bg-muted outline-2 outline outline-primary/20' : ''
+                        className={`w-full flex items-center px-4 py-2 text-sm hover:bg-secondary/30 text-left ${
+                          isSelected ? 'bg-secondary/30 outline-none' : ''
                         }`}
                         onClick={command.onSelect}
                         onMouseEnter={() => setSelectedItemIndex(globalIndex)}
@@ -377,13 +452,22 @@ export function CommandBar() {
                         tabIndex={-1}
                         data-command-index={globalIndex}
                       >
-                        <span className="h-5 w-5 mr-3 text-primary">
-                          {command.icon}
-                        </span>
-                        <span>{command.label}</span>
-                        {command.section === 'External' && (
-                          <ExternalLinkIcon className="h-3 w-3 ml-2 text-muted-foreground" />
-                        )}
+                        <div className="flex w-full justify-between items-center">
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center h-6 w-6 rounded bg-secondary/40 text-secondary-foreground">
+                              {command.icon}
+                            </div>
+                            <span>{command.label}</span>
+                            {command.section === 'External' && (
+                              <ExternalLinkIcon className="h-3 w-3 text-muted-foreground" />
+                            )}
+                          </div>
+                          {command.shortcut && (
+                            <div className="flex items-center text-xs text-muted-foreground/70 ml-8">
+                              {command.shortcut}
+                            </div>
+                          )}
+                        </div>
                       </button>
                     )
                   })}

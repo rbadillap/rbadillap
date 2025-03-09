@@ -29,16 +29,13 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Button 
             onClick={handleCommandClick}
-            variant="ghost" 
+            variant="outline" 
             size="sm" 
-            className="flex gap-2 items-center"
+            className="flex gap-2 items-center px-3 py-2"
             aria-label="Open site navigation"
           >
             <CommandIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Navigate Site</span>
-            <kbd className="hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
-              ⌘K
-            </kbd>
+            <span className="sm:inline">Menu</span>
           </Button>
           
           <ThemeToggle />
