@@ -107,7 +107,7 @@ const keywordDescriptions: Record<string, Record<string, string>> = {
 export default function SkillsCLI() {
   const { theme } = useTheme();
   const [history, setHistory] = useState<HistoryItem[]>([
-    { type: 'system', content: 'Welcome to the Skills CLI.' },
+    { type: 'system', content: 'Welcome to the my skills cli.' },
     { type: 'system', content: 'Type "help" for available commands or try "ls" to view categories.' },
   ]);
   const [input, setInput] = useState('');
