@@ -15,7 +15,8 @@ import {
   SearchIcon,
   ExternalLinkIcon,
   DownloadIcon,
-  PlusIcon
+  PlusIcon,
+  Terminal
 } from "lucide-react"
 import { SocialIcon } from "@/components/ui/social-icon"
 import { cn } from "@/lib/utils"
@@ -123,13 +124,13 @@ export function CommandBar() {
     },
     {
       id: "about",
-      label: "About Me",
-      icon: <UserIcon />,
+      label: "Skills",
+      icon: <Terminal />,
       section: "Navigation",
-      keywords: ["about", "bio", "profile", "resume"],
+      keywords: ["skills", "expertise", "terminal", "cli", "devops", "development", "cloud", "genai"],
       shortcut: <ShortcutKey>A</ShortcutKey>,
       onSelect: () => {
-        window.location.href = "/about"
+        window.location.href = "/skills"
         setOpen(false)
       }
     },
