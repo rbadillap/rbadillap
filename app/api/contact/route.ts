@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     }
 
     // Send email using Resend
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
       to: process.env.CONTACT_EMAIL || 'info@ronnybadilla.com',
       subject: `New Contact Form Submission from ${name}`,

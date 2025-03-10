@@ -6,6 +6,10 @@ import ContactForm from '../components/ContactForm'
 export const metadata = {
   title: 'Contact | Ronny Badilla',
   description: 'Get in touch with Ronny Badilla for software development, DevOps consulting, and cloud architecture services.',
+  openGraph: {
+    title: 'Contact | Ronny Badilla',
+    description: 'Get in touch with Ronny Badilla for software development, DevOps consulting, and cloud architecture services.',
+  }
 };
 
 export default function ContactPage() {
@@ -18,21 +22,22 @@ export default function ContactPage() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-16">
-          <div>
+          <section>
             <h2 className="text-2xl font-semibold mb-8">Send a Message</h2>
             <ContactForm />
-          </div>
+          </section>
           
-          <div>
+          <section>
             <h2 className="text-2xl font-semibold mb-8">Connect Directly</h2>
             <div className="space-y-6">
               <div className="flex items-start">
-                <Mail className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" />
+                <Mail className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" aria-hidden="true" />
                 <div>
                   <h3 className="font-medium">Email</h3>
                   <a 
                     href="mailto:info@ronnybadilla.com" 
                     className="text-primary hover:underline"
+                    aria-label="Send email to Ronny Badilla"
                   >
                     info@ronnybadilla.com
                   </a>
@@ -41,7 +46,7 @@ export default function ContactPage() {
 
               <div className="flex items-start">
                 <div className="mr-3 mt-0.5">
-                  <SocialIcon type="github" size={20} className="text-muted-foreground" />
+                  <SocialIcon type="github" size={20} className="text-muted-foreground" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-medium">GitHub</h3>
@@ -50,6 +55,7 @@ export default function ContactPage() {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-primary hover:underline"
+                    aria-label="Visit Ronny Badilla's GitHub profile"
                   >
                     github.com/rbadillap
                   </a>
@@ -58,7 +64,7 @@ export default function ContactPage() {
 
               <div className="flex items-start">
                 <div className="mr-3 mt-0.5">
-                  <SocialIcon type="linkedin" size={20} className="text-muted-foreground" />
+                  <SocialIcon type="linkedin" size={20} className="text-muted-foreground" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-medium">LinkedIn</h3>
@@ -67,6 +73,7 @@ export default function ContactPage() {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-primary hover:underline"
+                    aria-label="Visit Ronny Badilla's LinkedIn profile"
                   >
                     linkedin.com/in/rbadillap
                   </a>
@@ -75,7 +82,7 @@ export default function ContactPage() {
 
               <div className="flex items-start">
                 <div className="mr-3 mt-0.5">
-                  <SocialIcon type="twitter" size={20} className="text-muted-foreground" />
+                  <SocialIcon type="twitter" size={20} className="text-muted-foreground" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-medium">X / Twitter</h3>
@@ -84,6 +91,7 @@ export default function ContactPage() {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-primary hover:underline"
+                    aria-label="Visit Ronny Badilla's X/Twitter profile"
                   >
                     x.com/rbadillap
                   </a>
@@ -91,7 +99,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start">
-                <FileText className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" />
+                <FileText className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" aria-hidden="true" />
                 <div>
                   <h3 className="font-medium">Resume</h3>
                   <a 
@@ -99,13 +107,15 @@ export default function ContactPage() {
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="text-primary hover:underline"
+                    aria-label="Download Ronny Badilla's resume as PDF"
+                    download
                   >
                     Download Resume
                   </a>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </RootLayout>

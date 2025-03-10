@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 
 interface FormState {
   name: string;
@@ -26,13 +27,13 @@ export default function ContactForm() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     // Basic validation
@@ -85,8 +86,10 @@ export default function ContactForm() {
     }
   };
 
+  const isSubmitting = formStatus.status === 'submitting';
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" aria-label="Contact form">
       <div>
         <label htmlFor="name" className="block text-sm font-medium mb-2">
           Name
@@ -99,7 +102,9 @@ export default function ContactForm() {
           onChange={handleChange}
           className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="Your name"
-          disabled={formStatus.status === 'submitting'}
+          disabled={isSubmitting}
+          aria-required="true"
+          aria-invalid={formStatus.status === 'error' && !formData.name ? 'true' : 'false'}
         />
       </div>
 
@@ -115,7 +120,9 @@ export default function ContactForm() {
           onChange={handleChange}
           className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="your.email@example.com"
-          disabled={formStatus.status === 'submitting'}
+          disabled={isSubmitting}
+          aria-required="true"
+          aria-invalid={formStatus.status === 'error' && !formData.email ? 'true' : 'false'}
         />
       </div>
 
@@ -131,7 +138,9 @@ export default function ContactForm() {
           onChange={handleChange}
           className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="Your message here..."
-          disabled={formStatus.status === 'submitting'}
+          disabled={isSubmitting}
+          aria-required="true"
+          aria-invalid={formStatus.status === 'error' && !formData.message ? 'true' : 'false'}
         />
       </div>
 
@@ -144,6 +153,8 @@ export default function ContactForm() {
               ? 'bg-green-900/50 text-green-200'
               : 'bg-blue-900/50 text-blue-200'
           }`}
+          role="alert"
+          aria-live="polite"
         >
           {formStatus.message}
         </div>
@@ -151,10 +162,11 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        disabled={formStatus.status === 'submitting'}
+        disabled={isSubmitting}
         className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        aria-busy={isSubmitting}
       >
-        {formStatus.status === 'submitting' ? 'Sending...' : 'Send Message'}
+        {isSubmitting ? 'Sending...' : 'Send Message'}
       </button>
 
       <div className="pt-2">
