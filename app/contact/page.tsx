@@ -35,11 +35,11 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-medium">Email</h3>
                   <a 
-                    href="mailto:info@ronnybadilla.com" 
+                    href={`mailto:${process.env.CONTACT_EMAIL || ""}`} 
                     className="text-primary hover:underline"
                     aria-label="Send email to Ronny Badilla"
                   >
-                    info@ronnybadilla.com
+                    {process.env.CONTACT_EMAIL || "Contact me"}
                   </a>
                 </div>
               </div>

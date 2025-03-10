@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server"
 import { Resend } from 'resend';
+import { render } from '@react-email/render';
+import ContactFormEmail from '../../../emails/contact/contact-form';
+import AutoResponseEmail from '../../../emails/contact/auto-response';
 
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -7,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Contact data, in a real app this would come from a database
 const contactData = {
   name: "Ronny Badilla",
-  email: "info@ronnybadilla.com",
+  email: process.env.CONTACT_EMAIL || "",
   social: {
     github: "https://github.com/rbadillap",
     linkedin: "https://linkedin.com/in/rbadillap",
@@ -80,33 +83,60 @@ export async function POST(request: Request) {
       )
     }
 
-    // Send email using Resend
-    const { error } = await resend.emails.send({
+    // Render the React email templates
+    const notificationEmailHtml = await render(
+      ContactFormEmail({
+        name,
+        email,
+        message
+      })
+    );
+
+    // Create plain text version for email clients that don't support HTML
+    const plainText = `
+      Name: ${name}
+      Email: ${email}
+      Message: ${message}
+    `;
+
+    // Send notification email to site owner
+    const { error: notificationError } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
-      to: process.env.CONTACT_EMAIL || 'info@ronnybadilla.com',
-      subject: `New Contact Form Submission from ${name}`,
+      to: process.env.CONTACT_EMAIL || '',
+      subject: `New Contact Form Submission from rbadillap.dev`,
       replyTo: email,
-      text: `
-        Name: ${name}
-        Email: ${email}
-        Message: ${message}
-      `,
-      html: `
-        <div>
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong> ${message}</p>
-        </div>
-      `,
+      text: plainText,
+      html: notificationEmailHtml,
     });
 
-    if (error) {
-      console.error('Resend API error:', error);
+    if (notificationError) {
+      console.error('Resend API error (notification):', notificationError);
       return NextResponse.json(
         { error: 'Failed to send message. Please try again later.' },
         { status: 500 }
       );
+    }
+
+    // Send auto-response email to the sender
+    try {
+      // Render the auto-response email template
+      const autoResponseEmailHtml = await render(
+        AutoResponseEmail({
+          name
+        })
+      );
+
+      // Send auto-response
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+        to: email,
+        subject: 'Thank you for contacting Ronny Badilla',
+        html: autoResponseEmailHtml,
+      });
+    } catch (autoResponseError) {
+      // Log the error but don't fail the whole request
+      console.error('Auto-response email error:', autoResponseError);
+      // We still consider the submission successful even if the auto-response fails
     }
 
     return NextResponse.json({ success: true });

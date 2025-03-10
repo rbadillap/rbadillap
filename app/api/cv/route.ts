@@ -69,7 +69,7 @@ const cvData: CVData = {
   ],
 
   contact: {
-    email: "info@ronnybadilla.com",
+    email: process.env.CONTACT_EMAIL || "",
     github: "https://github.com/rbadillap",
     linkedin: "https://linkedin.com/in/rbadillap",
     twitter: "https://x.com/rbadillap"
