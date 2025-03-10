@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server"
+import { readFileSync } from 'fs'
+import path from 'path'
 
 // CV data, in a real app this would come from a database
 const cvData = {
@@ -71,14 +73,8 @@ export async function GET(request: Request) {
     case "json":
       return NextResponse.json(cvData)
     case "pdf":
-      // In a real implementation, we would generate a PDF
-      // For now, we'll just return a mock response
-      return new NextResponse("PDF generation not implemented", {
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": "attachment; filename=ronny-badilla-cv.pdf"
-        },
-      })
+      // Redirect to the static PDF file
+      return NextResponse.redirect(new URL('/assets/resume.pdf', request.url))
     case "markdown":
       const markdown = generateMarkdown(cvData)
       return new NextResponse(markdown, {

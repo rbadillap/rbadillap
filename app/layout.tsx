@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
 // We'll import the RootLayout component in client components
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   title: "Ronny Badilla | Software Developer & DevOps Engineer",
   description: "Ronny Badilla - Software Developer, DevOps Engineer, and Cloud Expert - @rbadillap in socials",
   keywords: ["Software Development", "DevOps", "Cloud", "AI", "Web Development"],
-  authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
+  authors: [{ name: "Ronny Badilla", url: "https://rbadillap.dev" }],
   creator: "Ronny Badilla",
   icons: {
     icon: [
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ronny Badilla | Software Developer & DevOps Engineer",
     description: "Ronny Badilla - Software Developer, DevOps Engineer, and Cloud Expert - @rbadillap in socials",
-    url: "https://ronnybadilla.com",
+    url: "https://rbadillap.dev",
     siteName: "Ronny Badilla",
     locale: "en_US",
     type: "website",
@@ -70,6 +71,7 @@ export default function Layout({
         className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
