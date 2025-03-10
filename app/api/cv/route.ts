@@ -1,68 +1,82 @@
 import { NextResponse } from "next/server"
 
+// Define proper interfaces for CV data
+interface ExperienceEntry {
+  title: string;
+  company: string;
+  period: string;
+  description?: string;
+  achievements?: string[];
+}
+
+interface ContactInfo {
+  email: string;
+  github: string;
+  linkedin: string;
+  twitter?: string;
+}
+
+interface CVData {
+  name: string;
+  title: string;
+  summary: string;
+  coreCompetencies: string[];
+  keyAchievements: string[];
+  experience: ExperienceEntry[];
+  contact: ContactInfo;
+}
+
 // CV data, in a real app this would come from a database
-const cvData = {
-  name: "Ronny Badilla",
-  title: "Software Developer & DevOps Engineer",
-  summary: "Experienced software developer and DevOps engineer with a focus on creating modern, interoperable systems with clean design and excellent developer experience.",
-  skills: [
-    {
-      category: "Software Development",
-      items: ["JavaScript/TypeScript", "React", "Next.js", "Node.js", "Go", "Python"]
-    },
-    {
-      category: "DevOps & Cloud",
-      items: ["Kubernetes", "Docker", "Terraform", "AWS", "GCP", "CI/CD Pipelines"]
-    },
-    {
-      category: "Architecture",
-      items: ["Microservices", "Serverless", "Event-Driven", "API Design", "System Integration"]
-    }
+const cvData: CVData = {
+  name: "Ronny Badilla Pastrano",
+  title: "Cloud & AI Engineer | Full-Stack | DevOps | Architecture",
+  summary: "20 years of cross-functional expertise in SaaS, Fintech, Blockchain, and consultancy. Specialized in integrating cloud, generative AI, and compliance frameworks (FedRAMP/SOC 2). Experienced in cloud migrations, modernizing architectures, prototyping AI tools, and internal tools development.",
+
+  coreCompetencies: [
+    "AWS",
+    "Generative AI",
+    "FedRAMP/SOC 2 Compliance",
+    "Serverless Architectures",
+    "LLM Integration",
+    "Cloud Migration",
+    "Cloud Optimization",
+    "Microservices",
+    "AI Workflow Automation"
   ],
+
+  keyAchievements: [
+    "Prototyped AI-driven internal tools for 100-1500 employees",
+    "Led cloud migration to AWS for Automattic",
+    "Implemented cloud observability solutions"
+  ],
+
   experience: [
     {
-      title: "Lead Software Engineer",
-      company: "Tech Innovations Inc.",
-      period: "2020 - Present",
-      description: "Leading development of cloud-native applications with a focus on Kubernetes and microservices architecture.",
-      achievements: [
-        "Migrated legacy monolith to microservices",
-        "Reduced deployment time by 80%",
-        "Implemented GitOps workflow"
-      ]
+      title: "Sr DevOps Architect",
+      company: "TransUnion",
+      period: "2024 - Present"
     },
     {
-      title: "DevOps Engineer",
-      company: "CloudSys Solutions",
-      period: "2017 - 2020",
-      description: "Designed and implemented CI/CD pipelines and infrastructure automation for enterprise clients.",
-      achievements: [
-        "Automated deployment processes",
-        "Implemented infrastructure as code",
-        "Reduced operational costs by 35%"
-      ]
-    }
-  ],
-  education: [
-    {
-      degree: "Master of Science in Computer Engineering",
-      institution: "Tech University",
-      year: "2017"
+      title: "Platform Engineer",
+      company: "Automattic",
+      period: "2020 - 2022"
     },
     {
-      degree: "Bachelor of Science in Computer Science",
-      institution: "State University",
-      year: "2015"
+      title: "Global Solutions Architect Lead",
+      company: "SoftwareONE",
+      period: "2018 - 2020"
     }
   ],
+
   contact: {
     email: "info@ronnybadilla.com",
     github: "https://github.com/rbadillap",
-    linkedin: "https://linkedin.com/in/ronnybadilla"
+    linkedin: "https://linkedin.com/in/rbadillap",
+    twitter: "https://x.com/rbadillap"
   }
-}
+};
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<NextResponse> {
   // Get URL parameters
   const { searchParams } = new URL(request.url)
   const format = searchParams.get("format") || "json"
@@ -71,14 +85,8 @@ export async function GET(request: Request) {
     case "json":
       return NextResponse.json(cvData)
     case "pdf":
-      // In a real implementation, we would generate a PDF
-      // For now, we'll just return a mock response
-      return new NextResponse("PDF generation not implemented", {
-        headers: {
-          "Content-Type": "application/pdf",
-          "Content-Disposition": "attachment; filename=ronny-badilla-cv.pdf"
-        },
-      })
+      // Redirect to the static PDF file
+      return NextResponse.redirect(new URL('/assets/resume.pdf', request.url))
     case "markdown":
       const markdown = generateMarkdown(cvData)
       return new NextResponse(markdown, {
@@ -95,36 +103,44 @@ export async function GET(request: Request) {
   }
 }
 
-// Helper function to generate Markdown
-function generateMarkdown(data: typeof cvData): string {
+/**
+ * Generates a Markdown representation of the CV data
+ * @param data The CV data to convert to Markdown
+ * @returns A formatted Markdown string
+ */
+function generateMarkdown(data: CVData): string {
   let markdown = `# ${data.name}\n\n`
   markdown += `## ${data.title}\n\n`
   markdown += `${data.summary}\n\n`
   
-  markdown += `## Skills\n\n`
-  data.skills.forEach(skillGroup => {
-    markdown += `### ${skillGroup.category}\n\n`
-    markdown += skillGroup.items.map(item => `- ${item}`).join('\n') + '\n\n'
-  })
+  markdown += `## Core Competencies\n\n`
+  markdown += data.coreCompetencies.map((item: string) => `- ${item}`).join('\n') + '\n\n'
+  
+  markdown += `## Key Achievements\n\n`
+  markdown += data.keyAchievements.map((achievement: string) => `- ${achievement}`).join('\n') + '\n\n'
   
   markdown += `## Experience\n\n`
-  data.experience.forEach(job => {
+  data.experience.forEach((job: ExperienceEntry) => {
     markdown += `### ${job.title} | ${job.company}\n\n`
     markdown += `**${job.period}**\n\n`
-    markdown += `${job.description}\n\n`
-    markdown += job.achievements.map(achievement => `- ${achievement}`).join('\n') + '\n\n'
-  })
-  
-  markdown += `## Education\n\n`
-  data.education.forEach(edu => {
-    markdown += `### ${edu.degree}\n\n`
-    markdown += `${edu.institution}, ${edu.year}\n\n`
+    
+    // Only add description and achievements if they exist
+    if (job.description) {
+      markdown += `${job.description}\n\n`
+    }
+    
+    if (job.achievements && job.achievements.length > 0) {
+      markdown += job.achievements.map((achievement: string) => `- ${achievement}`).join('\n') + '\n\n'
+    }
   })
   
   markdown += `## Contact\n\n`
   markdown += `- Email: ${data.contact.email}\n`
   markdown += `- GitHub: ${data.contact.github}\n`
   markdown += `- LinkedIn: ${data.contact.linkedin}\n`
+  if (data.contact.twitter) {
+    markdown += `- Twitter/X: ${data.contact.twitter}\n`
+  }
   
   return markdown
 } 

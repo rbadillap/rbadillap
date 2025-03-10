@@ -197,7 +197,7 @@ export function CommandBar() {
       section: "Actions",
       keywords: ["cv", "resume", "download", "pdf"],
       onSelect: () => {
-        window.open("/api/cv?format=pdf", "_blank")
+        window.open("/assets/resume.pdf", "_blank")
         setOpen(false)
       }
     },
