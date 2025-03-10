@@ -11,7 +11,7 @@ import Image from 'next/image';
 type HistoryItem = {
   type: string;
   content: string;
-  data?: any;
+  data?: Record<string, unknown>;
   avatar?: string;
   website?: string;
 };
@@ -51,35 +51,7 @@ type SkillItemContent = {
 
 type DirectoryContent = CategoryContent | AreaContent | SkillContent | SkillItemContent | null;
 
-// Add keyword mapping for each area
-const areaKeywords: Record<string, Record<string, string>> = {
-  devops: {
-    'Containers / Serverless': 'containers',
-    'Infrastructure as Code': 'iac',
-    'CI/CD': 'ci-cd',
-    'Monitoring': 'monitoring',
-    'Cloud Providers': 'cloud-providers'
-  },
-  genai: {
-    'Large Language Models': 'llm',
-    'Image Generation': 'image',
-    'Prompt Engineering': 'prompt',
-    'Agentic Frameworks': 'agents',
-    'Cloud AI Solutions': 'cloud-ai',
-    'AI Tools': 'tools'
-  },
-  dev: {
-    'Frontend': 'frontend',
-    'Backend': 'backend',
-    'Fullstack': 'fullstack'
-  },
-  architecture: {
-    'Cloud Architecture': 'cloud',
-    'System Design': 'system'
-  }
-};
-
-// Add descriptive reverse mapping for display
+// Add descriptive mapping from slug to display name
 const keywordDescriptions: Record<string, Record<string, string>> = {
   devops: {
     'containers': 'Containers / Serverless',
@@ -107,8 +79,14 @@ const keywordDescriptions: Record<string, Record<string, string>> = {
   }
 };
 
+// Removing the existing areaKeywords mapping, we'll use keywordDescriptions in both directions
+const areaKeywords: Record<string, Record<string, string>> = {
+  // This object will now reverse-map from the keywordDescriptions
+  // It will be populated in useEffect
+};
+
 export default function SkillsCLI() {
-  const { theme } = useTheme();
+  const { } = useTheme(); // Empty destructuring since theme is not used
   const [history, setHistory] = useState<HistoryItem[]>([
     { type: 'system', content: 'Welcome to the my skills cli.' },
     { type: 'system', content: 'Type "help" for available commands or try "ls" to view categories.' },
@@ -119,6 +97,20 @@ export default function SkillsCLI() {
   const [currentPath, setCurrentPath] = useState<Path>({});
   const terminalRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Add this useEffect to populate areaKeywords from keywordDescriptions on component mount
+  useEffect(() => {
+    // Create reverse mapping from keywordDescriptions for areaKeywords
+    Object.keys(keywordDescriptions).forEach(categoryId => {
+      if (!areaKeywords[categoryId]) {
+        areaKeywords[categoryId] = {};
+      }
+      
+      Object.entries(keywordDescriptions[categoryId]).forEach(([slug, displayName]) => {
+        areaKeywords[categoryId][displayName] = slug;
+      });
+    });
+  }, []);
   
   // Get current directory string representation using keywords
   const getCurrentDirString = () => {
@@ -168,11 +160,19 @@ export default function SkillsCLI() {
     return undefined;
   };
   
-  // Get area keyword for display
+  // Update getAreaKeyword to handle both cases consistently
   const getAreaKeyword = (categoryId: string, areaName: string): string => {
+    // First check if the area name exists in our reverse mapping
     if (areaKeywords[categoryId] && areaKeywords[categoryId][areaName]) {
       return areaKeywords[categoryId][areaName];
     }
+    
+    // Also check if this is already a slug in our keywordDescriptions (direct lookup)
+    const slugsInCategory = Object.keys(keywordDescriptions[categoryId] || {});
+    if (slugsInCategory.includes(areaName)) {
+      return areaName; // Already a slug, return as is
+    }
+    
     // Fallback to lowercase with no spaces if not in mapping
     return areaName.toLowerCase().replace(/\s+/g, '-');
   };
@@ -756,7 +756,7 @@ export default function SkillsCLI() {
         return (
           <div key={idx} className="mt-2 mb-2">
             <div className="grid grid-cols-1 gap-1">
-              {item.data.map((cmd: any, i: number) => (
+              {item.data && Array.isArray(item.data) && item.data.map((cmd: Record<string, string>, i: number) => (
                 <div key={i} className="flex items-center font-mono">
                   <span className="text-primary font-bold mr-4 w-32">{cmd.command}</span>
                   <span className="text-muted-foreground">{cmd.description}</span>
@@ -782,7 +782,9 @@ export default function SkillsCLI() {
               )}
               <div className="text-2xl font-bold text-primary font-mono">{item.content}</div>
             </div>
-            <div className="text-foreground font-mono mb-2">{item.data}</div>
+            <div className="text-foreground font-mono mb-2">
+              {item.data ? JSON.stringify(item.data) : ''}
+            </div>
             {item.website && (
               <div className="font-mono text-sm">
                 <span className="text-muted-foreground">Website: </span>
@@ -802,32 +804,36 @@ export default function SkillsCLI() {
         return (
           <div key={idx} className="mt-2 mb-2">
             <div className="text-lg font-mono text-primary mb-2">{item.content}</div>
-            {item.data.length === 0 ? (
-              <div className="text-muted-foreground font-mono italic">Empty directory</div>
+            {item.data && Array.isArray(item.data) ? (
+              item.data.length === 0 ? (
+                <div className="text-muted-foreground font-mono italic">Empty directory</div>
+              ) : (
+                <div className="grid grid-cols-1 gap-1">
+                  {item.data.map((entry: Record<string, unknown>, i: number) => (
+                    <div key={i} className="flex items-center font-mono hover:bg-muted/50 p-1 rounded transition-colors">
+                      {entry.isDirectory ? (
+                        <Folder size={16} className="text-primary mr-2" />
+                      ) : (
+                        <FileText size={16} className="text-secondary mr-2" />
+                      )}
+                      <span className={`${entry.isDirectory ? 'text-foreground' : 'text-muted-foreground'}`}>
+                        {typeof entry.name === 'string' ? entry.name : 'Unknown'}
+                      </span>
+                      {typeof entry.keyword === 'string' && (
+                        <span className="ml-2 text-muted-foreground text-xs">[{typeof entry.keyword === 'string' ? entry.keyword : ''}]</span>
+                      )}
+                      {entry.count !== undefined && (
+                        <Badge variant="outline" className="ml-2 text-xs">{entry.count as number}</Badge>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )
             ) : (
-              <div className="grid grid-cols-1 gap-1">
-                {item.data.map((entry: any, i: number) => (
-                  <div key={i} className="flex items-center font-mono hover:bg-muted/50 p-1 rounded transition-colors">
-                    {entry.isDirectory ? (
-                      <Folder size={16} className="text-primary mr-2" />
-                    ) : (
-                      <FileText size={16} className="text-secondary mr-2" />
-                    )}
-                    <span className={`${entry.isDirectory ? 'text-foreground' : 'text-muted-foreground'}`}>
-                      {entry.name}
-                    </span>
-                    {entry.keyword && (
-                      <span className="ml-2 text-muted-foreground text-xs">[{entry.keyword}]</span>
-                    )}
-                    {entry.count !== undefined && (
-                      <Badge variant="outline" className="ml-2 text-xs">{entry.count}</Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <div className="text-muted-foreground font-mono italic">No data available</div>
             )}
             <div className="mt-3 italic text-muted-foreground font-mono text-sm">
-              {item.data.some((entry: any) => entry.isDirectory) && 
+              {item.data && Array.isArray(item.data) && item.data.some((entry: Record<string, unknown>) => entry.isDirectory) && 
                 `Use "cd <keyword>" to navigate to a directory.`}
             </div>
           </div>
@@ -836,71 +842,107 @@ export default function SkillsCLI() {
         return (
           <div key={idx} className="mt-2 mb-2">
             <div className="text-xl font-bold text-primary font-mono mb-1">{item.content}</div>
-            {item.data.description && (
-              <div className="text-foreground font-mono mb-3 px-2 py-1 bg-muted/40 rounded border-l-2 border-primary">
-                {item.data.description}
-              </div>
-            )}
+            {item.data && 
+              'description' in item.data && 
+              typeof item.data.description === 'string' && (
+                <div className="text-foreground font-mono mb-3 px-2 py-1 bg-muted/40 rounded border-l-2 border-primary">
+                  {item.data.description}
+                </div>
+              )
+            }
           </div>
         );
       case 'category-detail':
-        return (
-          <div key={idx} className="mt-2 mb-2">
-            <div className="text-2xl font-bold text-primary font-mono mb-1">{item.content}</div>
-            <div className="text-foreground font-mono mb-3">{item.data.description}</div>
-            
-            <Badge className="mb-4 bg-primary/80 text-primary-foreground font-mono">{item.data.count} items</Badge>
-            
-            <div className="text-lg font-mono text-foreground mb-2">Areas of Expertise</div>
-            
-            {item.data.areas.map((area: any, i: number) => (
-              <div key={i} className="flex items-center mt-1 font-mono p-1 hover:bg-muted/50 rounded transition-colors">
-                <Folder size={16} className="text-primary mr-2" />
-                <span className="text-foreground">{area.name}</span>
-                <span className="ml-2 text-muted-foreground text-xs">[{area.keyword}]</span>
-                {area.count > 0 && (
-                  <Badge variant="outline" className="ml-2">{area.count}</Badge>
+        {
+          const categoryData = item.data as Record<string, unknown> | undefined;
+          const hasDescription = categoryData && 'description' in categoryData && typeof categoryData.description === 'string';
+          const hasCount = categoryData && 'count' in categoryData && typeof categoryData.count === 'number';
+          const hasId = categoryData && 'id' in categoryData && typeof categoryData.id === 'string';
+
+          return (
+            <div key={idx} className="mt-2 mb-2">
+              <div className="text-2xl font-bold text-primary font-mono mb-1">{item.content}</div>
+              
+              {hasDescription && (
+                <div className="text-foreground font-mono mb-3">{categoryData!.description as string}</div>
+              )}
+              
+              {hasCount && (
+                <Badge className="mb-4 bg-primary/80 text-primary-foreground font-mono">
+                  {categoryData!.count as number} items
+                </Badge>
+              )}
+              
+              <div className="text-lg font-mono text-foreground mb-2">Areas of Expertise</div>
+              
+              {categoryData && 'areas' in categoryData && Array.isArray(categoryData.areas) ? (
+                categoryData.areas.map((area: Record<string, unknown>, i) => (
+                  <div key={i} className="flex items-center mt-1 font-mono p-1 hover:bg-muted/50 rounded transition-colors">
+                    <Folder size={16} className="text-primary mr-2" />
+                    <span className="text-foreground">
+                      {typeof area.name === 'string' ? area.name : 'Unknown'}
+                    </span>
+                    <span className="ml-2 text-muted-foreground text-xs">
+                      [{typeof area.keyword === 'string' ? area.keyword : ''}]
+                    </span>
+                    {typeof area.count === 'number' && area.count > 0 && (
+                      <Badge variant="outline" className="ml-2">{area.count}</Badge>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="text-muted-foreground font-mono italic">No areas available</div>
+              )}
+              
+              <div className="mt-3 italic text-muted-foreground font-mono text-sm">
+                {hasId && (
+                  <>Try &quot;skills {categoryData!.id as string} &lt;keyword&gt;&quot; to view specific skills.</>
                 )}
               </div>
-            ))}
-            
-            <div className="mt-3 italic text-muted-foreground font-mono text-sm">
-              Try "skills {item.data.id} &lt;keyword&gt;" to view specific skills.
             </div>
-          </div>
-        );
+          );
+        }
       case 'area-detail':
-        return (
-          <div key={idx} className="mt-2 mb-2">
-            <div className="text-xl font-bold text-primary font-mono mb-1">{item.content}</div>
-            {item.data.description && (
-              <div className="text-foreground font-mono mb-3">{item.data.description}</div>
-            )}
-            
-            {item.data.skills.length > 0 ? (
-              <>
-                <div className="text-lg font-mono text-foreground mb-2">Skills & Technologies</div>
-                <div className="grid grid-cols-2 gap-2">
-                  {item.data.skills.map((skill: any, i: number) => (
-                    <div 
-                      key={i}
-                      className="bg-muted/50 border border-border rounded p-2 hover:border-primary transition-colors"
-                    >
-                      <div className="font-mono text-primary">{skill.name}</div>
-                      {skill.description && (
-                        <div className="text-xs text-muted-foreground font-mono mt-1 line-clamp-1">
-                          {skill.description}
+        {
+          const areaData = item.data as Record<string, unknown> | undefined;
+          const hasDescription = areaData && 'description' in areaData && typeof areaData.description === 'string';
+          const hasSkills = areaData && 'skills' in areaData && areaData.skills && Array.isArray(areaData.skills);
+          
+          return (
+            <div key={idx} className="mt-2 mb-2">
+              <div className="text-xl font-bold text-primary font-mono mb-1">{item.content}</div>
+              
+              {hasDescription && (
+                <div className="text-foreground font-mono mb-3">{areaData!.description as string}</div>
+              )}
+              
+              {hasSkills && (areaData!.skills as Array<Record<string, unknown>>).length > 0 ? (
+                <>
+                  <div className="text-lg font-mono text-foreground mb-2">Skills & Technologies</div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(areaData!.skills as Array<Record<string, unknown>>).map((skill, i) => (
+                      <div 
+                        key={i}
+                        className="bg-muted/50 border border-border rounded p-2 hover:border-primary transition-colors"
+                      >
+                        <div className="font-mono text-primary">
+                          {typeof skill.name === 'string' ? skill.name : 'Unknown'}
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="text-muted-foreground font-mono">No specific skills listed for this area.</div>
-            )}
-          </div>
-        );
+                        {typeof skill.description === 'string' && (
+                          <div className="text-xs text-muted-foreground font-mono mt-1 line-clamp-1">
+                            {skill.description}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="text-muted-foreground font-mono">No specific skills listed for this area.</div>
+              )}
+            </div>
+          );
+        }
       case 'tip':
         return (
           <div key={idx} className="mt-2 text-muted-foreground italic font-mono text-sm">{item.content}</div>

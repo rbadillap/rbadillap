@@ -5,9 +5,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { useTheme } from "@/components/layout/ThemeProvider"
 import {
   HomeIcon, 
-  UserIcon, 
   FolderIcon, 
-  CodeIcon, 
   MailIcon, 
   SunIcon, 
   MoonIcon, 
@@ -15,7 +13,6 @@ import {
   SearchIcon,
   ExternalLinkIcon,
   DownloadIcon,
-  PlusIcon,
   Terminal
 } from "lucide-react"
 import { SocialIcon } from "@/components/ui/social-icon"
@@ -400,7 +397,7 @@ export function CommandBar() {
                   {section}
                 </div>
                 <div>
-                  {commands.map((command, idx) => {
+                  {commands.map((command) => {
                     // Find the global index of this command in the flattened list
                     const globalIndex = flattenedCommands.findIndex(c => c.id === command.id)
                     const isSelected = globalIndex === selectedItemIndex
