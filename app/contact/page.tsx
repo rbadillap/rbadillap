@@ -1,9 +1,12 @@
+"use client"
+
 import { RootLayout } from "@/components/layout/RootLayout"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Github, Linkedin } from "lucide-react"
+import { Mail } from "lucide-react"
 import Link from "next/link"
+import { SocialIcon } from "@/components/ui/social-icon"
 
 export default function ContactPage() {
   return (
@@ -68,7 +71,9 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start">
-                <Github className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" />
+                <div className="mr-3 mt-0.5">
+                  <SocialIcon type="github" size={20} className="text-muted-foreground" />
+                </div>
                 <div>
                   <h3 className="font-medium">GitHub</h3>
                   <a
@@ -83,34 +88,37 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start">
-                <Linkedin className="h-5 w-5 mr-3 mt-0.5 text-muted-foreground" />
+                <div className="mr-3 mt-0.5">
+                  <SocialIcon type="linkedin" size={20} className="text-muted-foreground" />
+                </div>
                 <div>
                   <h3 className="font-medium">LinkedIn</h3>
                   <a
-                    href="https://linkedin.com/in/ronnybadilla"
+                    href="https://linkedin.com/in/rbadillap"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline"
                   >
-                    linkedin.com/in/ronnybadilla
+                    linkedin.com/in/rbadillap
                   </a>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-                <h3 className="font-medium mb-2">API Integration</h3>
-                <p className="text-sm text-muted-foreground mb-2">
-                  Contact information is available programmatically via our API:
-                </p>
-                <pre className="p-3 bg-muted text-xs rounded-md overflow-x-auto">
-                  <code>GET /api/contact</code>
-                </pre>
-                <Link
-                  href="/api"
-                  className="text-primary hover:text-primary/80 transition-colors mt-2 text-sm inline-block"
-                >
-                  View API Documentation
-                </Link>
+              <div className="flex items-start">
+                <div className="mr-3 mt-0.5">
+                  <SocialIcon type="twitter" size={20} className="text-muted-foreground" />
+                </div>
+                <div>
+                  <h3 className="font-medium">X / Twitter</h3>
+                  <a
+                    href="https://x.com/rbadillap"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                  >
+                    x.com/rbadillap
+                  </a>
+                </div>
               </div>
             </div>
           </section>
