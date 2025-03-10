@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { RootLayout } from "@/components/layout/RootLayout"
@@ -26,7 +26,7 @@ export default function BrandingPage() {
   // End of adjustable parameters
 
   // Color palette extracted from your CSS
-  const colors = {
+  const colors = useMemo(() => ({
     background: 'oklch(0.145 0 0)', // Dark mode background
     foreground: 'oklch(0.985 0 0)', // Dark mode foreground
     primary: 'oklch(0.985 0 0)',    // Dark mode primary
@@ -37,7 +37,7 @@ export default function BrandingPage() {
     chart3: 'oklch(0.398 0.07 227.392)',
     chart4: 'oklch(0.828 0.189 84.429)',
     chart5: 'oklch(0.769 0.188 70.08)'
-  }
+  }), []);
   
   // Preload avatar image
   useEffect(() => {
@@ -66,8 +66,39 @@ export default function BrandingPage() {
     preloadImage();
   }, []);
 
-  // Function to draw banner on canvas
-  const drawBanner = (canvas: HTMLCanvasElement, size: number) => {
+  // Function to draw avatar on canvas directly
+  const drawAvatarOnCanvas = useCallback((canvas: HTMLCanvasElement, img: HTMLImageElement, size: number) => {
+    console.log(`Drawing avatar on canvas, size: ${size}`);
+    const ctx = canvas.getContext('2d')
+    if (!ctx) {
+      setErrorMessage("Could not get canvas context")
+      return
+    }
+    
+    const avatarSize = size * 0.8
+    const avatarX = (size - avatarSize) / 2
+    const avatarY = (size - avatarSize) / 2
+    
+    // Calculate scaled offsets for this canvas size
+    const scaledOffsetX = circleOffsetX * (size / 512);
+    const scaledOffsetY = circleOffsetY * (size / 512);
+    const circleCenterX = size / 2 + scaledOffsetX;
+    const circleCenterY = size / 2 + scaledOffsetY;
+    
+    // Create a circle clipping path for the avatar
+    ctx.save()
+    ctx.beginPath()
+    // Use the offset center point for the clipping circle
+    ctx.arc(circleCenterX, circleCenterY, avatarSize / 2, 0, Math.PI * 2)
+    ctx.clip()
+    
+    // Draw the avatar image - adjust the drawing position to match the circle's offset
+    ctx.drawImage(img, avatarX, avatarY, avatarSize, avatarSize)
+    ctx.restore()
+  }, [circleOffsetX, circleOffsetY, setErrorMessage]);
+
+  // Function to draw banner on canvas - wrapped in useCallback to fix ESLint warning
+  const drawBanner = useCallback((canvas: HTMLCanvasElement, size: number) => {
     console.log(`Drawing banner on canvas, size: ${size}`);
     const ctx = canvas.getContext('2d')
     if (!ctx) {
@@ -137,41 +168,10 @@ export default function BrandingPage() {
     if (imageObj) {
       drawAvatarOnCanvas(canvas, imageObj, size);
     }
-  }
+  }, [colors, circleOffsetX, circleOffsetY, imageObj, drawAvatarOnCanvas, setErrorMessage]);
 
-  // Function to draw avatar on canvas directly
-  const drawAvatarOnCanvas = (canvas: HTMLCanvasElement, img: HTMLImageElement, size: number) => {
-    console.log(`Drawing avatar on canvas, size: ${size}`);
-    const ctx = canvas.getContext('2d')
-    if (!ctx) {
-      setErrorMessage("Could not get canvas context")
-      return
-    }
-    
-    const avatarSize = size * 0.8
-    const avatarX = (size - avatarSize) / 2
-    const avatarY = (size - avatarSize) / 2
-    
-    // Calculate scaled offsets for this canvas size
-    const scaledOffsetX = circleOffsetX * (size / 512);
-    const scaledOffsetY = circleOffsetY * (size / 512);
-    const circleCenterX = size / 2 + scaledOffsetX;
-    const circleCenterY = size / 2 + scaledOffsetY;
-    
-    // Create a circle clipping path for the avatar
-    ctx.save()
-    ctx.beginPath()
-    // Use the offset center point for the clipping circle
-    ctx.arc(circleCenterX, circleCenterY, avatarSize / 2, 0, Math.PI * 2)
-    ctx.clip()
-    
-    // Draw the avatar image - adjust the drawing position to match the circle's offset
-    ctx.drawImage(img, avatarX, avatarY, avatarSize, avatarSize)
-    ctx.restore()
-  }
-
-  // Function to generate banners
-  const generateBanners = () => {
+  // Function to generate banners - wrapped in useCallback to fix the dependency warning
+  const generateBanners = useCallback(() => {
     console.log("Generating banners...");
     setErrorMessage(null);
     setIsLoading(true);
@@ -204,7 +204,7 @@ export default function BrandingPage() {
       setErrorMessage(`An error occurred while generating banners: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setIsLoading(false);
     }
-  }
+  }, [avatarLoaded, imageObj, drawBanner, setErrorMessage, setBannersGenerated]);
 
   // Function to download banner
   const downloadBanner = (size: '512x512' | '192x192') => {
@@ -236,7 +236,7 @@ export default function BrandingPage() {
       
       return () => clearTimeout(timer);
     }
-  }, [avatarLoaded, imageObj]);
+  }, [avatarLoaded, imageObj, generateBanners]);
 
   return (
     <RootLayout>
@@ -336,16 +336,21 @@ export default function BrandingPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>About These Resources</CardTitle>
+                    <CardDescription>
+                        These branding images feature your profile avatar on a subtle gradient background, 
+                        creating a professional and elegant look that will work well across different platforms.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p>
-                        These branding images feature your profile avatar on a subtle gradient background, 
-                        creating a professional and elegant look that will work well across different platforms.
-                    </p>
-                    <p>
                         The images are designed to be eye-catching while maintaining a clean, minimalist 
-                        aesthetic that doesn't distract from your personal brand.
+                        aesthetic that doesn&apos;t distract from your personal brand.
                     </p>
+                    <h3 className="font-bold pt-4">Available Sizes:</h3>
+                    <ul>
+                        <li><strong>512x512 pixels:</strong> Ideal for most social media profiles and larger displays</li>
+                        <li><strong>192x192 pixels:</strong> Perfect for smaller displays, avatars, and icons</li>
+                    </ul>
                 </CardContent>
             </Card>
         </section>
