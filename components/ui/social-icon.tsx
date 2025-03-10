@@ -12,7 +12,7 @@ type SocialIconProps = {
 
 export function SocialIcon({ type, size = 24, className = "" }: SocialIconProps) {
   const { theme } = useTheme()
-  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("light")
+  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("dark")
   
   useEffect(() => {
     // Determine actual theme based on system preference if needed
