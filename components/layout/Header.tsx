@@ -3,6 +3,7 @@ import Link from "next/link"
 import { CommandIcon } from "lucide-react"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 
 export function Header() {
   const handleCommandClick = () => {
@@ -20,9 +21,13 @@ export function Header() {
         <div>
           <Link 
             href="/" 
-            className="font-medium hover:opacity-80 transition-opacity text-lg"
+            className="hover:opacity-80 transition-opacity flex items-center"
+            aria-label="Home"
           >
-            Ronny Badilla
+            <Avatar className="size-9 border border-neutral-200 dark:border-neutral-800 shadow-sm">
+              <AvatarImage src="/avatars/rbadillap.jpg" alt="Ronny Badilla" />
+              <AvatarFallback>RB</AvatarFallback>
+            </Avatar>
           </Link>
         </div>
         

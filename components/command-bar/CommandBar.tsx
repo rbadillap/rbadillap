@@ -28,7 +28,6 @@ type CommandItem = {
   onSelect: () => void
   keywords?: string[]
   section: string
-  shortcut?: string | React.ReactNode
 }
 
 // CSS para la barra de desplazamiento personalizada
@@ -99,14 +98,6 @@ export function CommandBar() {
     };
   }, []);
 
-  const ShortcutKey = ({ children }: { children: React.ReactNode }) => {
-    return (
-      <kbd className="px-1.5 py-0.5 bg-secondary/50 text-secondary-foreground/70 rounded font-medium text-xs">
-        {children}
-      </kbd>
-    )
-  }
-
   // Commands data
   const allCommands = React.useMemo(() => [
     // Navigation
@@ -116,7 +107,6 @@ export function CommandBar() {
       icon: <HomeIcon />,
       section: "Navigation",
       keywords: ["home", "main", "index"],
-      shortcut: <ShortcutKey>H</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/"
         setOpen(false)
@@ -128,7 +118,6 @@ export function CommandBar() {
       icon: <Terminal />,
       section: "Navigation",
       keywords: ["skills", "expertise", "terminal", "cli", "devops", "development", "cloud", "genai"],
-      shortcut: <ShortcutKey>A</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/skills"
         setOpen(false)
@@ -140,21 +129,8 @@ export function CommandBar() {
       icon: <FolderIcon />,
       section: "Navigation",
       keywords: ["projects", "portfolio", "work"],
-      shortcut: <ShortcutKey>P</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/projects"
-        setOpen(false)
-      }
-    },
-    {
-      id: "api",
-      label: "API & Interoperability",
-      icon: <CodeIcon />,
-      section: "Navigation",
-      keywords: ["api", "interoperability", "integration", "developer"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>A</ShortcutKey><span>then</span><ShortcutKey>I</ShortcutKey></div>,
-      onSelect: () => {
-        window.location.href = "/api"
         setOpen(false)
       }
     },
@@ -164,7 +140,6 @@ export function CommandBar() {
       icon: <MailIcon />,
       section: "Navigation",
       keywords: ["contact", "email", "message", "get in touch"],
-      shortcut: <ShortcutKey>C</ShortcutKey>,
       onSelect: () => {
         window.location.href = "/contact"
         setOpen(false)
@@ -178,7 +153,6 @@ export function CommandBar() {
       icon: <SocialIcon type="twitter" size={18} />,
       section: "External",
       keywords: ["twitter", "x", "social", "tweet"],
-      shortcut: <ShortcutKey>T</ShortcutKey>,
       onSelect: () => {
         window.open("https://x.com/rbadillap", "_blank")
         setOpen(false)
@@ -190,7 +164,6 @@ export function CommandBar() {
       icon: <SocialIcon type="github" size={18} />,
       section: "External",
       keywords: ["github", "code", "repository", "open source"],
-      shortcut: <ShortcutKey>G</ShortcutKey>,
       onSelect: () => {
         window.open("https://github.com/rbadillap", "_blank")
         setOpen(false)
@@ -202,7 +175,6 @@ export function CommandBar() {
       icon: <SocialIcon type="linkedin" size={18} />,
       section: "External",
       keywords: ["linkedin", "social", "professional", "network"],
-      shortcut: <ShortcutKey>L</ShortcutKey>,
       onSelect: () => {
         window.open("https://linkedin.com/in/rbadillap", "_blank")
         setOpen(false)
@@ -216,7 +188,6 @@ export function CommandBar() {
       icon: <MailIcon />,
       section: "Actions",
       keywords: ["email", "contact", "message"],
-      shortcut: <ShortcutKey>E</ShortcutKey>,
       onSelect: () => {
         window.location.href = "mailto:info@ronnybadilla.com"
         setOpen(false)
@@ -228,7 +199,6 @@ export function CommandBar() {
       icon: <DownloadIcon />,
       section: "Actions",
       keywords: ["cv", "resume", "download", "pdf"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>D</ShortcutKey><span>then</span><ShortcutKey>C</ShortcutKey></div>,
       onSelect: () => {
         window.open("/api/cv?format=pdf", "_blank")
         setOpen(false)
@@ -240,7 +210,6 @@ export function CommandBar() {
       icon: <DownloadIcon />,
       section: "Actions",
       keywords: ["vcard", "contact", "card", "download"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>D</ShortcutKey><span>then</span><ShortcutKey>V</ShortcutKey></div>,
       onSelect: () => {
         window.open("/api/contact?format=vcard", "_blank")
         setOpen(false)
@@ -254,7 +223,6 @@ export function CommandBar() {
       icon: <SunIcon />,
       section: "Theme",
       keywords: ["theme", "light", "mode", "bright"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>L</ShortcutKey></div>,
       onSelect: () => {
         setTheme("light")
         setOpen(false)
@@ -266,7 +234,6 @@ export function CommandBar() {
       icon: <MoonIcon />,
       section: "Theme",
       keywords: ["theme", "dark", "mode", "night"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>D</ShortcutKey></div>,
       onSelect: () => {
         setTheme("dark")
         setOpen(false)
@@ -278,7 +245,6 @@ export function CommandBar() {
       icon: <LaptopIcon />,
       section: "Theme",
       keywords: ["theme", "system", "auto", "default"],
-      shortcut: <div className="flex items-center gap-1"><ShortcutKey>T</ShortcutKey><span>then</span><ShortcutKey>S</ShortcutKey></div>,
       onSelect: () => {
         setTheme("system")
         setOpen(false)
@@ -463,11 +429,6 @@ export function CommandBar() {
                               <ExternalLinkIcon className="h-3 w-3 text-muted-foreground" />
                             )}
                           </div>
-                          {command.shortcut && (
-                            <div className="flex items-center text-xs text-muted-foreground/70 ml-8">
-                              {command.shortcut}
-                            </div>
-                          )}
                         </div>
                       </button>
                     )
