@@ -6,11 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { Terminal as TerminalIcon, Folder, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/components/layout/ThemeProvider';
+import Image from 'next/image';
 
 type HistoryItem = {
   type: string;
   content: string;
   data?: any;
+  avatar?: string;
+  website?: string;
 };
 
 type Path = {
@@ -262,7 +265,13 @@ export default function SkillsCLI() {
       description: 'Display basic information about me',
       execute: () => {
         return [
-          { type: 'about', content: 'Ronny Badilla', data: 'Software Developer & DevOps Engineer focused on modern, interoperable systems with minimal design and exceptional user experience.' }
+          { 
+            type: 'about', 
+            content: 'Ronny Badilla', 
+            data: 'Software Developer & DevOps Engineer focused on modern, interoperable systems with minimal design and exceptional user experience.',
+            avatar: '/avatars/rbadillap.jpg',
+            website: 'https://rbadillap.dev'
+          }
         ];
       }
     },
@@ -608,6 +617,10 @@ export default function SkillsCLI() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleCommand(input);
+    } else if (e.key === 'l' && e.ctrlKey) {
+      // Ctrl+L shortcut for clear
+      e.preventDefault();
+      commands.clear.execute();
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       const nextIndex = Math.min(commandIndex + 1, previousCommands.length - 1);
@@ -755,8 +768,34 @@ export default function SkillsCLI() {
       case 'about':
         return (
           <div key={idx} className="mt-2 mb-4">
-            <div className="text-2xl font-bold text-primary font-mono mb-2">{item.content}</div>
-            <div className="text-foreground font-mono">{item.data}</div>
+            <div className="flex items-center gap-3 mb-2">
+              {item.avatar && (
+                <div className="relative w-10 h-10 overflow-hidden rounded-full border border-primary/50 shadow-sm">
+                  <Image
+                    src={item.avatar}
+                    alt="Ronny Badilla"
+                    fill
+                    sizes="40px"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="text-2xl font-bold text-primary font-mono">{item.content}</div>
+            </div>
+            <div className="text-foreground font-mono mb-2">{item.data}</div>
+            {item.website && (
+              <div className="font-mono text-sm">
+                <span className="text-muted-foreground">Website: </span>
+                <a 
+                  href={item.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-primary hover:underline"
+                >
+                  {item.website}
+                </a>
+              </div>
+            )}
           </div>
         );
       case 'directory-list':

@@ -54,7 +54,11 @@ export function SocialIcon({ type, size = 24, className = "" }: SocialIconProps)
         alt={altText[type]}
         width={size}
         height={size}
-        className="object-contain"
+        className="object-contain w-auto h-auto"
+        style={{
+          maxWidth: size,
+          maxHeight: size
+        }}
       />
     </div>
   )

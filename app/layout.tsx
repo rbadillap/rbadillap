@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://rbadillap.dev'),
   title: "Ronny Badilla | Software Developer & DevOps Engineer",
   description: "Ronny Badilla - Software Developer, DevOps Engineer, and Cloud Expert - @rbadillap in socials",
   keywords: ["Software Development", "DevOps", "Cloud", "AI", "Web Development"],
