@@ -224,7 +224,7 @@ export function flattenSkills(): Record<string, { path: string[], data: Skill | 
   ) {
     if (!obj) return;
     
-    Object.entries(obj).forEach(([key, category]) => {
+    Object.values(obj).forEach((category) => {
       // Add the category
       result[category.id] = { path: [...currentPath], data: category };
       

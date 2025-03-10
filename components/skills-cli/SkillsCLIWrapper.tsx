@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamic import the CLI component in a client component
