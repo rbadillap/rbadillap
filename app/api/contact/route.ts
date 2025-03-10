@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Contact data, in a real app this would come from a database
 const contactData = {
   name: "Ronny Badilla",
-  email: "info@ronnybadilla.com",
+  email: process.env.CONTACT_EMAIL || "",
   social: {
     github: "https://github.com/rbadillap",
     linkedin: "https://linkedin.com/in/rbadillap",
@@ -102,8 +102,8 @@ export async function POST(request: Request) {
     // Send notification email to site owner
     const { error: notificationError } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
-      to: process.env.CONTACT_EMAIL || 'info@ronnybadilla.com',
-      subject: `New Contact Form Submission from ${name}`,
+      to: process.env.CONTACT_EMAIL || '',
+      subject: `New Contact Form Submission from rbadillap.dev`,
       replyTo: email,
       text: plainText,
       html: notificationEmailHtml,

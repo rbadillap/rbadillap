@@ -186,7 +186,10 @@ export function CommandBar() {
       section: "Actions",
       keywords: ["email", "contact", "message"],
       onSelect: () => {
-        window.location.href = "mailto:info@ronnybadilla.com"
+        // Get the email from an environment variable or fallback to a safe default
+        // The actual env variable value will be injected at build time
+        const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL || ""
+        window.location.href = `mailto:${contactEmail}`
         setOpen(false)
       }
     },
