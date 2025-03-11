@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { CommandIcon } from "lucide-react"
 
 export function HomeContent() {
@@ -41,17 +40,24 @@ export function HomeContent() {
           </p>
         </div>
         
-        <div className="mt-12 animate-pulse-slow">
-          <Button
-            onClick={triggerCommandBar}
-            variant="outline"
-            size="lg"
-            className="flex items-center gap-3 px-5 py-6 text-base rounded-lg shadow-sm hover:shadow transition-all"
-          >
-            <CommandIcon className="h-5 w-5 text-primary" /> 
-            Press <kbd className="mx-1 px-2 py-1 bg-muted rounded font-mono">⌘K</kbd> to begin
-          </Button>
-        </div>
+        <div className="mt-12 flex items-center gap-2 animate-fade-up">
+          <span className="text-sm text-muted-foreground mr-1">Press</span>
+          <div className="flex items-center">
+            <button 
+              onClick={triggerCommandBar}
+              className="group flex items-center justify-center gap-2 cursor-pointer transition-all"
+              aria-label="Open command menu"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted/80 border border-border shadow-sm">
+                <CommandIcon className="h-4 w-4" />
+              </span>
+              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted/80 border border-border shadow-sm text-sm">
+                K
+              </span>
+            </button>
+          </div>
+          <span className="text-sm text-muted-foreground ml-1">to begin</span>
+        </div>      
       </div>
       
       <style jsx global>{`
