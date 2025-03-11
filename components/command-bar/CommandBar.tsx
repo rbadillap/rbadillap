@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { useTheme } from "@/components/layout/ThemeProvider"
 import {
   HomeIcon, 
-  FolderIcon, 
   MailIcon, 
   SunIcon, 
   MoonIcon, 
@@ -13,7 +12,8 @@ import {
   SearchIcon,
   ExternalLinkIcon,
   DownloadIcon,
-  Terminal
+  Terminal,
+  MailCheckIcon
 } from "lucide-react"
 import { SocialIcon } from "@/components/ui/social-icon"
 import { cn } from "@/lib/utils"
@@ -27,26 +27,26 @@ type CommandItem = {
   section: string
 }
 
-// CSS para la barra de desplazamiento personalizada
+// CSS for custom scrollbar
 const scrollbarStyles = `
-  /* Estilo para la pista de la barra de desplazamiento */
+  /* Style for the scrollbar track */
   .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
   
-  /* Estilo para el "thumb" de la barra de desplazamiento (la parte que se puede arrastrar) */
+  /* Style for the scrollbar thumb (the draggable part) */
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--secondary) / 0.3);
     border-radius: 5px;
   }
   
-  /* Estilo para el "thumb" al pasar el cursor por encima */
+  /* Style for the thumb on hover */
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--secondary) / 0.5);
   }
   
-  /* Estilo para la pista de fondo */
+  /* Style for the background track */
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
@@ -121,20 +121,9 @@ export function CommandBar() {
       }
     },
     {
-      id: "projects",
-      label: "Projects",
-      icon: <FolderIcon />,
-      section: "Navigation",
-      keywords: ["projects", "portfolio", "work"],
-      onSelect: () => {
-        window.location.href = "/projects"
-        setOpen(false)
-      }
-    },
-    {
       id: "contact",
       label: "Contact Me",
-      icon: <MailIcon />,
+      icon: <MailCheckIcon />,
       section: "Navigation",
       keywords: ["contact", "email", "message", "get in touch"],
       onSelect: () => {
