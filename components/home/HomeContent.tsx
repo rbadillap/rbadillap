@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { CommandIcon } from "lucide-react"
 
 export function HomeContent() {
