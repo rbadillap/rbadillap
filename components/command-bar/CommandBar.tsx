@@ -13,7 +13,8 @@ import {
   ExternalLinkIcon,
   DownloadIcon,
   Terminal,
-  MailCheckIcon
+  MailCheckIcon,
+  GitBranch
 } from "lucide-react"
 import { SocialIcon } from "@/components/ui/social-icon"
 import { cn } from "@/lib/utils"
@@ -117,6 +118,17 @@ export function CommandBar() {
       keywords: ["skills", "expertise", "terminal", "cli", "devops", "development", "cloud", "genai"],
       onSelect: () => {
         window.location.href = "/skills"
+        setOpen(false)
+      }
+    },
+    {
+      id: "projects",
+      label: "Projects",
+      icon: <GitBranch />,
+      section: "Navigation",
+      keywords: ["projects", "portfolio", "work", "code", "github", "clip", "openai"],
+      onSelect: () => {
+        window.location.href = "/projects"
         setOpen(false)
       }
     },

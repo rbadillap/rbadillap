@@ -1,0 +1,19 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#000000"/>
+  <rect x="50" y="50" width="700" height="400" rx="8" fill="#111111"/>
+  <text x="75" y="90" font-family="monospace" font-size="16" fill="#F8F8F2">$ clip</text>
+  <text x="75" y="120" font-family="monospace" font-size="16" fill="#8BE9FD">CLIP v1.0.0</text>
+  <rect x="75" y="160" width="650" height="240" rx="4" fill="#0A0A0A"/>
+  <text x="90" y="190" font-family="monospace" font-size="16" fill="#F8F8F2">User > Tell me about the OpenAI Response API</text>
+  <text x="90" y="220" font-family="monospace" font-size="16" fill="#50FA7B">Assistant > The OpenAI Response API is designed for conversational</text>
+  <text x="90" y="250" font-family="monospace" font-size="16" fill="#50FA7B">interfaces, providing better tracking of conversation history,</text>
+  <text x="90" y="280" font-family="monospace" font-size="16" fill="#50FA7B">with response IDs that help reference previous interactions.</text>
+  <text x="90" y="310" font-family="monospace" font-size="16" fill="#50FA7B">It supports streaming responses and tool usage.</text>
+  <text x="90" y="340" font-family="monospace" font-size="16" fill="#F8F8F2">User > </text>
+  
+  <!-- Search Toggle -->
+  <rect x="75" y="420" width="180" height="24" rx="4" fill="#222222"/>
+  <text x="90" y="437" font-family="monospace" font-size="14" fill="#8BE9FD">Search: </text>
+  <rect x="150" y="424" width="16" height="16" rx="2" fill="#50FA7B"/>
+  <text x="175" y="437" font-family="monospace" font-size="14" fill="#F8F8F2">Enabled</text>
+</svg> 
