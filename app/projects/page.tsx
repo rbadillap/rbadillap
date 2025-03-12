@@ -10,6 +10,9 @@ import { ExternalLink, GitBranch, Terminal } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 
+// Import the project data directly to avoid API call during build
+import { projects as projectsData } from "@/app/api/projects/data"
+
 // Define the Project type
 interface Project {
   id: string;
@@ -25,10 +28,8 @@ interface Project {
 }
 
 export default async function ProjectsPage() {
-  // Fetch projects from our API endpoint
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/projects`, { next: { revalidate: 60 } });
-  const data = await res.json();
-  const projects: Project[] = data.projects;
+  // Use the imported data directly instead of fetching from the API during build
+  const projects: Project[] = projectsData;
 
   return (
     <RootLayout>
