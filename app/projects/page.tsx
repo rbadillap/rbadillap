@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -37,7 +36,7 @@ export default async function ProjectsPage() {
         <section>
           <h1 className="text-4xl font-bold tracking-tight mb-6">Projects</h1>
           <p className="text-xl text-muted-foreground max-w-2xl">
-            Welcome to my digital workshop — where ideas come to life through code. Here you'll find tools I've crafted that solve my problems and, hopefully, yours someday 😉
+            Welcome to my digital workshop — where ideas come to life through code. Here you&apos;ll find tools I&apos;ve crafted that solve my problems and, hopefully, yours someday 😉
           </p>
         </section>
 
@@ -46,7 +45,7 @@ export default async function ProjectsPage() {
             <Terminal size={48} className="text-muted-foreground mb-6" />
             <h2 className="text-2xl font-bold mb-3">Coming Soon</h2>
             <p className="text-muted-foreground max-w-md">
-              I'm currently building more projects to showcase. Check back soon to see what I'm working on!
+              I&apos;m currently building more projects to showcase. Check back soon to see what I&apos;m working on!
             </p>
           </div>
         ) : (
