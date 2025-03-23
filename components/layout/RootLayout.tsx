@@ -4,7 +4,7 @@ import * as React from "react"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { ThemeProvider } from "@/components/layout/ThemeProvider"
-import { CommandBar } from "@/components/command-bar/CommandBar"
+import { Toaster } from "sonner"
 
 interface RootLayoutProps {
   children: React.ReactNode
@@ -19,7 +19,12 @@ export function RootLayout({ children }: RootLayoutProps) {
           {children}
         </main>
         <Footer />
-        <CommandBar />
+        <Toaster 
+          position="bottom-center"
+          expand
+          richColors 
+          closeButton
+        />
       </div>
     </ThemeProvider>
   )
