@@ -8,16 +8,12 @@ export const metadata: Metadata = {
   robots: 'noindex, nofollow'
 }
 
-export default async function SynerPage() {
+export default async function Syner() {
   const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
   const res = await fetch(`${url}/api/syner/content`, {
     next: { revalidate: 60 * 60 * 24 } // Revalidate every day
   })
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch content')
-  }
 
   const data = await res.json()
 
