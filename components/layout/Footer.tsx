@@ -2,6 +2,7 @@ import * as React from "react"
 import Link from "next/link"
 import { SocialIcon } from "@/components/ui/social-icon"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -9,8 +10,8 @@ export function Footer() {
       <div className="max-w-5xl mx-auto px-4 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center" aria-label="Home">
-            <Avatar className="size-7 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-              <AvatarImage src="/avatars/rbadillap.jpg" alt="Ronny Badilla" />
+            <Avatar className="size-7">
+              <AvatarImage src="/avatars/rbadillap.png" alt="Ronny Badilla" />
               <AvatarFallback>RB</AvatarFallback>
             </Avatar>
           </Link>
@@ -47,6 +48,19 @@ export function Footer() {
           >
             <SocialIcon type="twitter" size={20} />
           </a>
+          <Link
+            href="/syner"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Syner"
+          >
+            <Image 
+              src="/logos/syner-dark.svg" 
+              alt="Syner" 
+              width={20}
+              height={20}
+              className="h-5 dark:invert opacity-60 hover:opacity-100 transition-opacity"
+            />
+          </Link>
         </div>
       </div>
     </footer>
