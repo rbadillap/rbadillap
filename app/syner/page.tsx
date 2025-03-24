@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   robots: 'noindex, nofollow'
 }
 
-export const dynamic = 'force-dynamic'
-
 async function getContent() {
   const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
 
