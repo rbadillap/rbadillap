@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-const LOOPS_ENDPOINT = "https://app.loops.so/api/newsletter-form/cm8kuiu3g0b2ffcpb6ebdwtvo"
+const LOOPS_ENDPOINT = process.env.LOOPS_ENDPOINT || '';
 
 export async function POST(request: Request) {
   try {
