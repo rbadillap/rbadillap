@@ -1,23 +1,29 @@
 import { RootLayout } from "@/components/layout/RootLayout"
 import { Metadata } from 'next'
 import ReactMarkdown from 'react-markdown'
-import { promises as fs } from 'fs'
-import path from 'path'
 import Link from "next/link"
-import { ExternalLinkIcon } from "lucide-react"
 
 export const metadata: Metadata = {
   robots: 'noindex, nofollow'
 }
 
 async function getContent() {
-  const filePath = path.join(process.cwd(), 'app/syner/content.md')
-  const content = await fs.readFile(filePath, 'utf8')
-  return content
+  const res = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/syner/content`, {
+    next: { revalidate: 60 } // Revalidate every minute
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch content')
+  }
+
+  const data = await res.json()
+  return data.content
 }
 
 export default async function SynerPage() {
   const content = await getContent()
+
+  console.log(content)
 
   return (
     <RootLayout>
@@ -39,15 +45,18 @@ export default async function SynerPage() {
           <div className="prose prose-invert max-w-none">
             <ReactMarkdown
               components={{
-                // Customize how different markdown elements are rendered
                 p: ({node, ...props}) => <p className="text-base" {...props} />,
                 h2: ({node, ...props}) => <h2 className="text-2xl font-bold mt-8 mb-4" {...props} />,
                 blockquote: ({node, ...props}) => (
                   <blockquote className="border-l-4 border-primary pl-4 italic my-6" {...props} />
                 ),
-                a: ({node, ...props}) => (
-                  <Link className="text-primary hover:underline hover:text-primary/80" {...props} />
-                )
+                a: ({node, href, ...props}) => {
+                  const isExternal = href?.startsWith('http')
+                  if (isExternal) {
+                    return <a href={href} className="text-primary hover:underline hover:text-primary/80" target="_blank" rel="noopener noreferrer" {...props} />
+                  }
+                  return <Link href={href || '#'} className="text-primary hover:underline hover:text-primary/80" {...props} />
+                }
               }}
             >
               {content}
