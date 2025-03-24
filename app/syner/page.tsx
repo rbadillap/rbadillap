@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   robots: 'noindex, nofollow'
 }
 
+export const dynamic = 'force-dynamic'
+
 async function getContent() {
   const res = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/syner/content`, {
     next: { revalidate: 60 } // Revalidate every minute
@@ -23,8 +25,6 @@ async function getContent() {
 
 export default async function SynerPage() {
   const content = await getContent()
-
-  console.log(content)
 
   return (
     <RootLayout>
@@ -68,7 +68,7 @@ export default async function SynerPage() {
             <div className="not-prose bg-muted/50 rounded-lg p-6 mt-8">
               <h3 className="text-lg font-semibold mb-2">Early Access</h3>
               <p className="text-muted-foreground mb-4">
-                Syner is currently in private development. If you&apos;re interested in learning more or potentially becoming an early adopter, feel free to reach out.
+                Syner is currently in private development. If you are interested in learning more or potentially becoming an early adopter, feel free to reach out.
               </p>
               <a 
                 href="mailto:info@rbadillap.dev?subject=Syner Early Access"
