@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 async function getContent() {
-  const res = await fetch(`/api/syner/content`, {
-    next: { revalidate: 60 } // Revalidate every minute
+  const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+
+  const res = await fetch(`${url}/api/syner/content`, {
+    next: { revalidate: 60 * 60 * 24 } // Revalidate every day
   })
 
   if (!res.ok) {
