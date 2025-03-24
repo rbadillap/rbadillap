@@ -53,9 +53,11 @@ export function Footer() {
             className="text-muted-foreground hover:text-foreground transition-colors"
             aria-label="Syner"
           >
-            <img 
+            <Image 
               src="/logos/syner-dark.svg" 
               alt="Syner" 
+              width={20}
+              height={20}
               className="h-5 dark:invert opacity-60 hover:opacity-100 transition-opacity"
             />
           </Link>

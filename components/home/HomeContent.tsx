@@ -4,7 +4,6 @@ import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
-import Link from 'next/link'
 
 export function HomeContent() {
   const [email, setEmail] = useState('')
@@ -63,7 +62,7 @@ export function HomeContent() {
         <div className="h-[1px] w-48 bg-border my-6"></div>
         
         <p className="text-base text-muted-foreground max-w-md">
-          Hey there! 👋 Join my journey into AI, Cloud, and Open Source. Also, I'm working on a new project called <Link href="https://synerops.com/?utm_source=rbadillap&utm_medium=website&utm_campaign=syner" className="text-primary">Syner</Link>.
+          Hey there! 👋 Join my journey into AI, Cloud, and Open Source. Also, I am working on a new project called <a href="https://synerops.com/?utm_source=rbadillap&utm_medium=website&utm_campaign=syner" className="text-primary">Syner</a>.
         </p>
 
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
