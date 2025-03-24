@@ -3,21 +3,21 @@ import { Metadata } from 'next'
 import ReactMarkdown from 'react-markdown'
 import Link from "next/link"
 import Image from "next/image"
+import { list } from '@vercel/blob'
 
 export const metadata: Metadata = {
   robots: 'noindex, nofollow'
 }
 
 export default async function Syner() {
-  const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+  const { blobs } = await list()
+  const synerBlob = blobs.find(b => b.pathname === 'syner/content.md')
+  
+  if (!synerBlob) {
+    throw new Error('Syner content not found')
+  }
 
-  const res = await fetch(`${url}/api/syner/content`, {
-    next: { revalidate: 60 * 60 * 24 } // Revalidate every day
-  })
-
-  const data = await res.json()
-
-  const { content } = data;
+  const content = await fetch(synerBlob.url).then(r => r.text())
 
   return (
     <RootLayout>
