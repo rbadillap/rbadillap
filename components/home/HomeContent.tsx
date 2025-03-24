@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
+import Link from 'next/link'
 
 export function HomeContent() {
   const [email, setEmail] = useState('')
@@ -45,8 +46,8 @@ export function HomeContent() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-240px)]">
       <div className="flex flex-col items-center text-center space-y-6 max-w-[650px] animate-fade-in">
-        <Avatar className="h-32 w-32 border-2 border-primary/10 rounded-full shadow-lg">
-          <AvatarImage src="/avatars/rbadillap.jpg" alt="Ronny Badilla" />
+        <Avatar className="h-32 w-32 rounded-full shadow-lg">
+          <AvatarImage src="/avatars/rbadillap.png" alt="Ronny Badilla" />
           <AvatarFallback>RB</AvatarFallback>
         </Avatar>
         
@@ -62,7 +63,7 @@ export function HomeContent() {
         <div className="h-[1px] w-48 bg-border my-6"></div>
         
         <p className="text-base text-muted-foreground max-w-md">
-          Hey there! 👋 Join my journey into AI, Cloud, and Open Source.
+          Hey there! 👋 Join my journey into AI, Cloud, and Open Source. Also, I'm working on a new project called <Link href="https://synerops.com/?utm_source=rbadillap&utm_medium=website&utm_campaign=syner" className="text-primary">Syner</Link>.
         </p>
 
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
@@ -81,7 +82,7 @@ export function HomeContent() {
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-md font-medium transition-colors whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+              {isSubmitting ? 'Subscribing...' : 'Notify me'}
             </button>
           </div>
           <p className="text-xs text-muted-foreground">

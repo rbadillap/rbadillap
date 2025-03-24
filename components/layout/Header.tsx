@@ -13,8 +13,8 @@ export function Header() {
             className="hover:opacity-80 transition-opacity flex items-center"
             aria-label="Home"
           >
-            <Avatar className="size-9 border border-neutral-200 dark:border-neutral-800 shadow-sm">
-              <AvatarImage src="/avatars/rbadillap.jpg" alt="Ronny Badilla" />
+            <Avatar className="size-9">
+              <AvatarImage src="/avatars/rbadillap.png" alt="Ronny Badilla" />
               <AvatarFallback>RB</AvatarFallback>
             </Avatar>
           </Link>
