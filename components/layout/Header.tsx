@@ -2,6 +2,8 @@ import * as React from "react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/layout/ThemeToggle"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import { TerminalIcon } from "lucide-react"
 
 export function Header() {
   return (
@@ -21,6 +23,15 @@ export function Header() {
         </div>
         
         <div className="flex items-center">
+          <Link href="/skills" className="hover:opacity-80 transition-opacity">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="h-8 w-8"
+            >
+              <TerminalIcon className="h-4 w-4" />
+            </Button>
+          </Link>
           <ThemeToggle />
         </div>
       </div>
