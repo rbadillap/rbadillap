@@ -1,5 +1,5 @@
 {
-  "name": "Ronny Badilla | Software Developer & DevOps Engineer",
+  "name": "Ronny Badilla: Software / DevOps / Cloud / AI",
   "short_name": "Ronny Badilla",
   "icons": [
     {
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#141414",
-  "background_color": "#141414",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone"
 }
