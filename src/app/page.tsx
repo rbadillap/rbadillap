@@ -24,7 +24,7 @@ export default function Home() {
                 <div>
                   <h1 className="text-2xl">Hey, I&apos;m Ronny 👋</h1>
                   <p className="mt-4 text-lg text-muted-foreground">
-                    Cloud builder. AI tinkerer. DevOps nerd.
+                    Software Engineer. DevOps. AI.
                   </p>
                 </div>
               </div>
@@ -32,10 +32,14 @@ export default function Home() {
 
             {/* About */}
             <div className="space-y-4">
-              <p className="text-lg text-muted-foreground">
-                I&apos;ve built cloud platforms, shipped AI products, and improved dev workflows along the way.<br />
-                Now I&apos;m building <Link href="https://syner.app?utm_source=ronnybadilla.com" className="text-blue-500 hover:underline">Syner</Link> — an AI-native OS for the web.
-
+              <p className="text-md text-muted-foreground">
+              I&apos;ve worked for years helping build great products - from startups to enterprises.
+              </p>
+              <p className="text-md text-muted-foreground">
+              Now it&apos;s my time to all-in on what I believe in most: A Web for everyone.
+              </p>
+              <p className="text-md text-muted-foreground">
+              I&apos;m building <Link href="https://syner.app?utm_source=ronnybadilla.com&utm_campaign=ronnybadilla-website" className="text-blue-500 hover:underline">Syner</Link> - the OS where the web works for you.
               </p>
             </div>
 
