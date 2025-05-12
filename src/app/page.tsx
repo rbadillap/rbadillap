@@ -1,12 +1,10 @@
-import { Header } from "@/components/header"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Link from "next/link"
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-background">
-      <Header />
-      
+     
       <main className="relative flex-1">
         {/* Main background grid */}
         <div className="pointer-events-none fixed inset-0 border-grid opacity-[0.03]" />
@@ -41,6 +39,37 @@ export default function Home() {
               <p className="text-md text-muted-foreground">
               I&apos;m building <Link href="https://syner.app?utm_source=ronnybadilla.com&utm_campaign=ronnybadilla-website" className="text-blue-500 hover:underline">Syner</Link> - the OS where the web works for you.
               </p>
+            </div>
+
+            {/* My Projects */}
+            <div className="space-y-8">
+              <h2 className="text-xl">My Projects</h2>
+              <div className="space-y-4">
+                <Link
+                  href="https://github.com/rbadillap/zeta"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-start justify-between cursor-pointer no-underline"
+                >
+                  <div>
+                    <h3>Zeta</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">A shadcn registry with advanced features</p>
+                  </div>
+                  <span className="text-sm text-blue-500 group-hover:underline">github.com/rbadillap/zeta</span>
+                </Link>
+                <Link
+                  href="https://registry.directory"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-start justify-between cursor-pointer no-underline"
+                >
+                  <div>
+                    <h3>Registry Directory</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">A directory for registries</p>
+                  </div>
+                  <span className="text-sm text-blue-500 group-hover:underline">registry.directory</span>
+                </Link>
+              </div>
             </div>
 
             {/* Experience */}
@@ -131,6 +160,47 @@ export default function Home() {
                 </form>
               </div>
             </div> */}
+
+            {/* Contact */}
+            <div className="space-y-8">
+              <h2 className="text-xl">Get in Touch</h2>
+              <div className="space-y-4">
+                <a
+                  href="mailto:info@ronnybadilla.com"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-center justify-between cursor-pointer no-underline"
+                >
+                  <span className="font-medium">Business</span>
+                  <span className="text-sm text-blue-500 group-hover:underline">info@ronnybadilla.com</span>
+                </a>
+                <a
+                  href="https://github.com/rbadillap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-center justify-between cursor-pointer no-underline"
+                >
+                  <span className="font-medium">GitHub</span>
+                  <span className="text-sm text-blue-500 group-hover:underline">github.com/rbadillap</span>
+                </a>
+                <a
+                  href="https://x.com/rbadillap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-center justify-between cursor-pointer no-underline"
+                >
+                  <span className="font-medium">Twitter / X</span>
+                  <span className="text-sm text-blue-500 group-hover:underline">x.com/rbadillap</span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/rbadillap"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-center justify-between cursor-pointer no-underline"
+                >
+                  <span className="font-medium">LinkedIn</span>
+                  <span className="text-sm text-blue-500 group-hover:underline">linkedin.com/in/rbadillap</span>
+                </a>
+              </div>
+            </div>
 
             {/* Footer with avatar in the center */}
             <div className="flex items-center justify-center gap-4">
