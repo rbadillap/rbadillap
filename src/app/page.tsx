@@ -46,7 +46,7 @@ export default function Home() {
               <h2 className="text-xl">My Projects</h2>
               <div className="space-y-4">
                 <Link
-                  href="https://github.com/rbadillap/zeta"
+                  href="https://git.new/zeta"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group fade-border rounded-lg p-4 transition-colors hover:bg-card flex items-start justify-between cursor-pointer no-underline"
@@ -55,7 +55,7 @@ export default function Home() {
                     <h3>Zeta</h3>
                     <p className="mt-1 text-sm text-muted-foreground">A shadcn registry with advanced features</p>
                   </div>
-                  <span className="text-sm text-blue-500 group-hover:underline">github.com/rbadillap/zeta</span>
+                  <span className="text-sm text-blue-500 group-hover:underline">git.new/zeta</span>
                 </Link>
                 <Link
                   href="https://registry.directory"
