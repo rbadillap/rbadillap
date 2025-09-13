@@ -1,8 +1,8 @@
 Hi, I'm Ronny! 👋
 
-I'm building @synerops, an open source AI agent Operating System.
+I'm building [**@synerops**](https://github.com/@synerops), an open-source AI Agent Operating System.
 
-I build software 
+I'm a cloud engineer who builds software as a hobby.
 
 <div align="center">
   <a href="https://rbadillap.dev">
