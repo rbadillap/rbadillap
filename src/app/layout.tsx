@@ -1,23 +1,19 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Schibsted_Grotesk } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
-const geist = Geist({ 
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  variable: "--font-geist-sans",
-});
-const geistMono = Geist_Mono({ 
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
-});
+  variable: "--font-schibsted"
+})
 
 export const metadata: Metadata = {
   title: {
     default: "Ronny Badilla",
     template: "%s | Ronny Badilla",
   },
-  description: "Software / DevOps / Cloud / AI",
+  description: "Design / DevOps / Cloud / AI Engineer",
   metadataBase: new URL("https://ronnybadilla.com"),
   authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
   creator: "Ronny Badilla",
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Ronny Badilla",
-    description: "Software / DevOps / Cloud / AI",
+    description: "Design / DevOps / Cloud / AI Engineer",
     url: "https://ronnybadilla.com",
     siteName: "Ronny Badilla",
     images: "/og.jpg",
@@ -37,30 +33,29 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Ronny Badilla",
-    description: "Software / DevOps / Cloud / AI",
+    description: "Design / DevOps / Cloud / AI Engineer",
     images: "/og.jpg",
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#171717",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <body className={`${geist.className} ${geistMono.className}`}>
-        <div className="relative min-h-screen bg-background">
-          {/* Grid Background */}
-          <div className="pointer-events-none fixed inset-0 border-grid opacity-[0.02]" />
-          
-          {/* Main Content */}
-          <div className="relative">
-            {children}
-          </div>
-        </div>
+    <html lang="en" className={`bg-background ${schibsted.variable}`}>
+      <body className="font-sans antialiased">
+        {children}
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
