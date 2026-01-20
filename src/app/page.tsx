@@ -62,6 +62,28 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="mb-16">
+          <h2 className="mb-6 text-xs uppercase tracking-widest text-foreground-muted">Open Source Tools</h2>
+          <div className="space-y-4">
+            <OpenSourceItem
+              name="registry.directory"
+              description="Discover and explore UI registries"
+              href="https://registry.directory"
+            />
+            <OpenSourceItem
+              name="pastecn.com"
+              description="pastebin + shadcn = pastecn"
+              href="https://pastecn.com"
+            />
+            <OpenSourceItem
+              name="registry.studio"
+              description="Advanced visual registry builder"
+              href="#"
+              comingSoon
+            />
+          </div>
+        </section>
+
         <footer className="pt-8 border-t border-border">
           <div className="flex flex-wrap gap-6 text-base">
             <Link
@@ -107,5 +129,43 @@ function ExperienceItem({ company, role, year }: { company: string; role: string
       </div>
       <span className="text-foreground-muted text-sm">{year}</span>
     </div>
+  )
+}
+
+function OpenSourceItem({
+  name,
+  description,
+  href,
+  comingSoon,
+}: {
+  name: string
+  description: string
+  href: string
+  comingSoon?: boolean
+}) {
+  const content = (
+    <div className="flex flex-col">
+      <div className="flex items-center gap-2">
+        <span className="text-foreground-strong">{name}</span>
+        {comingSoon && (
+          <span className="text-xs text-foreground-muted uppercase tracking-wider">Coming Soon</span>
+        )}
+      </div>
+      <p className="text-sm text-foreground-muted mt-1 leading-relaxed">{description}</p>
+    </div>
+  )
+
+  if (comingSoon || href === "#") {
+    return <div className="opacity-60">{content}</div>
+  }
+
+  return (
+    <Link
+      href={href}
+      target="_blank"
+      className="block hover:text-foreground-strong transition-colors group"
+    >
+      {content}
+    </Link>
   )
 }

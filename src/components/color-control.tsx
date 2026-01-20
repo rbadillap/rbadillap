@@ -93,7 +93,7 @@ const defaultSelections: Record<ElementKey, ColorSelection> = {
   text: { family: "zinc", shade: 200 },
   body: { family: "zinc", shade: 400 },
   muted: { family: "zinc", shade: 500 },
-  border: { family: "zinc", shade: 800 },
+  border: { family: "zinc", shade: 600 },
 }
 
 export function ColorControl() {
