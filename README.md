@@ -1,6 +1,6 @@
 Hi, I'm Ronny! 👋
 
-I'm building [**@synerops**](https://github.com/synerops), an open-source fullstack agent.
+I'm building [**@synerops**](https://github.com/synerops), an open-source Agentic Operating System.
 
 I'm a cloud engineer who builds software as a hobby.
 
