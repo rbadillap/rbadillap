@@ -40,5 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# personal vault (private notes)
-vaults/
+# vaults (keep structure, content is public)
+vaults/*
+!vaults/.gitkeep
+!vaults/rbadillap/
