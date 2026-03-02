@@ -43,4 +43,3 @@ next-env.d.ts
 # vaults (keep structure, content is public)
 vaults/*
 !vaults/.gitkeep
-!vaults/rbadillap/
