@@ -20,16 +20,18 @@ export async function subscribe(
   }
 
   const apiKey = process.env.RESEND_API_KEY
-  const audienceId = process.env.RESEND_AUDIENCE_ID
 
-  if (!apiKey || !audienceId) {
+  if (!apiKey) {
     return { status: "error", message: "Newsletter isn't live yet — check back soon." }
   }
 
   const resend = new Resend(apiKey)
-  const { error } = await resend.contacts.create({ email, audienceId, unsubscribed: false })
+  const { error } = await resend.contacts.create({ email, unsubscribed: false })
 
   if (error) {
+    if (error.statusCode === 401 || error.statusCode === 403) {
+      return { status: "error", message: "Newsletter isn't live yet — check back soon." }
+    }
     return { status: "error", message: "Something went wrong. Try again." }
   }
 
