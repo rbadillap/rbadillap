@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Schibsted_Grotesk } from "next/font/google";
+import { Schibsted_Grotesk, Geist_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
@@ -8,32 +8,31 @@ const schibsted = Schibsted_Grotesk({
   variable: "--font-schibsted"
 })
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono"
+})
+
 export const metadata: Metadata = {
   title: {
     default: "Ronny Badilla",
     template: "%s | Ronny Badilla",
   },
-  description: "Design / DevOps / Cloud / AI Engineer",
-  metadataBase: new URL("https://ronnybadilla.com"),
-  authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
+  description: "Design / DevOps / AI Engineer",
+  metadataBase: new URL("https://rbadillap.dev"),
+  authors: [{ name: "Ronny Badilla", url: "https://rbadillap.dev" }],
   creator: "Ronny Badilla",
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-    other: { rel: "icon", url: "/favicon.ico" },
-  },
   openGraph: {
     title: "Ronny Badilla",
-    description: "Design / DevOps / Cloud / AI Engineer",
-    url: "https://ronnybadilla.com",
+    description: "Design / DevOps / AI Engineer",
+    url: "https://rbadillap.dev",
     siteName: "Ronny Badilla",
     images: "/og.jpg",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ronny Badilla",
-    description: "Design / DevOps / Cloud / AI Engineer",
+    description: "Design / DevOps / AI Engineer",
     images: "/og.jpg",
   },
 };
@@ -42,7 +41,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#171717",
+  themeColor: "#fafaf8",
 }
 
 export default function RootLayout({
@@ -51,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-background ${schibsted.variable}`}>
+    <html lang="en" className={`bg-background ${schibsted.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />
