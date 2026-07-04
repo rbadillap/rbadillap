@@ -29,6 +29,7 @@ export async function subscribe(
   const { error } = await resend.contacts.create({ email, unsubscribed: false })
 
   if (error) {
+    console.error("newsletter subscribe failed:", error.name, error.statusCode, error.message)
     if (error.statusCode === 401 || error.statusCode === 403) {
       return { status: "error", message: "Newsletter isn't live yet — check back soon." }
     }
