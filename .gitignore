@@ -43,3 +43,5 @@ next-env.d.ts
 # vaults (keep structure, content is public)
 vaults/*
 !vaults/.gitkeep
+.gstack/
+.env*.local

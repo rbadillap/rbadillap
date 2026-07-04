@@ -1,122 +1,157 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-
 import Link from "next/link"
-import { ColorControl } from "@/components/color-control"
+
+import { Logomark } from "@/components/logomark"
+import { NewsletterForm } from "@/components/newsletter-form"
+import { SynerMark } from "@/components/syner-mark"
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      <ColorControl />
-
-      <div className="mx-auto max-w-xl px-6 py-16 md:py-24">
-        <header className="mb-16">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16 shrink-0">
-              <AvatarImage src="/rbadillap.png" alt="Ronny Badilla" />
-              <AvatarFallback>RB</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <h1 className="text-xl md:text-2xl font-medium text-foreground-strong tracking-wide">Ronny Badilla</h1>
-              <p className="text-foreground leading-relaxed tracking-wide mt-0.5">Design / DevOps / AI Engineer</p>
-            </div>
-          </div>
+    <main className="min-h-screen">
+      <div className="mx-auto max-w-[560px] px-6 pb-16 pt-24">
+        <header className="fade-up">
+          <Logomark className="mb-7 text-foreground-strong" />
+          <h1 className="text-base font-medium text-foreground-strong">Ronny Badilla</h1>
+          <p className="mt-0.5 text-sm text-foreground-muted">Design / DevOps / AI Engineer</p>
         </header>
 
-        <section className="mb-16 space-y-4">
-          <p className="leading-relaxed">
-            I&apos;ve worked for years helping build great products, from startups to enterprises. Now it&apos;s my turn to achieve my dreams.
-          </p>
-          <p className="leading-relaxed">
-            Building{" "}
-            <Link
-              href="https://syner.app"
-              target="_blank"
-              className="text-foreground-strong hover:text-primary transition-colors underline underline-offset-4"
-            >
-              Syner
-            </Link>
-            —the Agentic Operating System.
-          </p>
-        </section>
+        <div className="relative">
+          {/* the spine: one continuous base connecting every section node */}
+          <span
+            className="absolute bottom-[56px] left-[2px] top-[96px] w-px bg-border"
+            aria-hidden="true"
+          />
 
-        <section className="mb-16">
-          <h2 className="mb-6 text-xs uppercase tracking-widest text-foreground-muted">Experience</h2>
+        <Section label="Now" className="fade-up fade-up-1">
           <div className="space-y-4">
+            <p>
+              I&apos;ve worked for years helping build great products, from startups to
+              enterprises. Now it&apos;s my turn to achieve my dreams.
+            </p>
+            <p>
+              Building{" "}
+              <ExternalLink href="https://syner.app">
+                <SynerMark className="mr-[5px] inline-block size-[15px] align-[-2px]" />
+                Syner
+              </ExternalLink>{" "}
+              — the Agentic Operating System.
+            </p>
+          </div>
+        </Section>
+
+        <Section label="Experience" className="fade-up fade-up-2">
+          <div className="space-y-3.5">
             <ExperienceItem company="SynerOps" role="Founder" year="2025" />
             <ExperienceItem company="Automattic" role="Platform Engineer" year="2023" />
             <ExperienceItem company="FedRAMP.gov" role="Solutions Architect" year="2022" />
           </div>
-        </section>
+        </Section>
 
-        <section className="mb-16">
-          <h2 className="mb-6 text-xs uppercase tracking-widest text-foreground-muted">What I Do</h2>
-          <div className="space-y-4">
-            <p className="leading-relaxed">
-              <span className="text-foreground-strong">Cloud & DevOps</span>
-              <span className="ml-2">AWS architecture, infrastructure automation, and CI/CD pipelines.</span>
-            </p>
-            <p className="leading-relaxed">
-              <span className="text-foreground-strong">AI Solutions</span>
-              <span className="ml-2">LLM integration, RAG systems, and AI-powered tools.</span>
-            </p>
+        <Section label="What I Do" className="fade-up fade-up-3">
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-medium text-foreground-strong">Cloud &amp; DevOps</h3>
+              <p>AWS architecture, infrastructure automation, and CI/CD pipelines.</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-foreground-strong">AI Solutions</h3>
+              <p>LLM integration, RAG systems, and AI-powered tools.</p>
+            </div>
           </div>
-        </section>
+        </Section>
 
-        <section className="mb-16">
-          <h2 className="mb-6 text-xs uppercase tracking-widest text-foreground-muted">Open Source Tools</h2>
-          <div className="space-y-4">
-            <OpenSourceItem
-              name="registry.directory"
-              description="Discover and explore UI registries"
-              href="https://registry.directory"
-            />
-            <OpenSourceItem
-              name="pastecn.com"
-              description="pastebin + shadcn = pastecn"
-              href="https://pastecn.com"
-            />
-            <OpenSourceItem
-              name="registry.studio"
-              description="Advanced visual registry builder"
-              href="#"
-              comingSoon
-            />
+        <Section label="Open Source" className="fade-up fade-up-4">
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-medium text-foreground-strong">
+                <ExternalLink href="https://registry.directory">registry.directory</ExternalLink>
+              </h3>
+              <p>Discover and explore UI registries.</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-foreground-strong">
+                <ExternalLink href="https://pastecn.com">pastecn.com</ExternalLink>
+              </h3>
+              <p>pastebin + shadcn = pastecn.</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-foreground-strong">
+                registry.studio
+                <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
+                  Coming soon
+                </span>
+              </h3>
+              <p>Advanced visual registry builder.</p>
+            </div>
           </div>
-        </section>
+        </Section>
 
-        <footer className="pt-8 border-t border-border">
-          <div className="flex flex-wrap gap-6 text-base">
-            <Link
-              href="https://x.com/rbadillap"
-              className="text-foreground-muted hover:text-foreground-strong transition-colors"
-              target="_blank"
-            >
-              X
-            </Link>
-            <Link
-              href="https://github.com/rbadillap"
-              className="text-foreground-muted hover:text-foreground-strong transition-colors"
-              target="_blank"
-            >
-              GitHub
-            </Link>
-            <Link
-              href="https://linkedin.com/in/rbadillap"
-              className="text-foreground-muted hover:text-foreground-strong transition-colors"
-              target="_blank"
-            >
-              LinkedIn
-            </Link>
-            <Link
-              href="mailto:info@ronnybadilla.com"
-              className="text-foreground-muted hover:text-foreground-strong transition-colors"
-            >
-              Mail
-            </Link>
+        <Section label="Newsletter" className="fade-up fade-up-5">
+          <div className="space-y-5">
+            <p>Occasional notes on design, infrastructure, and AI. No spam.</p>
+            <NewsletterForm />
           </div>
+        </Section>
+
+        <footer className="fade-up fade-up-6 mt-[88px]">
+          <SectionLabel label="Elsewhere" />
+          <nav className="flex gap-6 pl-[15px] text-sm">
+            <FooterLink href="https://x.com/rbadillap">X</FooterLink>
+            <FooterLink href="https://github.com/rbadillap">GitHub</FooterLink>
+            <FooterLink href="https://linkedin.com/in/rbadillap">LinkedIn</FooterLink>
+            <FooterLink href="mailto:info@ronnybadilla.com">Mail</FooterLink>
+          </nav>
         </footer>
+        </div>
+
+        {/* the landing: the page closes where the symbol lands */}
+        <div className="mt-[72px] flex items-center" aria-hidden="true">
+          <span className="h-px flex-1 bg-border" />
+          <span className="size-[5px] rounded-full bg-foreground-muted" />
+        </div>
       </div>
     </main>
+  )
+}
+
+function SectionLabel({ label }: { label: string }) {
+  return (
+    <div className="mb-7 flex items-center gap-2.5" aria-hidden="true">
+      <span className="size-[5px] shrink-0 rounded-full bg-foreground-strong" />
+      <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.16em] text-foreground-muted">
+        {label}
+      </span>
+      <span className="h-px flex-1 bg-border" />
+    </div>
+  )
+}
+
+function Section({
+  label,
+  className,
+  children,
+}: {
+  label: string
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className={`mt-[88px] ${className ?? ""}`} aria-label={label}>
+      <SectionLabel label={label} />
+      <div className="pl-[15px]">{children}</div>
+    </section>
+  )
+}
+
+function ExternalLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="border-b border-border text-foreground-strong transition-colors hover:border-foreground-strong"
+    >
+      {children}
+    </Link>
   )
 }
 
@@ -124,48 +159,23 @@ function ExperienceItem({ company, role, year }: { company: string; role: string
   return (
     <div className="flex items-baseline justify-between">
       <div>
-        <span className="text-foreground-strong">{company}</span>
-        <span className="ml-2 text-foreground-muted">{role}</span>
+        <span className="font-medium text-foreground-strong">{company}</span>
+        <span className="ml-2">{role}</span>
       </div>
-      <span className="text-foreground-muted text-sm">{year}</span>
+      <span className="font-mono text-xs text-foreground-muted">{year}</span>
     </div>
   )
 }
 
-function OpenSourceItem({
-  name,
-  description,
-  href,
-  comingSoon,
-}: {
-  name: string
-  description: string
-  href: string
-  comingSoon?: boolean
-}) {
-  const content = (
-    <div className="flex flex-col">
-      <div className="flex items-center gap-2">
-        <span className="text-foreground-strong">{name}</span>
-        {comingSoon && (
-          <span className="text-xs text-foreground-muted uppercase tracking-wider">Coming Soon</span>
-        )}
-      </div>
-      <p className="text-sm text-foreground-muted mt-1 leading-relaxed">{description}</p>
-    </div>
-  )
-
-  if (comingSoon || href === "#") {
-    return <div className="opacity-60">{content}</div>
-  }
-
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+  const external = href.startsWith("http")
   return (
     <Link
       href={href}
-      target="_blank"
-      className="block hover:text-foreground-strong transition-colors group"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="-mx-1 -my-2 px-1 py-2 text-foreground transition-colors hover:text-foreground-strong"
     >
-      {content}
+      {children}
     </Link>
   )
 }
