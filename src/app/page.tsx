@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { experience, home, projects } from "#velite"
+import { experience, home, projects } from "#content"
 
 import { ExternalLink } from "@/components/external-link"
 import { Logomark } from "@/components/logomark"
@@ -7,6 +7,7 @@ import { ContentMarkdown } from "@/components/markdown"
 import { NewsletterForm } from "@/components/newsletter-form"
 
 const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
+const sortedExperience = [...experience].sort((a, b) => b.year.localeCompare(a.year))
 
 export default function Home() {
   return (
@@ -33,7 +34,7 @@ export default function Home() {
 
         <Section label="Experience" className="fade-up fade-up-2">
           <div className="space-y-3.5">
-            {experience.items.map((item) => (
+            {sortedExperience.map((item) => (
               <ExperienceItem
                 key={item.company}
                 company={item.company}

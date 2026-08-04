@@ -28,16 +28,11 @@ const home = defineCollection({
 
 const experience = defineCollection({
   name: "Experience",
-  pattern: "experience.yaml",
-  single: true,
+  pattern: "experience/*.md",
   schema: s.object({
-    items: s.array(
-      s.object({
-        company: s.string(),
-        role: s.string(),
-        year: s.string(),
-      }),
-    ),
+    company: s.string(),
+    role: s.string(),
+    year: s.string(),
   }),
 })
 
