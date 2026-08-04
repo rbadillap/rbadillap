@@ -76,16 +76,18 @@ for (const [order, item] of [
     title: 'registry.directory',
     url: 'https://registry.directory',
     description: 'Discover and explore UI registries.',
+    active: true,
   },
   {
     title: 'pastecn.com',
     url: 'https://pastecn.com',
     description: 'pastebin + shadcn = pastecn.',
+    active: true,
   },
   {
     title: 'registry.studio',
     description: 'Advanced visual registry builder.',
-    badge: 'Coming soon',
+    active: false,
   },
 ].entries()) {
   await payload.create({ collection: 'projects', data: { ...item, order } })

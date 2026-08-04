@@ -77,23 +77,30 @@ export default async function Home() {
 
         <Section label="Open Source" className="fade-up fade-up-4">
           <div className="space-y-6">
-            {projects.docs.map((project) => (
-              <div key={project.id}>
-                <h3 className="font-medium text-foreground-strong">
-                  {project.url ? (
-                    <ExternalLink href={project.url}>{project.title}</ExternalLink>
-                  ) : (
-                    project.title
-                  )}
-                  {project.badge && (
-                    <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
-                      {project.badge}
-                    </span>
-                  )}
-                </h3>
-                <p>{project.description}</p>
-              </div>
-            ))}
+            {projects.docs.map((project) => {
+              const active = project.active !== false
+              return (
+                <div key={project.id}>
+                  <h3
+                    className={`font-medium ${active ? "text-foreground-strong" : "text-foreground-muted"}`}
+                  >
+                    {active && project.url ? (
+                      <ExternalLink href={project.url}>{project.title}</ExternalLink>
+                    ) : (
+                      project.title
+                    )}
+                    {!active && (
+                      <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
+                        Coming soon
+                      </span>
+                    )}
+                  </h3>
+                  <p className={active ? undefined : "text-foreground-muted"}>
+                    {project.description}
+                  </p>
+                </div>
+              )
+            })}
           </div>
         </Section>
 

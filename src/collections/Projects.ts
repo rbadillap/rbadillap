@@ -7,7 +7,7 @@ export const Projects: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'url', 'badge'],
+    defaultColumns: ['title', 'url', 'active'],
   },
   defaultSort: 'order',
   fields: [
@@ -26,10 +26,11 @@ export const Projects: CollectionConfig = {
       required: true,
     },
     {
-      name: 'badge',
-      type: 'text',
+      name: 'active',
+      type: 'checkbox',
+      defaultValue: true,
       admin: {
-        description: 'Optional label shown next to the title, e.g. "Coming soon"',
+        description: 'Uncheck if the project is not launched yet — it renders dimmed with a "Coming soon" badge',
       },
     },
     {

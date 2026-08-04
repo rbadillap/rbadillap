@@ -171,9 +171,9 @@ export interface Project {
   url?: string | null;
   description: string;
   /**
-   * Optional label shown next to the title, e.g. "Coming soon"
+   * Uncheck if the project is not launched yet — it renders dimmed with a "Coming soon" badge
    */
-  badge?: string | null;
+  active?: boolean | null;
   order: number;
   updatedAt: string;
   createdAt: string;
@@ -298,7 +298,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   url?: T;
   description?: T;
-  badge?: T;
+  active?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
