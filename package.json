@@ -2,15 +2,24 @@
   "name": "ronnybadilla",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap"
   },
   "dependencies": {
+    "@payloadcms/db-sqlite": "^3.87.0",
+    "@payloadcms/next": "^3.87.0",
+    "@payloadcms/richtext-lexical": "^3.87.0",
     "@vercel/analytics": "^2.0.1",
+    "graphql": "^17.0.2",
     "next": "16.2.10",
+    "payload": "^3.87.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "resend": "6.17.1"

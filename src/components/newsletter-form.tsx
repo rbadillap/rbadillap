@@ -1,7 +1,7 @@
 "use client"
 
 import { useActionState } from "react"
-import { subscribe, type SubscribeState } from "@/app/actions"
+import { subscribe, type SubscribeState } from "@/app/(site)/actions"
 
 const initialState: SubscribeState = { status: "idle", message: "" }
 

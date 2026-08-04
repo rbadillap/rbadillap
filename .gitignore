@@ -45,3 +45,7 @@ vaults/*
 !vaults/.gitkeep
 .gstack/
 .env*.local
+
+# sqlite WAL artifacts (payload.db itself IS committed)
+*.db-wal
+*.db-shm
