@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "velite && next dev",
+    "dev": "run-p content:watch dev:next",
+    "dev:next": "next dev",
     "build": "velite && next build",
     "content": "velite",
+    "content:watch": "velite --watch",
     "start": "next start",
     "lint": "eslint ."
   },
@@ -24,6 +26,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.10",
+    "npm-run-all2": "^9.0.3",
     "tailwindcss": "^4.3.2",
     "typescript": "^5.9.3",
     "velite": "^0.4.0"
