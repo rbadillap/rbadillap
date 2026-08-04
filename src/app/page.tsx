@@ -1,8 +1,13 @@
 import Link from "next/link"
+import { experience, home, projects } from "#content"
 
+import { ExternalLink } from "@/components/external-link"
 import { Logomark } from "@/components/logomark"
+import { ContentMarkdown } from "@/components/markdown"
 import { NewsletterForm } from "@/components/newsletter-form"
-import { SynerMark } from "@/components/syner-mark"
+
+const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
+const sortedExperience = [...experience].sort((a, b) => b.year.localeCompare(a.year))
 
 export default function Home() {
   return (
@@ -10,8 +15,8 @@ export default function Home() {
       <div className="mx-auto max-w-[560px] px-6 pb-16 pt-24">
         <header className="fade-up">
           <Logomark className="mb-7 text-foreground-strong" />
-          <h1 className="text-base font-medium text-foreground-strong">Ronny Badilla</h1>
-          <p className="mt-0.5 text-sm text-foreground-muted">Design / DevOps / AI Engineer</p>
+          <h1 className="text-base font-medium text-foreground-strong">{home.name}</h1>
+          <p className="mt-0.5 text-sm text-foreground-muted">{home.tagline}</p>
         </header>
 
         <div className="relative">
@@ -23,71 +28,61 @@ export default function Home() {
 
         <Section label="Now" className="fade-up fade-up-1">
           <div className="space-y-4">
-            <p>
-              I&apos;ve worked for years helping build great products, from startups to
-              enterprises. Now it&apos;s my turn to achieve my dreams.
-            </p>
-            <p>
-              Building{" "}
-              <ExternalLink href="https://syner.app">
-                <SynerMark className="mr-[5px] inline-block size-[15px] align-[-2px]" />
-                Syner
-              </ExternalLink>{" "}
-              — the Agentic Operating System.
-            </p>
+            <ContentMarkdown>{home.now}</ContentMarkdown>
           </div>
         </Section>
 
         <Section label="Experience" className="fade-up fade-up-2">
           <div className="space-y-3.5">
-            <ExperienceItem company="SynerOps" role="Founder" year="2025" />
-            <ExperienceItem company="Automattic" role="Platform Engineer" year="2023" />
-            <ExperienceItem company="FedRAMP.gov" role="Solutions Architect" year="2022" />
+            {sortedExperience.map((item) => (
+              <ExperienceItem
+                key={item.company}
+                company={item.company}
+                role={item.role}
+                year={item.year}
+              />
+            ))}
           </div>
         </Section>
 
         <Section label="What I Do" className="fade-up fade-up-3">
           <div className="space-y-6">
-            <div>
-              <h3 className="font-medium text-foreground-strong">Cloud &amp; DevOps</h3>
-              <p>AWS architecture, infrastructure automation, and CI/CD pipelines.</p>
-            </div>
-            <div>
-              <h3 className="font-medium text-foreground-strong">AI Solutions</h3>
-              <p>LLM integration, RAG systems, and AI-powered tools.</p>
-            </div>
+            {home.services.map((service) => (
+              <div key={service.title}>
+                <h3 className="font-medium text-foreground-strong">{service.title}</h3>
+                <p>{service.description}</p>
+              </div>
+            ))}
           </div>
         </Section>
 
         <Section label="Open Source" className="fade-up fade-up-4">
           <div className="space-y-6">
-            <div>
-              <h3 className="font-medium text-foreground-strong">
-                <ExternalLink href="https://registry.directory">registry.directory</ExternalLink>
-              </h3>
-              <p>Discover and explore UI registries.</p>
-            </div>
-            <div>
-              <h3 className="font-medium text-foreground-strong">
-                <ExternalLink href="https://pastecn.com">pastecn.com</ExternalLink>
-              </h3>
-              <p>pastebin + shadcn = pastecn.</p>
-            </div>
-            <div>
-              <h3 className="font-medium text-foreground-strong">
-                registry.studio
-                <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
-                  Coming soon
-                </span>
-              </h3>
-              <p>Advanced visual registry builder.</p>
-            </div>
+            {sortedProjects.map((project) => (
+              <div key={project.title}>
+                <h3
+                  className={`font-medium ${project.active ? "text-foreground-strong" : "text-foreground-muted"}`}
+                >
+                  {project.active && project.url ? (
+                    <ExternalLink href={project.url}>{project.title}</ExternalLink>
+                  ) : (
+                    project.title
+                  )}
+                  {!project.active && (
+                    <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
+                      Coming soon
+                    </span>
+                  )}
+                </h3>
+                <ContentMarkdown muted={!project.active}>{project.description}</ContentMarkdown>
+              </div>
+            ))}
           </div>
         </Section>
 
         <Section label="Newsletter" className="fade-up fade-up-5">
           <div className="space-y-5">
-            <p>Occasional notes on design, infrastructure, and AI. No spam.</p>
+            <p>{home.newsletterText}</p>
             <NewsletterForm />
           </div>
         </Section>
@@ -95,10 +90,11 @@ export default function Home() {
         <footer className="fade-up fade-up-6 mt-[88px]">
           <SectionLabel label="Elsewhere" />
           <nav className="flex gap-6 pl-[15px] text-sm">
-            <FooterLink href="https://x.com/rbadillap">X</FooterLink>
-            <FooterLink href="https://github.com/rbadillap">GitHub</FooterLink>
-            <FooterLink href="https://linkedin.com/in/rbadillap">LinkedIn</FooterLink>
-            <FooterLink href="mailto:info@ronnybadilla.com">Mail</FooterLink>
+            {home.elsewhere.map((link) => (
+              <FooterLink key={link.href} href={link.href}>
+                {link.label}
+              </FooterLink>
+            ))}
           </nav>
         </footer>
         </div>
@@ -139,19 +135,6 @@ function Section({
       <SectionLabel label={label} />
       <div className="pl-[15px]">{children}</div>
     </section>
-  )
-}
-
-function ExternalLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="border-b border-border text-foreground-strong transition-colors hover:border-foreground-strong"
-    >
-      {children}
-    </Link>
   )
 }
 

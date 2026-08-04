@@ -45,3 +45,6 @@ vaults/*
 !vaults/.gitkeep
 .gstack/
 .env*.local
+
+# velite build artifact (content/ is the source of truth)
+.velite/
