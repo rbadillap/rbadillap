@@ -23,6 +23,12 @@ export default buildConfig({
   collections: [Users, Experience, Projects],
   globals: [Home],
   editor: lexicalEditor(),
+  // The site reads content through the Local API only; REST stays for the
+  // local admin panel. GraphQL is unused — and unsupported on Cloudflare
+  // Workers, where this app is headed in phase 2.
+  graphQL: {
+    disable: true,
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
