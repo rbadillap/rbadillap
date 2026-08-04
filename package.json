@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "velite && next dev",
+    "build": "velite && next build",
+    "content": "velite",
     "start": "next start",
     "lint": "eslint ."
   },
@@ -13,6 +14,7 @@
     "next": "16.2.10",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-markdown": "^10.1.0",
     "resend": "6.17.1"
   },
   "devDependencies": {
@@ -23,7 +25,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.10",
     "tailwindcss": "^4.3.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "velite": "^0.4.0"
   },
   "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6"
 }
