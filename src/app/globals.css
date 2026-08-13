@@ -1,20 +1,16 @@
 @import "tailwindcss";
 
 /*
- * Same variable names the ColorControl retention widget manipulates —
- * keep them stable so it can be remounted later without changes.
+ * The site consumes the brand tokens directly — single source of truth,
+ * no duplicated values to drift. brand/tokens.css keeps the same
+ * variable names the ColorControl retention widget manipulates, so it
+ * can be remounted later without changes.
  */
-:root {
-  --background: #fafaf8;
-  --foreground: #52525b;
-  --foreground-strong: #18181b;
-  --foreground-muted: #a1a1aa;
-  --border: #e4e4e7;
-}
+@import "../../brand/tokens.css";
 
 @theme inline {
   --font-sans: var(--font-schibsted), "Schibsted Grotesk", system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", monospace;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-foreground-strong: var(--foreground-strong);
