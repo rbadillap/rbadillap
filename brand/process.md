@@ -764,6 +764,29 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
 - Contrato → **v3.1**; templates re-headereados v3.1 (regla bump-both),
   cero cambios de shell.
 
+### R10. Registro declarativo — el contrato sin autobiografía → v3.2 (2026-08-14)
+
+- **Decisión (Ronny)**: "no lo hagas autobiográfico… hazlo declarativo
+  para que cualquier agente lea y sepa lo que tiene que hacer, no su
+  historia detrás; mira vercel.com/design.md". Referencia verificada:
+  vercel/design.md abre con definición de rol e imperativos presentes,
+  cero historia ("authoritative present-tense instruction, not
+  documented precedent").
+- **Reescritura completa de DESIGN.md**: mismas reglas, registro
+  declarativo. La sección "Context" (biografía + narrativa) se vuelve
+  "Identity" (el símbolo como spec + reglas imperativas). Fuera del
+  contrato: "Ronny is a…", "canonized after two generations converged",
+  "judged side-by-side by Ronny", "three independent agents converged",
+  "this shipped once", "a real document once…" — TODA esa historia vive
+  aquí, en process.md, y el contrato ahora lo dice explícitamente
+  ("read it to understand, never to override"). Las listas de nombres
+  muertos (dead aliases, clases renombradas) se conservan: son
+  deny-lists operativas, no anécdotas.
+- **Fix atrapado por la pasada**: "Mark rules" citaba
+  `src/components/logomark.tsx`, muerto desde R8 → `mark.tsx`.
+- Contrato → **v3.2**; templates re-headereados v3.2, cero cambios de
+  shell.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las

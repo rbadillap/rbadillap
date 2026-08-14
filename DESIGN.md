@@ -1,60 +1,18 @@
-# rbadillap design contract — v3.1
+# rbadillap design contract — v3.2
 
-**Version 3.1 — 2026-08-14.** The contract now lives at the repo root
-(`DESIGN.md`) as the project's source of knowledge — first thing an
-agent or person meets in this codebase; `/design.md` serves it
-unchanged. v3.0 (same day) changed the token language: the brand speaks
-shadcn's semantic vocabulary (see Visual system). Paper templates still
-speak the v2 names inside their frozen `@brand tokens` blocks until
-documents migrate to the React stack. The contract and the templates version
+**Version 3.2 — 2026-08-14.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
-header comments. An agent mid-generation must diff against the version
-it read — a generation started under one version delivers under it or
-re-syncs, never mixes.
+header comments. If you are mid-generation, diff against the version
+you read — deliver under it or re-sync, never mix versions.
 
-This document is the brand of Ronny Badilla (@rbadillap), written for the
-agent or person producing any surface that carries his name: the site
-(ronnybadilla.com), client proposals and quotes, and resumes. If you are
-an AI agent generating one of those documents, this contract is your
-system of record. You have not seen his previous documents; you do not
-need to. Everything you may use is published here.
-
-## Context
-
-Ronny is a product/DevOps/AI engineer. His brand voice is the same as his
-engineering voice: evidence leads, claims are checkable, restraint over
-spectacle. The visual identity is **the arc symbol**: a horizontal
-baseline, an arc emerging from it, three nodes marking origin, apex, and
-destination. Read it as the brand's thinking process —
-**baseline → emergence → synthesis → execution** — never literally as a
-bridge, an orbit, or a chart. The line is the base: structure, system,
-criterion, technical ground. The arc is an idea that emerges, rises,
-finds synthesis, and lands. The three dots are the starting point, the
-point of clarity, and the point of execution.
-
-The design must breathe that spirit rather than repeat the logo:
-minimal, analytical, sober, precise, generous white space, few and very
-intentional visual gestures. The brand does not shout; it should feel
-like a mind ordering complexity.
-
-The site extends the symbol into structure: a spine connects section
-nodes (each section is a decision point on the baseline), and the page
-closes where the symbol lands — a hairline meeting a dot. Documents
-inherit the same grammar at paper scale. The full symbol appears exactly
-once per surface, in the header lockup; everything else echoes its parts.
-
-Philosophical authority: `vaults/brand.md` (private, git-ignored — on
-Ronny's machine only). Its closing rule governs additions: every future
-element justifies itself under the symbol's reasoning or it does not
-enter. This contract operationalizes that document for agents; when both
-are readable, `vaults/brand.md` wins on intent, this contract wins on
-mechanics.
-
-Surfaces this contract governs:
-
-- **Site** — ronnybadilla.com (`src/` in this repo). Reference implementation.
-- **Proposal / quote** — letter documents from `brand/templates/proposal.html`.
-- **Resume** — letter documents from `brand/templates/resume.html`.
+This contract governs every surface that carries the rbadillap brand:
+the site (ronnybadilla.com, `src/` in this repo), client proposals and
+quotes (`brand/templates/proposal.html`), and resumes
+(`brand/templates/resume.html`). If you are generating one of those
+surfaces, this document is your system of record. You do not need any
+previous document; everything you may use is published here. The
+process history behind each rule lives in `brand/process.md` — read it
+to understand, never to override.
 
 ## Priority order
 
@@ -62,6 +20,35 @@ Surfaces this contract governs:
 2. The templates in `brand/templates/`. Start from them; never from scratch.
 3. Your composition judgment — free within 1 and 2: content structure,
    section order, how many pages, which published patterns to use.
+
+Intent authority: `vaults/brand.md` (private, git-ignored). When both
+are readable, it wins on intent; this contract wins on mechanics. Every
+new element must justify itself under the symbol's reasoning or it does
+not enter.
+
+## Identity
+
+The visual identity is **the arc symbol**: a horizontal baseline, an
+arc emerging from it, three nodes marking origin, apex, and
+destination. Read it as a thinking process —
+**baseline → emergence → synthesis → execution** — never literally as a
+bridge, an orbit, or a chart. The line is the base: structure, system,
+criterion, technical ground. The arc is an idea that emerges, rises,
+finds synthesis, and lands. The three dots are the starting point, the
+point of clarity, and the point of execution.
+
+- **Breathe the symbol; do not repeat the logo.** Make every surface
+  minimal, analytical, sober, precise — generous white space, few and
+  very intentional visual gestures. The brand does not shout; it reads
+  as a mind ordering complexity.
+- **Voice**: evidence leads, claims are checkable, restraint over
+  spectacle.
+- **The full symbol appears exactly once per surface**, in the header
+  lockup. Everything else echoes its parts — baseline, arc, node.
+- **On the site the symbol is structure**: a spine connects section
+  nodes (each section is a decision point on the baseline), and the
+  page closes where the symbol lands — a hairline meeting a dot.
+  Documents inherit the same grammar at paper scale.
 
 ## Work passes
 
@@ -82,20 +69,19 @@ Work in four passes, in order:
 
 Tokens live in `src/app/globals.css` and speak **shadcn's semantic
 vocabulary** with the brand's values, so components installed via
-`shadcn add` inherit the brand on arrival. Mapping from the contract's
-roles: strong ink → `--primary`, body → `--foreground`, muted →
-`--muted-foreground`, ground → `--background`, hairline → `--border`.
-Roles shadcn defines that the site does not yet use carry
-**brand-proposed derivations** in globals.css: each value is the
-brand's own answer, derived from doctrine (one ground that does not
-elevate; interaction deepens ink instead of introducing color; the one
-pigment marks the critical — hence `--destructive` proposes the
-terracotta, pending ratification). They are proposals, not defaults:
-none may appear on the site until its first use is ratified.
-`--radius` is `0` by mandate. Paper templates embed
-their values in a frozen `@brand tokens` block (v2 names) — that block
-is the paper source of truth until documents migrate. Never edit values
-inline; a value that differs from its source of truth is drift.
+`shadcn add` inherit the brand on arrival. Role mapping: strong ink →
+`--primary`, body → `--foreground`, muted → `--muted-foreground`,
+ground → `--background`, hairline → `--border`. Roles the site does not
+yet use carry **brand-proposed derivations** in globals.css — each
+value is the brand's own answer, derived from doctrine (one ground that
+does not elevate; interaction deepens ink instead of introducing color;
+the one pigment marks the critical, hence `--destructive` proposes the
+terracotta). Treat them as proposals, not defaults: none may appear on
+the site until its first use is ratified. `--radius` is `0` by mandate.
+Paper templates embed their values in a frozen `@brand tokens` block
+(v2 names) — that block is the paper source of truth until documents
+migrate. Never edit values inline; a value that differs from its source
+of truth is drift.
 
 - **Ground**: warm paper `--background: #fafaf8` — never pure white.
   Hairlines `--border: #e4e4e7`.
@@ -106,8 +92,7 @@ inline; a value that differs from its source of truth is drift.
   the zinc ladder than on the web — smaller type needs more contrast.
   That difference is a rule, not an inconsistency.
 - **Accent**: `--accent: #9f4b37` (terracotta), **paper only** — the
-  site stays strictly monochrome. Canonized after two independent
-  generations converged on terracotta. THE LAW: exactly three published
+  site stays strictly monochrome. THE LAW: exactly three published
   uses, all marking the SAME critical dimension of the document —
   `.row-id.hot` for its critical reference(s), the diagram's `.hot`
   node/flow for its critical path, and at most ONE `.callout.accent`.
@@ -117,7 +102,7 @@ inline; a value that differs from its source of truth is drift.
   interaction-surface step, brand-proposed and unused) that happens to
   share the name; this terracotta law governs the paper accent — and
   the web proposes the same pigment for `--destructive`, an extension
-  of this law that Ronny ratifies or rejects at first use.
+  of this law ratified or rejected at first use.
 - **Type**: Schibsted Grotesk for prose; JetBrains Mono for labels,
   identifiers, metadata, code — always uppercase with letter-spacing when
   used as a label. The mono is technical register — schematic annotation,
@@ -159,10 +144,8 @@ countable against the section structure.
 
 ## Published grammar
 
-These patterns are canon. They were extracted from real documents two
-independent agents produced under deadline; where both converged, the
-pattern was canonized. Use them by their published class names — never
-synonyms, never re-implementations.
+These patterns are canon. Use them by their published class names —
+never synonyms, never re-implementations.
 
 **Hairline doctrine** — every border answers to these rules:
 
@@ -234,9 +217,9 @@ synonyms, never re-implementations.
   (grid with `--border` as gap background). One anatomy, many jobs:
   at-a-glance summaries, commercial terms, credentials. `.figures`
   amplifies each cell's strong to `--text-md` for rates, ranges, and
-  totals (the stat strip). A real document once named this anatomy
-  three ways (`.summary-grid`, `.commercial-grid`, `.credential-grid`)
-  — those names are dead; the pattern is `.memo`.
+  totals (the stat strip). Dead aliases for this anatomy —
+  `.summary-grid`, `.commercial-grid`, `.credential-grid` — must not
+  return; the pattern is `.memo`.
 - `.callout` — 2px left border in strong, soft text, optional `strong`
   title line, no background fill. For scope boundaries, principles, and
   ownership statements. `.callout.accent` (max one per document) borders
@@ -263,9 +246,8 @@ synonyms, never re-implementations.
 - `.footer` — mono, muted, hairline top border: identity left,
   `NN / NN` pagination right. Every document page has one.
 - **Diagrams (SVG)** — `.diagram`, styled ONLY through the published
-  `d-*` classes; never through SVG presentation attributes (the
-  pre-contract diagrams hardcoded fonts and hex per `<text>` and drifted
-  in every copy). Anatomy: `.d-zone` (rounded boundary wash with a
+  `d-*` classes; never through SVG presentation attributes. Anatomy:
+  `.d-zone` (rounded boundary wash with a
   `.d-eyebrow` label), `.d-node` (white card, strong stroke; `.open` =
   dashed muted for undecided; `.focal` = filled strong with `.d-title
   .inverse`; `.hot` = the accent-law critical node), `.d-flow`
@@ -279,14 +261,12 @@ synonyms, never re-implementations.
 
 ## Dark variant (web only)
 
-Dark is not light with its values flipped. Three independent agents,
-given three different briefs, converged on one identity: **dark is the
-unlit technical plane, where everything legible is emitted light,
-administered exactly as light mode administers ink.** "White dominates"
-was never a law about white — it is a law about ration: the unmarked
-field dominates and the mark is spent sparingly, in the symbol's own
-order. That law survives unchanged; only the scarce resource changes
-hands.
+**Dark is the unlit technical plane, where everything legible is
+emitted light, administered exactly as light mode administers ink.**
+Dark is not light with its values flipped. The governing law is ration,
+not color: the unmarked field dominates and the mark is spent
+sparingly, in the symbol's own order — in light the scarce resource is
+ink; in dark it is light.
 
 - Scope: the web. The OS decides by default
   (`@media (prefers-color-scheme: dark)`); pressing **D** overrides in
@@ -308,9 +288,9 @@ hands.
   reader's hand — `::selection` resolves to strong-on-ground through
   the same variables. A dark surface with white text is off-brand by
   definition.
-- The historical dark (the pre-redesign site) seated its ground on
-  `#18181b`; that value is now strong ink, and a ground that doubles
-  as an ink value is the mirror's fingerprint — rejected.
+- **Never seat the dark ground on an ink value.** `#18181b` is strong
+  ink in light mode; a ground that doubles as an ink value reads as
+  light mode mirrored, which dark must never be.
 - The accent stays paper-only. In dark, light itself is the accent.
 - The mark keeps its geometry and inherits `currentColor`; the favicon
   (`src/app/icon.svg`) carries the dark paint via its own media query.
@@ -329,7 +309,7 @@ hands.
 - **Paper**: pt units from the published scale, anchored to a 15px
   (11.25pt) body reading size — these documents are read on screen as
   PDFs far more often than printed, and the identity reads at 15 on
-  every medium (judged side-by-side against 16). Letter size. Proposal
+  every medium. Letter size. Proposal
   pages are fixed-height (`11in`, overflow hidden) — balance content per
   page by hand. Resumes flow and break naturally. On screen the sheet is
   emulated (shadow over `#e4e4e2`); print leaves paper unpainted and
@@ -338,7 +318,7 @@ hands.
   `@media screen and (max-width: 820px)` — never an unqualified media
   query. Letter paper lays out at 816px, UNDER the 820px breakpoint: an
   unqualified query makes every PDF print the mobile layout and bleed
-  across sheets. This shipped once; the qualifier is not optional.
+  across sheets. The qualifier is not optional.
 - **Paper breathes.** White space is part of the spirit, not slack to
   reclaim. The templates' spacing rhythm (section gaps, cell padding,
   line-heights) is grammar — when content fights the page, cut content
@@ -349,8 +329,7 @@ hands.
 - **Language**: documents are written in English or Spanish as the
   client requires. Spanish keeps its accents everywhere, including mono
   uppercase labels (ACEPTACIÓN, not ACEPTACION). Currency keeps the
-  `USD 2,400` grouping in both languages, as the existing document
-  corpus does.
+  `USD 2,400` grouping in both languages.
 
 ## Mark rules
 
@@ -366,55 +345,46 @@ footer's identity line instead.
 - Small sizes: `brand/mark-32.svg` (favicon geometry) recalibrates
   strokes (1.5 baseline / 1.75 arc) for legibility. Below ~90px wide, use
   the 32px variant's proportions.
-- The site component (`src/components/logomark.tsx`), the favicon
+- The site component (`src/components/mark.tsx`), the favicon
   (`src/app/icon.svg`), and both SVG files must stay geometrically
   identical. A change to the mark is a brand decision, not an edit.
 
 ## Rejected reflexes
 
-Named failures observed in real generated documents, plus standing
-prohibitions. Do not:
+Standing prohibitions. Each one names a failure mode that has already
+occurred at least once (the case files live in `brand/process.md`).
+Do not:
 
 - Invent token names (`--paper`, `--line`, `--text`, `--strong`,
-  `--ink`, `--canvas`, `--wash`, `--soft` are dead aliases from
-  pre-contract documents) or restate token values inline.
-- Warm-shift the gray ladder (#5f5f67, #7a7a83, #dededb appeared in one
-  pre-contract document) — the ladder is zinc, exact values only. A
-  warm ladder is a recorded open thread, not a per-document choice.
+  `--ink`, `--canvas`, `--wash`, `--soft` are dead aliases and must not
+  return) or restate token values inline.
+- Warm-shift the gray ladder — the ladder is zinc, exact values only.
+  A warm ladder is a recorded open thread, not a per-document choice.
 - Give a callout (or anything else) a background wash — the system has
   no surface fills; boundaries are borders and air.
 - Introduce a color — including "just one accent". The accent slot is
-  empty by decision, not by omission.
+  governed by the accent law; it is not open.
 - Introduce a font, a weight the templates don't load, or an off-scale
-  size (the pre-contract documents drifted to 9.2pt vs 9.3pt vs 9.5pt
-  bodies; the scale exists so that cannot happen again).
-- Drop the dot from `.section-label` (a pre-contract resume did; the dot
-  is canon).
+  size. The scale exists so drifted bodies cannot happen.
+- Drop the dot from `.section-label` — the dot is canon.
 - Set a section's internal annotations (table `th`, keys, eyebrows) at
-  the same ink and weight as its `.section-label` — pre-contract
-  documents did, and section titles drowned in their own contents. The
-  title holds soft/Medium; annotations hold muted/Regular.
-- Redraw the arc from memory (pre-contract documents hand-copied it 20+
-  times; two copies already differ in stroke opacity).
+  the same ink and weight as its `.section-label` — section titles
+  drown in their own contents. The title holds soft/Medium; annotations
+  hold muted/Regular.
+- Redraw the arc from memory. Copy `brand/mark.svg` verbatim.
 - Rename published classes or create synonyms (`.decision-table`,
-  `.delivery-table`, `.positions`, `.method` were four names for two
-  patterns; the canon is `.data-table` and `.cards`; `.terms` was a
-  bordered variant of `.rows` and is dead).
-- Close a component with a trailing border, or frame one with borders —
-  pre-contract tables ended in an orphan hairline that collided with the
-  next section-label. Borders separate siblings or ground a head;
-  components end with air.
+  `.delivery-table`, `.positions`, `.method`, `.terms` are dead names
+  and must not return; the canon is `.data-table`, `.cards`, `.rows`).
+- Close a component with a trailing border, or frame one with borders.
+  Borders separate siblings or ground a head; components end with air.
 - Use inline `style` attributes anywhere except widths on `<col>`.
   Spacing tweaks get a published class (`.flush`) or nothing.
-- Rebuild the stylesheet by eye instead of carrying the template block —
-  a real document imitated the system at 90% and shaved ~8% of the air
-  across every padding, invented a `.compact` table modifier with an
-  off-scale 9.35pt, and renamed the diagram classes. Near-compliance IS
-  drift; only the verbatim template block is compliance.
-- Claim the brand in a provenance comment the document does not honor —
-  the same imitation opened with "rbadillap brand v1.6" while carrying
-  none of the v1.6 tokens block. The provenance comment states the
-  template + version actually copied, nothing else.
+- Rebuild the stylesheet by eye instead of carrying the template block.
+  Near-compliance IS drift; only the verbatim template block is
+  compliance.
+- Claim the brand in a provenance comment the document does not honor.
+  The provenance comment states the template + version actually copied,
+  nothing else.
 - Substitute ASCII for the brand's typographic voice: separators are
   `·` (never ` - `), arrows are `→` (never `>`), and Spanish keeps its
   accents (San José, not San Jose).
@@ -422,9 +392,8 @@ prohibitions. Do not:
   6–7px, stock imagery, icons, emoji, or decorative SVG.
 - Use scroll-triggered reveals, hover motion, parallax, or any animation
   in documents.
-- Compress spacing or line-height to make content fit a page — the
-  pre-contract specimens were densified exactly this way, page by page,
-  until nothing breathed. Cut content or add a page instead.
+- Compress spacing or line-height to make content fit a page. Cut
+  content or add a page instead.
 - Manufacture certainty: no hype adjectives, no fake deadlines, no
   unverifiable claims. Evidence columns exist so claims can carry proof.
 
@@ -445,17 +414,15 @@ Before delivering, verify:
 5. Labels are mono, uppercase, tracked; prose is sans; nothing mixed.
 6. Every section opens with a complete `.section-label` (dot included).
 7. Token values match the template's frozen `@brand tokens` block —
-   the paper source of truth until documents migrate (the historical
-   `brand/tokens.css` is retired; web tokens live in
-   `src/app/globals.css`). No token may be added, dropped, or altered.
+   the paper source of truth until documents migrate; web tokens live
+   in `src/app/globals.css`. No token may be added, dropped, or altered.
 8. Footer paginated `NN / NN`; proposal pages don't overflow their 11in.
 9. Print verification is VISUAL, not just counted: sheet count equals
    page count AND an actual look at rendered sheets confirms the paper
-   layout (no mobile collapse, no bleed, footers at the base). A
-   correct count over a broken layout has happened.
+   layout (no mobile collapse, no bleed, footers at the base).
 10. No fill-in comments or `{{slots}}` remain; one provenance comment
     (template + version) identifies the origin.
 
-And the master question, from the canon: does the result feel like an
-extension of the symbol, or just another modern document? If the latter,
-reduce, align, and add intention until it does.
+And the master question: does the result feel like an extension of the
+symbol, or just another modern document? If the latter, reduce, align,
+and add intention until it does.
