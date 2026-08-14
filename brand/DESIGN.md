@@ -1,6 +1,6 @@
-# rbadillap design contract — v1.8 (light mode)
+# rbadillap design contract — v1.9
 
-**Version 1.8 — 2026-08-13.** The contract and the templates version
+**Version 1.9 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -216,6 +216,40 @@ synonyms, never re-implementations.
   appears). Text sizes are viewBox units from the published set (12
   titles, 8 annotations, 7 refs). A diagram that needs a color outside
   the system is a diagram that needs redesigning.
+
+## Dark variant (web only)
+
+Dark is not light with its values flipped. Three independent agents,
+given three different briefs, converged on one identity: **dark is the
+unlit technical plane, where everything legible is emitted light,
+administered exactly as light mode administers ink.** "White dominates"
+was never a law about white — it is a law about ration: the unmarked
+field dominates and the mark is spent sparingly, in the symbol's own
+order. That law survives unchanged; only the scarce resource changes
+hands.
+
+- Scope: the web, via `@media (prefers-color-scheme: dark)` in
+  `brand/tokens.css` — no toggle, no `[data-theme]`. **Paper is always
+  light**: print has no dark mode, and the `.paper` scope pins every
+  role so no OS scheme can flip a document. The templates' embedded
+  token blocks therefore restate the paper-relevant values only; the
+  dark block lives in `tokens.css` alone.
+- Tokens: ground `#0a0a0a` (off-ladder and UNTINTED — the unlit plane
+  is not a material, so unlike the warm paper it takes no cast; the
+  ground is a ground, the ink is the ladder). Strong `#d4d4d8`
+  (zinc-300 — emitted light blooms where deposited ink does not, so
+  the strongest role stops one rung short of the top: firm, never a
+  lamp). Body `#a1a1aa`, muted `#71717a`, border `#27272a`.
+- **Nothing static reaches white.** Full light exists only under the
+  reader's hand — `::selection` resolves to strong-on-ground through
+  the same variables. A dark surface with white text is off-brand by
+  definition.
+- The historical dark (the pre-redesign site) seated its ground on
+  `#18181b`; that value is now strong ink, and a ground that doubles
+  as an ink value is the mirror's fingerprint — rejected.
+- The accent stays paper-only. In dark, light itself is the accent.
+- The mark keeps its geometry and inherits `currentColor`; the favicon
+  (`src/app/icon.svg`) carries the dark paint via its own media query.
 
 ## Per-medium rules
 

@@ -27,10 +27,37 @@
 }
 
 /*
+ * Dark variant — WEB ONLY (decision Ronny 2026-08-13, specimen A judged
+ * against B, C and the historical dark). Thesis, converged 3/3 by
+ * independent agents: dark is not light inverted — it is the unlit
+ * technical plane, where everything legible is EMITTED light,
+ * administered exactly as light mode administers ink. Nothing static
+ * reaches white; full light exists only under the reader's hand
+ * (::selection resolves to strong-on-ground via the same variables).
+ * The ground takes no tint ("the unlit plane is not a material") and
+ * sits off-ladder, as the paper does — the ground is a ground, the
+ * ink is the ladder. Paper documents are ALWAYS light: print has no
+ * dark mode; the .paper scope below pins every value.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;        /* the unlit plane — off-ladder, untinted */
+    --foreground: #a1a1aa;        /* body — the historical dark's own body */
+    --foreground-strong: #d4d4d8; /* zinc-300 — one rung short of the top; firm, never a lamp */
+    --foreground-muted: #71717a;  /* zinc-500 — whispers at the same distance */
+    --border: #27272a;            /* zinc-800 — the smallest step that still reads as a base */
+  }
+}
+
+/*
  * Paper medium (proposals, quotes, resumes — letter documents).
- * Scope a document body with class="paper".
+ * Scope a document body with class="paper". Paper is always light —
+ * every role is pinned here so no OS scheme can flip a document.
  */
 .paper {
+  --background: #fafaf8;
+  --border: #e4e4e7;
+  --foreground-strong: #18181b;
   /* one step darker per role */
   --foreground: #3f3f46;       /* zinc-700 — body on paper */
   --foreground-soft: #52525b;  /* zinc-600 — secondary text; paper-only role */

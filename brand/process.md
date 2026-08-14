@@ -491,6 +491,87 @@ Cuando Ronny dé la señal (contenido estable):
 5. Con el port aprobado: commit del repo + publicar `/design.md`
    (deploy), en ese orden.
 
+## Replay dark mode — EN CURSO (2026-08-13)
+
+Primera ejecución real de la sección de replay. Mandato de Ronny: dark
+mode no es poner colores opuestos — es crear un branding, con el mismo
+proceso del light.
+
+### R1. Dossier de insumos
+
+- **Histórico 1**: el sitio pre-rediseño era DARK por defecto, de la
+  mano de Ronny (`git show 1fd0210^:src/app/globals.css`): fondo
+  `#18181b`, texto `#a1a1aa`, strong `#e4e4e7`, muted `#71717a`, border
+  `#52525b`. La MISMA escalera zinc del light con roles rotados — la
+  tinta de hoy era el suelo de ayer. Semilla anti-inversión: el
+  material es la escalera; light/dark son posiciones sobre ella.
+- **Histórico 2**: `src/components/color-control.tsx` (widget muerto)
+  — su default también era dark zinc.
+- **Canon**: `vaults/brand.md` — "el blanco domina" es doctrina del
+  light; en dark se re-deriva qué domina, no se invierte.
+- **Decisiones de Ronny (2026-08-13)**: superficies v1 = SOLO WEB
+  (documentos siguen light; print siempre light — regla a canonizar);
+  mecanismo = auto por OS (`prefers-color-scheme`), cero UI nueva.
+- **Método paso 2**: 3 agentes ciegos entre sí, mismo encargo (home
+  dark standalone), lentes distintas — A ciego (solo contrato),
+  B histórico (+ paleta pre-rediseño), C filosófico (+ vaults/brand.md
+  y la pregunta "¿qué ES el dark mode de este símbolo?").
+
+### R2. Specimens entregados + auditoría de convergencia (2026-08-13)
+
+Los 3 agentes entregaron (A ciego, B histórico, C filosófico), ciegos
+entre sí. Auditoría con el estándar 2-votos:
+
+- **Tesis identitaria: 3/3 CONVERGEN** (canon): dark no es el light
+  invertido — es el plano técnico sin luz, donde lo legible es luz
+  EMITIDA y se administra como el light administra la tinta; la
+  oscuridad domina como el blanco domina en light ("que el blanco
+  domine" era ley de ración, no de color — lectura de C). Nada estático
+  alcanza el blanco: la luz plena existe solo bajo la mano del lector.
+- **Valores convergidos** (canon): strong `#d4d4d8` (zinc-300, 3/3
+  exacto — "un peldaño antes del tope; firme, nunca una lámpara");
+  body `#a1a1aa` (3/3 — el MISMO body del dark histórico de Ronny:
+  continuidad real); muted `#71717a` (2/3: A+B; C quería `#52525b` por
+  paridad perceptual — registrado); border `#27272a` zinc-800 (2/3:
+  A+B; C quería `#302f2b` más presente con la tesis "en el plano sin
+  luz la base ES el material, iluminado" — registrado).
+- **Principio del suelo: 3/3** — off-ladder ("el suelo es material, la
+  tinta es la escalera") y rechazo unánime del `#18181b` histórico
+  porque hoy es tinta strong ("un suelo que dobla como tinta es la
+  huella del espejo" — B).
+- **DIVERGENCIA A JUICIO: la temperatura del suelo.** A `#0a0a0a`
+  (neutro, sin tinte), B `#121316` (frío, +azul), C `#100f0d` (cálido —
+  simétrico del papel cálido). La única decisión identitaria abierta;
+  perceptual → compare de 4 paneles.
+- Secundaria a juicio: selection (A: luz strong emitida; B: apagada;
+  C: `#f4f4f5` luz plena solo bajo la mano — la única que cumple la
+  tesis 3/3 literalmente).
+- Specimen 0 (histórico exacto) reconstruido como panel de referencia.
+
+### R3. Veredicto y canonización → contrato v1.9 (2026-08-13)
+
+- **Juicio (Ronny): specimen A** — suelo neutro `#0a0a0a`, sin tinte
+  ("el plano apagado no es material, no lleva tinte").
+- **Meta-hallazgo mayor**: A era el agente CIEGO — solo el contrato.
+  El sistema sin insumos extra produjo el canon que el ojo de Ronny
+  eligió sobre la continuidad histórica y la lectura filosófica. El
+  test de agente-fresco del paso 6 queda satisfecho por construcción:
+  A ERA ese test.
+- **Canon dark (web only)**: ground `#0a0a0a` · strong `#d4d4d8` ·
+  body `#a1a1aa` (el mismo del histórico — continuidad emergente) ·
+  muted `#71717a` · border `#27272a` · selection = strong-on-ground vía
+  variables (luz plena solo bajo la mano). Leyes: nada estático alcanza
+  el blanco; el acento sigue siendo de papel — en dark la luz ES el
+  acento; papel SIEMPRE light (roles pineados en .paper).
+- **Implementado**: tokens.css (bloque `prefers-color-scheme: dark` +
+  pines light en .paper), DESIGN.md v1.9 (sección "Dark variant", no
+  fork), viewport themeColor dual, favicon con media query propia
+  (geometría intacta, solo pintura). Build verde; bloque dark
+  verificado en el CSS compilado.
+- El replay light→dark completo tomó ~40 minutos de pared: dossier →
+  3 specimens ciegos → auditoría → juicio → canon. El proceso
+  documentado funciona.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las
