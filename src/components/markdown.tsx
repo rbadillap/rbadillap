@@ -25,7 +25,7 @@ export function ContentMarkdown({
       </ExternalLink>
     ),
     p: ({ children }) => (
-      <p className={muted ? "text-foreground-muted" : undefined}>{children}</p>
+      <p className={muted ? "text-muted-foreground" : undefined}>{children}</p>
     ),
   }
 

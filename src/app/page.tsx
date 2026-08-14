@@ -2,9 +2,12 @@ import Link from "next/link"
 import { experience, home, projects } from "#content"
 
 import { ExternalLink } from "@/components/external-link"
-import { Logomark } from "@/components/logomark"
 import { ContentMarkdown } from "@/components/markdown"
 import { NewsletterForm } from "@/components/newsletter-form"
+import { Mark } from "@/components/ui/mark"
+import { Meta } from "@/components/ui/meta"
+import { Node } from "@/components/ui/node"
+import { Rule } from "@/components/ui/rule"
 
 const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
 const sortedExperience = [...experience].sort((a, b) => b.year.localeCompare(a.year))
@@ -14,16 +17,16 @@ export default function Home() {
     <main className="min-h-screen">
       <div className="mx-auto max-w-[560px] px-6 pb-16 pt-24">
         <header className="fade-up">
-          <Logomark className="mb-7 text-foreground-strong" />
-          <h1 className="text-(length:--text-md) font-medium text-foreground-strong">{home.name}</h1>
-          <p className="mt-0.5 text-(length:--text-sm) text-foreground-muted">{home.tagline}</p>
+          <Mark className="mb-7 text-primary" />
+          <h1 className="text-(length:--text-md) font-medium text-primary">{home.name}</h1>
+          <p className="mt-0.5 text-(length:--text-sm) text-muted-foreground">{home.tagline}</p>
         </header>
 
         <div className="relative">
           {/* the spine: one continuous base connecting every section node */}
-          <span
-            className="absolute bottom-[56px] left-[2px] top-[96px] w-px bg-border"
-            aria-hidden="true"
+          <Rule
+            orientation="vertical"
+            className="absolute bottom-[56px] left-[2px] top-[96px]"
           />
 
         <Section label="Now" className="fade-up fade-up-1">
@@ -49,7 +52,7 @@ export default function Home() {
           <div className="space-y-6">
             {home.services.map((service) => (
               <div key={service.title}>
-                <h3 className="font-medium text-foreground-strong">{service.title}</h3>
+                <h3 className="font-medium text-primary">{service.title}</h3>
                 <p>{service.description}</p>
               </div>
             ))}
@@ -61,7 +64,7 @@ export default function Home() {
             {sortedProjects.map((project) => (
               <div key={project.title}>
                 <h3
-                  className={`font-medium ${project.active ? "text-foreground-strong" : "text-foreground-muted"}`}
+                  className={`font-medium ${project.active ? "text-primary" : "text-muted-foreground"}`}
                 >
                   {project.active && project.url ? (
                     <ExternalLink href={project.url}>{project.title}</ExternalLink>
@@ -69,9 +72,9 @@ export default function Home() {
                     project.title
                   )}
                   {!project.active && (
-                    <span className="ml-2 font-mono text-(length:--text-2xs) font-normal uppercase tracking-[0.12em] text-foreground-muted">
+                    <Meta className="ml-2 font-normal tracking-[0.12em]">
                       Coming soon
-                    </span>
+                    </Meta>
                   )}
                 </h3>
                 <ContentMarkdown muted={!project.active}>{project.description}</ContentMarkdown>
@@ -101,8 +104,8 @@ export default function Home() {
 
         {/* the landing: the page closes where the symbol lands */}
         <div className="mt-[72px] flex items-center" aria-hidden="true">
-          <span className="h-px flex-1 bg-border" />
-          <span className="size-[5px] rounded-full bg-foreground-muted" />
+          <Rule className="flex-1" />
+          <Node className="bg-muted-foreground" />
         </div>
       </div>
     </main>
@@ -112,11 +115,9 @@ export default function Home() {
 function SectionLabel({ label }: { label: string }) {
   return (
     <div className="mb-7 flex items-center gap-2.5" aria-hidden="true">
-      <span className="size-[5px] shrink-0 rounded-full bg-foreground-strong" />
-      <span className="font-mono text-(length:--text-2xs) font-medium uppercase tracking-[0.16em] text-foreground-muted">
-        {label}
-      </span>
-      <span className="h-px flex-1 bg-border" />
+      <Node />
+      <Meta>{label}</Meta>
+      <Rule className="flex-1" />
     </div>
   )
 }
@@ -142,10 +143,10 @@ function ExperienceItem({ company, role, year }: { company: string; role: string
   return (
     <div className="flex items-baseline justify-between">
       <div>
-        <span className="font-medium text-foreground-strong">{company}</span>
+        <span className="font-medium text-primary">{company}</span>
         <span className="ml-2">{role}</span>
       </div>
-      <span className="font-mono text-(length:--text-xs) text-foreground-muted">{year}</span>
+      <Meta variant="data">{year}</Meta>
     </div>
   )
 }
@@ -156,7 +157,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
     <Link
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="-mx-1 -my-2 px-1 py-2 text-foreground transition-colors hover:text-foreground-strong"
+      className="-mx-1 -my-2 px-1 py-2 text-foreground transition-colors hover:text-primary"
     >
       {children}
     </Link>

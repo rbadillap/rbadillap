@@ -1,6 +1,9 @@
-# rbadillap design contract — v2.3
+# rbadillap design contract — v3.0
 
-**Version 2.3 — 2026-08-14.** The contract and the templates version
+**Version 3.0 — 2026-08-14.** This major revision changes the token
+language: the brand now speaks shadcn's semantic vocabulary (see Visual
+system). Paper templates still speak the v2 names inside their frozen
+`@brand tokens` blocks until documents migrate to the React stack. The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -74,15 +77,23 @@ Work in four passes, in order:
 
 ## Visual system
 
-Tokens live in `brand/tokens.css` and are embedded in each template inside
-a `/* @brand tokens v1 */` block. Never edit values inline; a value that
-differs from `tokens.css` is drift.
+Tokens live in `src/app/globals.css` and speak **shadcn's semantic
+vocabulary** with the brand's values, so components installed via
+`shadcn add` inherit the brand on arrival. Mapping from the contract's
+roles: strong ink → `--primary`, body → `--foreground`, muted →
+`--muted-foreground`, ground → `--background`, hairline → `--border`.
+Roles shadcn defines that the site does not yet use are declared
+provisional in globals.css and must not appear on the site until each
+earns its place; `--radius` is `0` by mandate. Paper templates embed
+their values in a frozen `@brand tokens` block (v2 names) — that block
+is the paper source of truth until documents migrate. Never edit values
+inline; a value that differs from its source of truth is drift.
 
 - **Ground**: warm paper `--background: #fafaf8` — never pure white.
   Hairlines `--border: #e4e4e7`.
 - **Text is zinc, monochrome first.** Roles, not colors:
-  `--foreground-strong` (headings, names, emphasis), `--foreground`
-  (body), `--foreground-soft` (secondary, paper only), `--foreground-muted`
+  `--primary` (headings, names, emphasis — the strong ink), `--foreground`
+  (body), `--foreground-soft` (secondary, paper only), `--muted-foreground`
   (labels, metadata, footers). On paper every role sits one step darker on
   the zinc ladder than on the web — smaller type needs more contrast.
   That difference is a rule, not an inconsistency.
@@ -93,7 +104,11 @@ differs from `tokens.css` is drift.
   `.row-id.hot` for its critical reference(s), the diagram's `.hot`
   node/flow for its critical path, and at most ONE `.callout.accent`.
   Never prose, never fills, never every id (if everything is accented,
-  nothing is), never any other value.
+  nothing is), never any other value. Name collision, resolved: shadcn's
+  `--accent` in `src/app/globals.css` is a DIFFERENT role (an
+  interaction-surface tint from the zinc ladder, provisional) that
+  happens to share the name; this terracotta law governs the paper
+  accent only.
 - **Type**: Schibsted Grotesk for prose; JetBrains Mono for labels,
   identifiers, metadata, code — always uppercase with letter-spacing when
   used as a label. The mono is technical register — schematic annotation,
@@ -108,6 +123,29 @@ differs from `tokens.css` is drift.
   pt on paper (px = pt × 4/3); the 15 anchor is identical in both
   media. Never an off-scale size on either medium — the site consumes
   the tokens (`text-(length:--text-*)`), not literals.
+
+## Site component layer
+
+On the site, the symbol's grammar is embodied as four primitives in
+`src/components/ui/`, built with shadcn's internal anatomy (flat
+functions typed `React.ComponentProps`, props spread, `data-slot` on
+every part, `cn()` with the consumer's className last, `cva` only where
+real variants exist, no behavior dependencies):
+
+- **`Node`** — the dot (5px). Default strong ink; the consumer may
+  soften it (`bg-muted-foreground` at the landing).
+- **`Rule`** — the baseline. `orientation` horizontal (hairlines) or
+  vertical (the spine is a vertical Rule).
+- **`Meta`** — the mono register. Variants: `label` (uppercase,
+  tracked — section labels, tags) and `data` (years, dates).
+- **`Mark`** — the arc lockup (150×42), the only place the full symbol
+  appears.
+
+Gestures are compositions, not components: a section label is
+`Node + Meta + Rule`; the page's landing is `Rule + Node`. The
+`data-slot` attributes make the grammar auditable from the DOM: on the
+homepage, `mark` appears exactly once; nodes, rules, and metas are
+countable against the section structure.
 
 ## Published grammar
 
@@ -248,8 +286,8 @@ hands.
   modifier held. **Paper is always light**: print has no dark mode, and
   the `.paper` scope pins every role so no OS scheme can flip a
   document. The templates' embedded token blocks therefore restate the
-  paper-relevant values only; the dark blocks live in `tokens.css`
-  alone.
+  paper-relevant values only; the dark blocks live in
+  `src/app/globals.css` alone.
 - Tokens: ground `#0a0a0a` (off-ladder and UNTINTED — the unlit plane
   is not a material, so unlike the warm paper it takes no cast; the
   ground is a ground, the ink is the ladder). Strong `#d4d4d8`
@@ -306,8 +344,9 @@ hands.
 
 ## Mark rules
 
-The arc mark appears on every surface, at the top, in
-`--foreground-strong`. A multi-page document is ONE surface: the mark
+The arc mark appears on every surface, at the top, in the strong ink
+(`--primary` on the web, `--foreground-strong` in the paper templates'
+frozen vocabulary). A multi-page document is ONE surface: the mark
 opens page 1 and appears nowhere else; continuation pages carry the
 footer's identity line instead.
 
@@ -395,9 +434,10 @@ Before delivering, verify:
    decision, a boundary, or a base — or it goes.
 5. Labels are mono, uppercase, tracked; prose is sans; nothing mixed.
 6. Every section opens with a complete `.section-label` (dot included).
-7. Token values match `brand/tokens.css` — the template's `@brand
-   tokens` block restates values without comments; every value must
-   agree, and no token may be added, dropped, or altered.
+7. Token values match the template's frozen `@brand tokens` block —
+   the paper source of truth until documents migrate (the historical
+   `brand/tokens.css` is retired; web tokens live in
+   `src/app/globals.css`). No token may be added, dropped, or altered.
 8. Footer paginated `NN / NN`; proposal pages don't overflow their 11in.
 9. Print verification is VISUAL, not just counted: sheet count equals
    page count AND an actual look at rendered sheets confirms the paper

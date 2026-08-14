@@ -1,20 +1,116 @@
 @import "tailwindcss";
 
 /*
- * The site consumes the brand tokens directly — single source of truth,
- * no duplicated values to drift. Light, dark, and the paper pins all
- * live in brand/tokens.css.
+ * rbadillap brand tokens — shadcn vocabulary, brand values.
+ * Source of truth for the site (contract: brand/DESIGN.md). The brand
+ * speaks shadcn's semantic token names so installed components inherit
+ * the brand on arrival. Mapping from the contract's roles:
+ *   ground → --background · body (zinc-600) → --foreground
+ *   strong ink (zinc-900) → --primary · muted (zinc-400) → --muted-foreground
+ *   hairline → --border
+ * The palette is Tailwind zinc over warm paper. Paper documents
+ * (proposals, resumes) are postponed: their values live frozen inside
+ * brand/templates/*.html until that migration.
  */
-@import "../../brand/tokens.css";
+
+:root {
+  /* ground */
+  --background: #fafaf8; /* warm paper — never pure white */
+  --border: #e4e4e7;     /* zinc-200 — hairlines, rules, table borders */
+
+  /* text roles */
+  --foreground: #52525b;       /* zinc-600 — body */
+  --primary: #18181b;          /* zinc-900 — strong ink: headings, names, emphasis */
+  --primary-foreground: #fafaf8;
+  --muted-foreground: #a1a1aa; /* zinc-400 — labels, metadata, footers */
+
+  /* provisional until first use — derived from the zinc ladder so a
+   * future `shadcn add` lands on brand instead of defaults. The site
+   * itself must not use these until each earns its place. */
+  --card: #fafaf8;
+  --card-foreground: #52525b;
+  --popover: #fafaf8;
+  --popover-foreground: #52525b;
+  --secondary: #f4f4f2;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f2;
+  --accent: #f4f4f2;
+  --accent-foreground: #18181b;
+  --destructive: #dc2626;
+  --input: #e4e4e7;
+  --ring: #18181b;
+
+  /* radius 0 — contract mandate for the site (no rounds, no shadows) */
+  --radius: 0rem;
+
+  /* type */
+  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* type scale — ONE scale, two units. Web (px) renderings of the same
+   * rungs the paper medium declares in pt (px = pt × 4/3); the 15
+   * anchor is identical in both media. Never an off-scale size. */
+  --text-2xs: 10.5px;  /* mono micro: section labels, tags, subscribe */
+  --text-xs: 12px;     /* mono meta: years, dates */
+  --text-sm: 13.5px;   /* taglines, secondary nav, form status */
+  --text-body: 15px;   /* prose — the anchor */
+  --text-md: 16px;     /* the name (h1) — one step, ink still leads */
+  --text-lg: 20px;     /* reserved: article h2 (writing surface) */
+}
+
+/*
+ * Dark — WEB ONLY. Not light inverted: the unlit technical plane, where
+ * everything legible is EMITTED light, administered exactly as light
+ * mode administers ink. Nothing static reaches white; full light exists
+ * only under the reader's hand (::selection). The ground takes no tint
+ * and sits off-ladder, as the paper does. Full doctrine: brand/DESIGN.md.
+ * Mechanism: the OS decides by default; the D key overrides in either
+ * direction via data-theme (no icon — the toggle is knowledge, not
+ * chrome). Values appear in both blocks by necessity — keep them equal.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0a0a0a;        /* the unlit plane — off-ladder, untinted */
+    --foreground: #a1a1aa;        /* body */
+    --primary: #d4d4d8;           /* zinc-300 — one rung short of the top; firm, never a lamp */
+    --primary-foreground: #0a0a0a;
+    --muted-foreground: #71717a;  /* zinc-500 — whispers at the same distance */
+    --border: #27272a;            /* zinc-800 — the smallest step that still reads as a base */
+  }
+}
+:root[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #a1a1aa;
+  --primary: #d4d4d8;
+  --primary-foreground: #0a0a0a;
+  --muted-foreground: #71717a;
+  --border: #27272a;
+}
 
 @theme inline {
   --font-sans: var(--font-schibsted), "Schibsted Grotesk", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-foreground-strong: var(--foreground-strong);
-  --color-foreground-muted: var(--foreground-muted);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: var(--radius);
+  --radius-sm: var(--radius);
 }
 
 @layer base {
@@ -36,7 +132,7 @@ html {
 }
 
 ::selection {
-  background: var(--foreground-strong);
+  background: var(--primary);
   color: var(--background);
 }
 

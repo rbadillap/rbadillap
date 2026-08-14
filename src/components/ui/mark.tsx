@@ -1,12 +1,18 @@
-export function Logomark({ className }: { className?: string }) {
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+function Mark({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <svg
-      className={className}
+      data-slot="mark"
       width="150"
       height="42"
       viewBox="0 0 150 42"
       fill="none"
       aria-hidden="true"
+      className={cn(className)}
+      {...props}
     >
       <line x1="0" y1="34" x2="150" y2="34" stroke="currentColor" strokeWidth="1" opacity="0.9" />
       <path d="M 49 34 A 26 26 0 0 1 101 34" stroke="currentColor" strokeWidth="1.4" fill="none" />
@@ -16,3 +22,5 @@ export function Logomark({ className }: { className?: string }) {
     </svg>
   )
 }
+
+export { Mark }

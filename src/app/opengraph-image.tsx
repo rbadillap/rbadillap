@@ -21,8 +21,8 @@ export default async function OpengraphImage() {
     loadGoogleFont("JetBrains Mono", 400, tagline),
   ])
 
-  // palette mirrors brand/tokens.css (satori cannot read CSS vars):
-  // #fafaf8 --background, #18181b --foreground-strong, #a1a1aa --foreground-muted
+  // palette mirrors src/app/globals.css (satori cannot read CSS vars):
+  // #fafaf8 --background, #18181b --primary, #a1a1aa --muted-foreground
   return new ImageResponse(
     (
       <div
@@ -34,7 +34,7 @@ export default async function OpengraphImage() {
           background: "#fafaf8",
         }}
       >
-        {/* the arc, scaled from Logomark (viewBox 150x42) to the 1200x630 canvas */}
+        {/* the arc, scaled from the Mark primitive (viewBox 150x42) to the 1200x630 canvas */}
         <svg
           width="1200"
           height="630"

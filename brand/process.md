@@ -696,6 +696,43 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
   la OG card renderiza el tagline nuevo en JetBrains Mono. Juicio
   visual de Ronny: pendiente.
 
+### R8. El branding a partir de shadcn — primitivos del símbolo → contrato v3.0 (2026-08-14)
+
+- **Origen (Ronny)**: "no puedo mantener dos cosas al mismo tiempo, o
+  estoy en react/next o en html/css" → migrar el branding a su stack.
+  Scope explícito: SOLO el homepage actual; proposals/resumes ignorados
+  hasta un task futuro. Segunda corrección suya, rechazando el primer
+  plan (nomenclatura propia + `.paper` heredado): "shadcn es 100%
+  customizable y el branding podría crearse a partir de ahí" — la marca
+  se expresa como theme shadcn, no como vocabulario paralelo.
+- **Anatomía adoptada** (leída del source en el fork
+  `~/code/github/rbadillap/ui`, registry new-york-v4): funciones planas
+  `React.ComponentProps` + spread, `data-slot` en cada parte, `cn()`
+  className-último, `cva` solo con variantes reales, cero Radix sin
+  comportamiento.
+- **Tokens**: `brand/tokens.css` eliminado; `src/app/globals.css` es la
+  fuente única, en vocabulario shadcn con valores de marca. Mapping:
+  strong→`--primary`, body→`--foreground`, muted→`--muted-foreground`,
+  ground→`--background`, hairline→`--border`. Roles sin uso declarados
+  provisionales (escalera zinc); `--radius: 0` por mandato. Colisión
+  `--accent` resuelta en DESIGN.md: el de shadcn es tint de superficie,
+  la ley terracota gobierna solo papel. `.paper` NO migró — documentos
+  pospuestos; sus valores viven congelados (nombres v2) en los bloques
+  `@brand tokens` de los templates.
+- **Primitivos** (`src/components/ui/`): `Node` (el punto), `Rule` (la
+  base; el spine es un Rule vertical), `Meta` (registro mono; variantes
+  label/data), `Mark` (el arco — único lugar del símbolo completo).
+  Los gestos son composiciones: section label = Node+Meta+Rule; el
+  aterrizaje = Rule+Node. `components.json` restaurado (baseColor zinc)
+  para `shadcn add` futuro. Deps nuevas: clsx, tailwind-merge, cva.
+- **Verificado (no inferido)**: paridad PIXEL-PERFECT — screenshots
+  antes/después (1280×900, light y dark) con MD5 idénticos; audit DOM:
+  `data-slot` mark=1, node=7 (6 secciones + landing), rule=8 (+spine),
+  meta=10; build estático limpio; cero referencias a la nomenclatura
+  vieja en `src/`.
+- Contrato → **v3.0** (cambio de lenguaje del sistema); templates
+  re-headereados v3.0 sin cambios de shell.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las
@@ -738,11 +775,11 @@ reglas por medio. Pasos parametrizados:
   staging; resolver al promover a `~/.claude/skills/`.
 - Superficie artículos: `vaults/articles/style.css` re-declara la paleta
   con una 3.ª nomenclatura (`--bg/--ink/--body/--muted/--line`) y medida
-  620px — integrarla a tokens.css cuando se construya la superficie de
-  escritura.
-- Dead files en el repo: `src/components/color-control.tsx` (no
-  importado por nadie; default dark zinc) y `components.json` (shadcn
-  sin componentes instalados) — limpiar o conservar, decisión de Ronny.
+  620px — integrarla a `src/app/globals.css` (vocabulario shadcn, R8)
+  cuando se construya la superficie de escritura.
+- ~~Dead files~~ RESUELTO (R8, 2026-08-14): `color-control.tsx` ya
+  estaba borrado en el branch; `components.json` volvió deliberadamente
+  (baseColor zinc) — Ronny quiere `shadcn add` pronto.
 - Dark mode: recorrer el replay de arriba (arranque: la paleta oscura
   pre-rediseño en git).
 - Factura: primera superficie nueva nacida del sistema (fuera de v1).
