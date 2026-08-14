@@ -1,6 +1,6 @@
-# rbadillap design contract — v1.7 (light mode)
+# rbadillap design contract — v1.8 (light mode)
 
-**Version 1.7 — 2026-08-13.** The contract and the templates version
+**Version 1.8 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -236,6 +236,11 @@ synonyms, never re-implementations.
   page by hand. Resumes flow and break naturally. On screen the sheet is
   emulated (shadow over `#e4e4e2`); print leaves paper unpainted and
   breaks pages. Both media collapse gracefully under 820px.
+- **Responsive rules are screen-only.** The mobile collapse is always
+  `@media screen and (max-width: 820px)` — never an unqualified media
+  query. Letter paper lays out at 816px, UNDER the 820px breakpoint: an
+  unqualified query makes every PDF print the mobile layout and bleed
+  across sheets. This shipped once; the qualifier is not optional.
 - **Paper breathes.** White space is part of the spirit, not slack to
   reclaim. The templates' spacing rhythm (section gaps, cell padding,
   line-heights) is grammar — when content fights the page, cut content
@@ -344,8 +349,10 @@ Before delivering, verify:
    tokens` block restates values without comments; every value must
    agree, and no token may be added, dropped, or altered.
 8. Footer paginated `NN / NN`; proposal pages don't overflow their 11in.
-9. Print preview: pages break where intended, paper unpainted, sheet
-   count equals page count.
+9. Print verification is VISUAL, not just counted: sheet count equals
+   page count AND an actual look at rendered sheets confirms the paper
+   layout (no mobile collapse, no bleed, footers at the base). A
+   correct count over a broken layout has happened.
 10. No fill-in comments or `{{slots}}` remain; one provenance comment
     (template + version) identifies the origin.
 

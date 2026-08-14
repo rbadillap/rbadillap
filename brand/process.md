@@ -443,6 +443,32 @@ Demás legislación integrada:
   quiere, pero no lo carga. La promoción del skill + /design.md público
   convierte imitación en cumplimiento.
 
+### 24. Bug de print: colapso móvil en PDF → contrato v1.8 (2026-08-13)
+
+- **Reporte (Ronny)**: los PDFs mostraban contenido superpuesto en cada
+  inicio de página. Diagnóstico por inspección VISUAL del PDF en el
+  navegador (screenshot): el PDF renderizaba el **layout móvil** (gates
+  apilados, tablas colapsadas).
+- **Causa raíz**: el media query responsive del template estaba SIN
+  calificar — `@media (max-width: 820px)` — heredado del specimen de
+  fable. Sin tipo `screen`, aplica a print; el papel carta imprime a
+  816px < 820px → colapso móvil en PDF → contenido desborda las páginas
+  fijas y sangra entre hojas. Explica también el 3-hojas-para-2-páginas
+  de la entrada 15 (el calc(11in-1px) fue curita sobre herida
+  equivocada; se conserva por el redondeo real).
+- **Ironía registrada**: proposal-min (la imitación) tenía el query
+  BIEN calificado — mi port le inyectó el bug al reemplazar su
+  stylesheet. La imitación corrigió al sistema en un punto; auditar en
+  ambas direcciones.
+- **Fix**: `@media screen and (max-width: 820px)` en template + ambos
+  ports (lab y workspace) + demos; PDFs regenerados y verificados
+  VISUALMENTE (página 8 del min: gate-flow horizontal, tablas de 3
+  columnas, cero sangrado).
+- **Legislado (v1.8)**: regla per-medium "responsive rules are
+  screen-only" + checklist 9 reescrito: la verificación de print es
+  visual, no solo conteo — "a correct count over a broken layout has
+  happened".
+
 ## Port pendiente: proposal.html (LCM) — procedimiento
 
 Cuando Ronny dé la señal (contenido estable):
