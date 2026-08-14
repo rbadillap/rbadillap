@@ -54,7 +54,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-background ${schibsted.variable} ${jetbrainsMono.variable}`}>
+    <html
+      lang="en"
+      className={`bg-background ${schibsted.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased">
         {/* anti-FOUC: apply the persisted D-key override before first paint */}
         <script

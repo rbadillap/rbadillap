@@ -15,8 +15,8 @@ export default function Home() {
       <div className="mx-auto max-w-[560px] px-6 pb-16 pt-24">
         <header className="fade-up">
           <Logomark className="mb-7 text-foreground-strong" />
-          <h1 className="text-base font-medium text-foreground-strong">{home.name}</h1>
-          <p className="mt-0.5 text-sm text-foreground-muted">{home.tagline}</p>
+          <h1 className="text-(length:--text-md) font-medium text-foreground-strong">{home.name}</h1>
+          <p className="mt-0.5 text-(length:--text-sm) text-foreground-muted">{home.tagline}</p>
         </header>
 
         <div className="relative">
@@ -69,7 +69,7 @@ export default function Home() {
                     project.title
                   )}
                   {!project.active && (
-                    <span className="ml-2 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-foreground-muted">
+                    <span className="ml-2 font-mono text-(length:--text-2xs) font-normal uppercase tracking-[0.12em] text-foreground-muted">
                       Coming soon
                     </span>
                   )}
@@ -89,7 +89,7 @@ export default function Home() {
 
         <footer className="fade-up fade-up-6 mt-[88px]">
           <SectionLabel label="Elsewhere" />
-          <nav className="flex gap-6 pl-[15px] text-sm">
+          <nav className="flex gap-6 pl-[15px] text-(length:--text-sm)">
             {home.elsewhere.map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}
@@ -113,7 +113,7 @@ function SectionLabel({ label }: { label: string }) {
   return (
     <div className="mb-7 flex items-center gap-2.5" aria-hidden="true">
       <span className="size-[5px] shrink-0 rounded-full bg-foreground-strong" />
-      <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.16em] text-foreground-muted">
+      <span className="font-mono text-(length:--text-2xs) font-medium uppercase tracking-[0.16em] text-foreground-muted">
         {label}
       </span>
       <span className="h-px flex-1 bg-border" />
@@ -145,7 +145,7 @@ function ExperienceItem({ company, role, year }: { company: string; role: string
         <span className="font-medium text-foreground-strong">{company}</span>
         <span className="ml-2">{role}</span>
       </div>
-      <span className="font-mono text-xs text-foreground-muted">{year}</span>
+      <span className="font-mono text-(length:--text-xs) text-foreground-muted">{year}</span>
     </div>
   )
 }

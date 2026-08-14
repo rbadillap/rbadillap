@@ -1,6 +1,6 @@
-# rbadillap design contract — v2.0
+# rbadillap design contract — v2.1
 
-**Version 2.0 — 2026-08-13.** The contract and the templates version
+**Version 2.1 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -100,9 +100,14 @@ differs from `tokens.css` is drift.
   never a marketing headline. Use the published scale
   (`--text-2xs` … `--text-title`); never invent a size.
 - **Hierarchy is ink first, size second.** Strong vs body vs muted does
-  the ranking. On the web, headings carry no size jump at all (the site's
-  h1 is body-size in medium weight). On paper, the scale provides size
-  steps, but ink still leads.
+  the ranking. On the web the name (h1) takes a single step over body
+  (`--text-md`, 16px over 15px) in medium weight — ink still leads. On
+  paper, the scale provides size steps, but ink still leads.
+- **One scale, two units.** The same `--text-*` rungs render in px on
+  the web (2xs 10.5 · xs 12 · sm 13.5 · body 15 · md 16 · lg 20) and in
+  pt on paper (px = pt × 4/3); the 15 anchor is identical in both
+  media. Never an off-scale size on either medium — the site consumes
+  the tokens (`text-(length:--text-*)`), not literals.
 
 ## Published grammar
 

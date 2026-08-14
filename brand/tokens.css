@@ -24,6 +24,16 @@
   /* type */
   --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+
+  /* type scale — ONE scale, two units. These are the web (px) renderings
+   * of the same rungs the paper scope re-declares in pt (px = pt × 4/3);
+   * the 15 anchor is identical in both media. Never an off-scale size. */
+  --text-2xs: 10.5px;  /* mono micro: section labels, tags, subscribe */
+  --text-xs: 12px;     /* mono meta: years, dates */
+  --text-sm: 13.5px;   /* taglines, secondary nav, form status */
+  --text-body: 15px;   /* prose — the anchor */
+  --text-md: 16px;     /* the name (h1) — one step, ink still leads */
+  --text-lg: 20px;     /* reserved: article h2 (writing surface) */
 }
 
 /*
