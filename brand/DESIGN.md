@@ -1,6 +1,6 @@
-# rbadillap design contract — v2.1
+# rbadillap design contract — v2.2
 
-**Version 2.1 — 2026-08-13.** The contract and the templates version
+**Version 2.2 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -166,7 +166,14 @@ synonyms, never re-implementations.
   Numeric columns (prices, quantities) take `.num`: right-aligned,
   tabular figures.
 - `.rows` — key/value grid: mono uppercase key column (~112pt), prose
-  value. Never carries borders — the keys do the separating.
+  value. Never carries borders — the keys do the separating. When an
+  item carries several facets of UNEQUAL rank, use the stanza: the
+  primary facet is the body; each secondary facet is a `.facet` line
+  opened by a `.facet-label` (mono micro, the table-th register). A
+  table's columns ration equal rank; the stanza ranks by typography —
+  choose the table when cross-item column scanning matters more than
+  hierarchy, the stanza when it doesn't. Facets scale to N without
+  redesign.
 - `.gate` — a hard condition. One meaning, context-dependent dress:
   inside `.gate-flow` it renders as a bordered card; inside `.rows` it
   renders inline in strong. The card dress is scoped to `.gate-flow` and

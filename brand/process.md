@@ -600,6 +600,37 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
   tabla-apéndice de vaults/brand.md podría ganar filas para la
   variante dark, el favicon dual y la tecla D.
 
+### R5. La estrofa — 4 facetas sin 4 columnas → contrato v2.2 (2026-08-13)
+
+- **Solicitud de última hora (Ronny)**: el agente LCM añadió una 4.ª
+  columna a las tablas de decisiones ("What we need to decide") —
+  información válida, jerárquicamente desigual. "¿Qué componente
+  propondrías?"
+- **Diagnóstico**: la geometría de tabla raciona rangos IGUALES; 4
+  columnas de prosa en carta = celdas ilegibles y jerarquía falsa.
+  Cuando los rangos son desiguales, la jerarquía migra de la geometría
+  a la tipografía — la gramática del sistema.
+- **Componente canonizado: la estrofa** — `.rows` + `.facet` /
+  `.facet-label` (registro th). Cuerpo = la faceta dominante; facetas
+  secundarias como líneas anotadas. Regla de elección en DESIGN.md:
+  tabla cuando el escaneo columnar entre items importa más que la
+  jerarquía; estrofa cuando no. Aprobado por juicio con demo de
+  contenido real.
+- **Aplicado en proposal.html LCM** (instrucción: "en proposal mas no
+  en ronny"): las 3 tablas de decisiones (D1–D12, 4 col) → estrofas
+  (key = decisión + row-id, cuerpo = what-we-need-to-decide, facetas =
+  evaluación y evidencia; D2 hot preservado). La tabla de
+  responsabilidades ("Ronny") y las demás 3-col SIGUEN siendo tablas.
+  Sitio y templates personales: sin cambios de layout — interpretación
+  registrada de "yo me quedo con las 4 columnas" (sus superficies
+  conservan tablas; corregible si refería otra cosa).
+- **Nota operativa**: el archivo vivo cambió DOS veces bajo mis pies
+  (agente LCM activo — 10 páginas nuevas, min-estructura, a las 18:59).
+  El pipeline se re-corrió sobre snapshot con guardia de diff antes de
+  instalar. Backup: proposal-tabla-phaseb.backup.html.
+- Verificado: 11 páginas, 0 desbordes, mapa resuelve, 24 facetas, cero
+  tablas 4-col, PDF 11 hojas con fuentes embebidas.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las

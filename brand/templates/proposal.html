@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  rbadillap brand — proposal/quote template (v1.8, light mode)
+  rbadillap brand — proposal/quote template (v2.2, light mode)
   Versioned WITH brand/DESIGN.md: any revision to either bumps both.
 
   For the agent filling this template:
@@ -262,6 +262,18 @@
   .rows .gate { color: var(--foreground-strong); font-weight: 600; }
   /* .rows never carries borders — the mono keys do the separating.
      A list that needs ledger weight is a .data-table, not a .rows. */
+  /* the stanza: when an item carries several facets of UNEQUAL rank, a
+     table's geometry rations equal rank — typography restores it. The
+     primary facet is the body; secondary facets are annotated lines. */
+  .rows .facet { margin-top: 5px; color: var(--foreground-soft); font-size: var(--text-xs); line-height: 1.45; }
+  .rows .facet-label {
+    margin-right: 8px;
+    color: var(--foreground-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 
   /* ---------- eyebrow: micro mono label inside cards ---------- */
   .eyebrow {
