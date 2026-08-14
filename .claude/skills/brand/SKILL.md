@@ -11,7 +11,7 @@ produce an on-brand result. Follow this sequence exactly.
 
 ## Sequence
 
-1. **Read the contract**: `brand/DESIGN.md` (repo root of
+1. **Read the contract**: `DESIGN.md` (repo root of
    ~/apps/rbadillap). It defines the visual system, the published
    grammar, the rejected reflexes, and the judgment checklist. The
    contract outranks any instinct or example you carry.

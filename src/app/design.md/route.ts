@@ -7,7 +7,7 @@ export const dynamic = "force-static"
 
 export function GET() {
   const contract = readFileSync(
-    join(process.cwd(), "brand", "DESIGN.md"),
+    join(process.cwd(), "DESIGN.md"),
     "utf-8",
   )
   return new Response(contract, {

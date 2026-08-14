@@ -746,6 +746,24 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
   de la ley del acento al web, ratificación pendiente.
   `--primary-foreground` ahora se auto-deriva: `var(--background)`.
 
+### R9. El contrato a la raíz — DESIGN.md como fuente de conocimiento → v3.1 (2026-08-14)
+
+- **Decisión (Ronny)**: "me quedaría con el DESIGN.md y lo muevo a la
+  raíz del proyecto, no solo por jerarquía, también como fuente de
+  conocimiento — pero asegúrate que así lo sea".
+- **Move**: `brand/DESIGN.md` → `DESIGN.md` (raíz). Referencias
+  actualizadas: `src/app/design.md/route.ts` (la ruta pública),
+  `.claude/skills/brand/SKILL.md`, comentarios de ambos templates,
+  comentarios de `globals.css`. Este log conserva sus menciones
+  históricas a `brand/DESIGN.md` sin reescribir.
+- **La garantía de "fuente de conocimiento"**: se creó `CLAUDE.md` en
+  la raíz del repo — se carga en TODA sesión de agente y ordena leer
+  DESIGN.md antes de producir nada visual o documental. Sin ese
+  puntero, la raíz solo hacía al contrato *descubrible*; con él es
+  *cargado*.
+- Contrato → **v3.1**; templates re-headereados v3.1 (regla bump-both),
+  cero cambios de shell.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las

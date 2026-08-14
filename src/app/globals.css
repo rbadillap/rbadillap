@@ -2,7 +2,7 @@
 
 /*
  * rbadillap brand tokens — shadcn vocabulary, brand values.
- * Source of truth for the site (contract: brand/DESIGN.md). The brand
+ * Source of truth for the site (contract: DESIGN.md). The brand
  * speaks shadcn's semantic token names so installed components inherit
  * the brand on arrival. Mapping from the contract's roles:
  *   ground → --background · body (zinc-600) → --foreground
@@ -28,7 +28,7 @@
    * Each value is the brand's own answer, derived from the contract's
    * doctrine, so the day a component needs the role the derivation is
    * already decided. None of these may appear on the site until its
-   * first use is ratified (brand/DESIGN.md). */
+   * first use is ratified (DESIGN.md). */
 
   /* surfaces do not elevate: one ground, no shadows — a card IS the paper */
   --card: var(--background);
@@ -78,7 +78,7 @@
  * everything legible is EMITTED light, administered exactly as light
  * mode administers ink. Nothing static reaches white; full light exists
  * only under the reader's hand (::selection). The ground takes no tint
- * and sits off-ladder, as the paper does. Full doctrine: brand/DESIGN.md.
+ * and sits off-ladder, as the paper does. Full doctrine: DESIGN.md.
  * Mechanism: the OS decides by default; the D key overrides in either
  * direction via data-theme (no icon — the toggle is knowledge, not
  * chrome). Values appear in both blocks by necessity — keep them equal.

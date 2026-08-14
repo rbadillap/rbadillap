@@ -1,9 +1,12 @@
-# rbadillap design contract — v3.0
+# rbadillap design contract — v3.1
 
-**Version 3.0 — 2026-08-14.** This major revision changes the token
-language: the brand now speaks shadcn's semantic vocabulary (see Visual
-system). Paper templates still speak the v2 names inside their frozen
-`@brand tokens` blocks until documents migrate to the React stack. The contract and the templates version
+**Version 3.1 — 2026-08-14.** The contract now lives at the repo root
+(`DESIGN.md`) as the project's source of knowledge — first thing an
+agent or person meets in this codebase; `/design.md` serves it
+unchanged. v3.0 (same day) changed the token language: the brand speaks
+shadcn's semantic vocabulary (see Visual system). Paper templates still
+speak the v2 names inside their frozen `@brand tokens` blocks until
+documents migrate to the React stack. The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
