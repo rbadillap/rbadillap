@@ -4,10 +4,10 @@ import { experience, home, projects } from "#content"
 import { ExternalLink } from "@/components/external-link"
 import { ContentMarkdown } from "@/components/markdown"
 import { NewsletterForm } from "@/components/newsletter-form"
-import { Mark } from "@/components/ui/mark"
-import { Meta } from "@/components/ui/meta"
-import { Node } from "@/components/ui/node"
-import { Rule } from "@/components/ui/rule"
+import { Mark } from "@/components/mark"
+import { Meta } from "@/components/meta"
+import { Node } from "@/components/node"
+import { Rule } from "@/components/rule"
 
 const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
 const sortedExperience = [...experience].sort((a, b) => b.year.localeCompare(a.year))

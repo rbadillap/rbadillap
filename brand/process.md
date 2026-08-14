@@ -732,6 +732,19 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
   vieja en `src/`.
 - Contrato → **v3.0** (cambio de lenguaje del sistema); templates
   re-headereados v3.0 sin cambios de shell.
+- **Corrección (Ronny, mismo día)**: (1) los primitivos se mueven de
+  `src/components/ui/` a `src/components/` — `ui/` queda RESERVADO para
+  lo que instale `shadcn add`. (2) Los roles sin uso NO se rellenan
+  "provisionales desde la escalera": lo correcto es que el branding
+  PROPONGA su derivación aunque nadie los use aún. Re-derivados con
+  doctrina: superficies no elevan (card/popover = `var(--background)`),
+  la interacción profundiza tinta (secondary/muted/accent = un aliento
+  de tinta `#f4f4f2` conservando el cast cálido; emitido `#18181b` en
+  dark), inputs sobre hairlines (`var(--border)`), focus = énfasis
+  (`var(--ring)` → primary), y `--destructive` propone la terracota
+  `#9f4b37` — el único pigmento de la marca marca lo crítico; extensión
+  de la ley del acento al web, ratificación pendiente.
+  `--primary-foreground` ahora se auto-deriva: `var(--background)`.
 
 ## Replay para una variante nueva (p. ej. dark mode)
 

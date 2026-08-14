@@ -82,9 +82,14 @@ vocabulary** with the brand's values, so components installed via
 `shadcn add` inherit the brand on arrival. Mapping from the contract's
 roles: strong ink → `--primary`, body → `--foreground`, muted →
 `--muted-foreground`, ground → `--background`, hairline → `--border`.
-Roles shadcn defines that the site does not yet use are declared
-provisional in globals.css and must not appear on the site until each
-earns its place; `--radius` is `0` by mandate. Paper templates embed
+Roles shadcn defines that the site does not yet use carry
+**brand-proposed derivations** in globals.css: each value is the
+brand's own answer, derived from doctrine (one ground that does not
+elevate; interaction deepens ink instead of introducing color; the one
+pigment marks the critical — hence `--destructive` proposes the
+terracotta, pending ratification). They are proposals, not defaults:
+none may appear on the site until its first use is ratified.
+`--radius` is `0` by mandate. Paper templates embed
 their values in a frozen `@brand tokens` block (v2 names) — that block
 is the paper source of truth until documents migrate. Never edit values
 inline; a value that differs from its source of truth is drift.
@@ -106,9 +111,10 @@ inline; a value that differs from its source of truth is drift.
   Never prose, never fills, never every id (if everything is accented,
   nothing is), never any other value. Name collision, resolved: shadcn's
   `--accent` in `src/app/globals.css` is a DIFFERENT role (an
-  interaction-surface tint from the zinc ladder, provisional) that
-  happens to share the name; this terracotta law governs the paper
-  accent only.
+  interaction-surface step, brand-proposed and unused) that happens to
+  share the name; this terracotta law governs the paper accent — and
+  the web proposes the same pigment for `--destructive`, an extension
+  of this law that Ronny ratifies or rejects at first use.
 - **Type**: Schibsted Grotesk for prose; JetBrains Mono for labels,
   identifiers, metadata, code — always uppercase with letter-spacing when
   used as a label. The mono is technical register — schematic annotation,
@@ -127,7 +133,8 @@ inline; a value that differs from its source of truth is drift.
 ## Site component layer
 
 On the site, the symbol's grammar is embodied as four primitives in
-`src/components/ui/`, built with shadcn's internal anatomy (flat
+`src/components/` (`src/components/ui/` stays reserved for components
+installed via `shadcn add`), built with shadcn's internal anatomy (flat
 functions typed `React.ComponentProps`, props spread, `data-slot` on
 every part, `cn()` with the consumer's className last, `cva` only where
 real variants exist, no behavior dependencies):

@@ -21,24 +21,39 @@
   /* text roles */
   --foreground: #52525b;       /* zinc-600 — body */
   --primary: #18181b;          /* zinc-900 — strong ink: headings, names, emphasis */
-  --primary-foreground: #fafaf8;
+  --primary-foreground: var(--background); /* ink inverted resolves to the ground */
   --muted-foreground: #a1a1aa; /* zinc-400 — labels, metadata, footers */
 
-  /* provisional until first use — derived from the zinc ladder so a
-   * future `shadcn add` lands on brand instead of defaults. The site
-   * itself must not use these until each earns its place. */
-  --card: #fafaf8;
-  --card-foreground: #52525b;
-  --popover: #fafaf8;
-  --popover-foreground: #52525b;
+  /* Unused shadcn roles — BRAND-PROPOSED derivations, not defaults.
+   * Each value is the brand's own answer, derived from the contract's
+   * doctrine, so the day a component needs the role the derivation is
+   * already decided. None of these may appear on the site until its
+   * first use is ratified (brand/DESIGN.md). */
+
+  /* surfaces do not elevate: one ground, no shadows — a card IS the paper */
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+
+  /* the smallest surface step: one breath of ink over the warm paper,
+   * keeping its cast (f8 → f2). Interaction never introduces color —
+   * it deepens ink — so hover (accent), secondary, and muted share it. */
   --secondary: #f4f4f2;
-  --secondary-foreground: #18181b;
+  --secondary-foreground: var(--primary);
   --muted: #f4f4f2;
   --accent: #f4f4f2;
-  --accent-foreground: #18181b;
-  --destructive: #dc2626;
-  --input: #e4e4e7;
-  --ring: #18181b;
+  --accent-foreground: var(--primary);
+
+  /* the brand's one pigment marks the critical dimension (the paper
+   * accent law); on the web the only critical surface is a destructive
+   * action. PROPOSAL — extends the accent law to the web, and its dark
+   * rendering is unjudged; ratification required before first use. */
+  --destructive: #9f4b37;
+
+  /* inputs sit on hairlines; focus is administered like emphasis */
+  --input: var(--border);
+  --ring: var(--primary);
 
   /* radius 0 — contract mandate for the site (no rounds, no shadows) */
   --radius: 0rem;
@@ -73,18 +88,23 @@
     --background: #0a0a0a;        /* the unlit plane — off-ladder, untinted */
     --foreground: #a1a1aa;        /* body */
     --primary: #d4d4d8;           /* zinc-300 — one rung short of the top; firm, never a lamp */
-    --primary-foreground: #0a0a0a;
     --muted-foreground: #71717a;  /* zinc-500 — whispers at the same distance */
     --border: #27272a;            /* zinc-800 — the smallest step that still reads as a base */
+    /* proposed surface step, emitted: the same breath over the unlit plane */
+    --secondary: #18181b;
+    --muted: #18181b;
+    --accent: #18181b;
   }
 }
 :root[data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #a1a1aa;
   --primary: #d4d4d8;
-  --primary-foreground: #0a0a0a;
   --muted-foreground: #71717a;
   --border: #27272a;
+  --secondary: #18181b;
+  --muted: #18181b;
+  --accent: #18181b;
 }
 
 @theme inline {
