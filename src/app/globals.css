@@ -9,8 +9,8 @@
  *   strong ink (zinc-900) → --primary · muted (zinc-400) → --muted-foreground
  *   hairline → --border
  * The palette is Tailwind zinc over warm paper. Paper documents
- * (proposals, resumes) are postponed: their values live frozen inside
- * brand/templates/*.html until that migration.
+ * (proposals, resumes) are dormant — no artifacts exist; their token
+ * values re-derive from DESIGN.md's paper rules at rebuild.
  */
 
 :root {

@@ -11,4 +11,3 @@ Personal site. Next.js (App Router) + velite (markdown as database, `content/`) 
 - Tokens: `src/app/globals.css` — shadcn vocabulary, brand values; single source of truth.
 - Brand primitives: `src/components/{node,rule,meta,mark}.tsx`. `src/components/ui/` is reserved for components installed via `shadcn add`.
 - Content: `content/*.md` via velite (`#content` alias).
-- Paper templates (frozen, pre-React): `brand/templates/`. Brand process log: `brand/process.md`.

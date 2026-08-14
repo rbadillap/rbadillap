@@ -1,24 +1,23 @@
-# rbadillap design contract — v3.2
+# rbadillap design contract — v4.0
 
-**Version 3.2 — 2026-08-14.** The contract and the templates version
-together: any revision to either bumps this line and the templates'
-header comments. If you are mid-generation, diff against the version
-you read — deliver under it or re-sync, never mix versions.
+**Version 4.0 — 2026-08-14.** Any revision bumps this line. If you are
+mid-generation, diff against the version you read — deliver under it or
+re-sync, never mix versions.
 
-This contract governs every surface that carries the rbadillap brand:
-the site (ronnybadilla.com, `src/` in this repo), client proposals and
-quotes (`brand/templates/proposal.html`), and resumes
-(`brand/templates/resume.html`). If you are generating one of those
-surfaces, this document is your system of record. You do not need any
-previous document; everything you may use is published here. The
-process history behind each rule lives in `brand/process.md` — read it
-to understand, never to override.
+This contract governs every surface that carries the rbadillap brand.
+Two media exist: the **site** (ronnybadilla.com, `src/` in this repo),
+implemented; and **paper documents** (proposals, quotes, resumes),
+dormant — no document artifacts exist in this repo. When documents are
+rebuilt (in React, from this contract), every paper rule below binds
+that rebuild. If you are generating a surface, this document is your
+system of record. You do not need any previous document; everything you
+may use is published here.
 
 ## Priority order
 
-1. This contract. If it forbids something, no template or instinct overrides it.
-2. The templates in `brand/templates/`. Start from them; never from scratch.
-3. Your composition judgment — free within 1 and 2: content structure,
+1. This contract. If it forbids something, no instinct or example
+   overrides it.
+2. Your composition judgment — free within 1: content structure,
    section order, how many pages, which published patterns to use.
 
 Intent authority: `vaults/brand.md` (private, git-ignored). When both
@@ -78,10 +77,11 @@ does not elevate; interaction deepens ink instead of introducing color;
 the one pigment marks the critical, hence `--destructive` proposes the
 terracotta). Treat them as proposals, not defaults: none may appear on
 the site until its first use is ratified. `--radius` is `0` by mandate.
-Paper templates embed their values in a frozen `@brand tokens` block
-(v2 names) — that block is the paper source of truth until documents
-migrate. Never edit values inline; a value that differs from its source
-of truth is drift.
+Paper token values derive from the published rules: every text role one
+step darker on the zinc ladder — body `#3f3f46` (zinc-700), soft
+`#52525b` (zinc-600, paper-only role), muted `#71717a` (zinc-500) —
+over the same warm ground and hairline. Never edit values inline; a
+value that differs from its source of truth is drift.
 
 - **Ground**: warm paper `--background: #fafaf8` — never pure white.
   Hairlines `--border: #e4e4e7`.
@@ -114,9 +114,11 @@ of truth is drift.
   paper, the scale provides size steps, but ink still leads.
 - **One scale, two units.** The same `--text-*` rungs render in px on
   the web (2xs 10.5 · xs 12 · sm 13.5 · body 15 · md 16 · lg 20) and in
-  pt on paper (px = pt × 4/3); the 15 anchor is identical in both
-  media. Never an off-scale size on either medium — the site consumes
-  the tokens (`text-(length:--text-*)`), not literals.
+  pt on paper (2xs 8 · xs 9 · sm 10 · body 11.25 · md 12 · lg 15, plus
+  the paper-only `name` 22.5 and `title` 25.5); the 15px = 11.25pt
+  anchor is identical in both media. Never an off-scale size on either
+  medium — the site consumes the tokens (`text-(length:--text-*)`), not
+  literals.
 
 ## Site component layer
 
@@ -168,7 +170,7 @@ never synonyms, never re-implementations.
   it appears; a pattern that needs different dress is a different
   pattern.
 - **The stylesheet travels whole.** A generated document carries the
-  template's full style block, unused patterns included — a diffable
+  complete published dress, unused patterns included — a diffable
   stylesheet is how drift gets detected. Grid column counts and `<col>`
   widths are content geometry and may be adjusted; everything else is
   dress and may not.
@@ -275,9 +277,8 @@ ink; in dark it is light.
   while typing (inputs, textareas, editable content) and with any
   modifier held. **Paper is always light**: print has no dark mode, and
   the `.paper` scope pins every role so no OS scheme can flip a
-  document. The templates' embedded token blocks therefore restate the
-  paper-relevant values only; the dark blocks live in
-  `src/app/globals.css` alone.
+  document. The dark blocks live in `src/app/globals.css` alone; paper
+  never gains one.
 - Tokens: ground `#0a0a0a` (off-ladder and UNTINTED — the unlit plane
   is not a material, so unlike the warm paper it takes no cast; the
   ground is a ground, the ink is the ladder). Strong `#d4d4d8`
@@ -320,7 +321,7 @@ ink; in dark it is light.
   unqualified query makes every PDF print the mobile layout and bleed
   across sheets. The qualifier is not optional.
 - **Paper breathes.** White space is part of the spirit, not slack to
-  reclaim. The templates' spacing rhythm (section gaps, cell padding,
+  reclaim. The published spacing rhythm (section gaps, cell padding,
   line-heights) is grammar — when content fights the page, cut content
   or add a page; never compress the air. The rule cuts both ways: an
   underfull page is correct — the footer pins to the base and the air
@@ -334,26 +335,27 @@ ink; in dark it is light.
 ## Mark rules
 
 The arc mark appears on every surface, at the top, in the strong ink
-(`--primary` on the web, `--foreground-strong` in the paper templates'
-frozen vocabulary). A multi-page document is ONE surface: the mark
-opens page 1 and appears nowhere else; continuation pages carry the
-footer's identity line instead.
+(`--primary`). A multi-page document is ONE surface: the mark opens
+page 1 and appears nowhere else; continuation pages carry the footer's
+identity line instead.
 
-- Canonical lockup: `brand/mark.svg` (150×42). Copy it verbatim — never
-  redraw, never eyeball the geometry. The resume renders the same
-  geometry at 132×38.
-- Small sizes: `brand/mark-32.svg` (favicon geometry) recalibrates
-  strokes (1.5 baseline / 1.75 arc) for legibility. Below ~90px wide, use
-  the 32px variant's proportions.
-- The site component (`src/components/mark.tsx`), the favicon
-  (`src/app/icon.svg`), and both SVG files must stay geometrically
-  identical. A change to the mark is a brand decision, not an edit.
+- Canonical lockup: the `Mark` component (`src/components/mark.tsx`),
+  viewBox 150×42. Copy its geometry verbatim — never redraw, never
+  eyeball. Paper renders the same geometry smaller (resumes used
+  132×38).
+- Small sizes: the favicon (`src/app/icon.svg`) holds the 32px
+  recalibration — viewBox 32, strokes 1.5 baseline / 1.75 arc, arc
+  radius 6.5, end nodes r 1.6, apex r 1.1 — so the mark stays legible.
+  Below ~90px wide, use these proportions.
+- The component and the favicon must stay geometrically identical (the
+  favicon carries fixed colors and its own dark media query because
+  favicons cannot inherit `currentColor`). A change to the mark is a
+  brand decision, not an edit.
 
 ## Rejected reflexes
 
 Standing prohibitions. Each one names a failure mode that has already
-occurred at least once (the case files live in `brand/process.md`).
-Do not:
+occurred at least once. Do not:
 
 - Invent token names (`--paper`, `--line`, `--text`, `--strong`,
   `--ink`, `--canvas`, `--wash`, `--soft` are dead aliases and must not
@@ -364,14 +366,15 @@ Do not:
   no surface fills; boundaries are borders and air.
 - Introduce a color — including "just one accent". The accent slot is
   governed by the accent law; it is not open.
-- Introduce a font, a weight the templates don't load, or an off-scale
-  size. The scale exists so drifted bodies cannot happen.
+- Introduce a font, an unpublished weight, or an off-scale size. The
+  scale exists so drifted bodies cannot happen.
 - Drop the dot from `.section-label` — the dot is canon.
 - Set a section's internal annotations (table `th`, keys, eyebrows) at
   the same ink and weight as its `.section-label` — section titles
   drown in their own contents. The title holds soft/Medium; annotations
   hold muted/Regular.
-- Redraw the arc from memory. Copy `brand/mark.svg` verbatim.
+- Redraw the arc from memory. Copy the `Mark` component's geometry
+  verbatim.
 - Rename published classes or create synonyms (`.decision-table`,
   `.delivery-table`, `.positions`, `.method`, `.terms` are dead names
   and must not return; the canon is `.data-table`, `.cards`, `.rows`).
@@ -379,12 +382,11 @@ Do not:
   Borders separate siblings or ground a head; components end with air.
 - Use inline `style` attributes anywhere except widths on `<col>`.
   Spacing tweaks get a published class (`.flush`) or nothing.
-- Rebuild the stylesheet by eye instead of carrying the template block.
-  Near-compliance IS drift; only the verbatim template block is
-  compliance.
+- Rebuild the dress by eye instead of carrying the published values.
+  Near-compliance IS drift; only verbatim compliance is compliance.
 - Claim the brand in a provenance comment the document does not honor.
-  The provenance comment states the template + version actually copied,
-  nothing else.
+  The provenance comment states the source + contract version actually
+  followed, nothing else.
 - Substitute ASCII for the brand's typographic voice: separators are
   `·` (never ` - `), arrows are `→` (never `>`), and Spanish keeps its
   accents (San José, not San Jose).
@@ -413,15 +415,15 @@ Before delivering, verify:
    decision, a boundary, or a base — or it goes.
 5. Labels are mono, uppercase, tracked; prose is sans; nothing mixed.
 6. Every section opens with a complete `.section-label` (dot included).
-7. Token values match the template's frozen `@brand tokens` block —
-   the paper source of truth until documents migrate; web tokens live
-   in `src/app/globals.css`. No token may be added, dropped, or altered.
+7. Token values match `src/app/globals.css` on the web and the
+   published paper derivations on paper. No token may be added,
+   dropped, or altered.
 8. Footer paginated `NN / NN`; proposal pages don't overflow their 11in.
 9. Print verification is VISUAL, not just counted: sheet count equals
    page count AND an actual look at rendered sheets confirms the paper
    layout (no mobile collapse, no bleed, footers at the base).
-10. No fill-in comments or `{{slots}}` remain; one provenance comment
-    (template + version) identifies the origin.
+10. No fill-in comments or placeholder slots remain; one provenance
+    comment (source + contract version) identifies the origin.
 
 And the master question: does the result feel like an extension of the
 symbol, or just another modern document? If the latter, reduce, align,
