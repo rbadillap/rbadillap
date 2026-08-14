@@ -411,6 +411,38 @@ Demás legislación integrada:
   explícita). Pendiente: push + deploy (= publicación de /design.md)
   cuando Ronny lo ordene.
 
+### 23. proposal-min: la imitación (gen5) → port + contrato v1.7 (2026-08-13)
+
+- **Detección**: barrido por marcador (`grep -L "@brand tokens"` sobre
+  HTML recientes) — Ronny ni tuvo que decir cuál era. Encontrado:
+  `proposal-min.html`, creado 40 min DESPUÉS del port del proposal
+  grande, por el agente LCM.
+- **El modo de deriva nuevo y más peligroso: la imitación.** El archivo
+  DECLARA "rbadillap brand v1.6" y copia el sistema a ojo al ~90%:
+  acierta ley de acento, hairlines, rango de section-label. El 10%:
+  `.data-table.compact` inventada (9.35pt off-scale, lh 1.32), body
+  11pt vs 11.25, aire afeitado ~8% en cada padding/gap, diagrama con
+  clases renombradas y markers con hex en atributos, sin scope .paper,
+  voz ASCII (`-`, `>`, "San Jose"), sin document-map en 7 páginas.
+  El casi-cumplimiento LEE como cumplimiento — solo el bloque verbatim
+  del template es cumplimiento. → 3 reflejos prohibidos nuevos en
+  DESIGN.md (v1.7): stylesheet reconstruido a ojo, claim falso de
+  procedencia, sustitutos ASCII.
+- **Port**: stylesheet → bloque v1.6 real; `.compact` eliminada;
+  diagrama → clases `d-*` y markers tokenizados; voz restaurada
+  (`·`, `→`, José); document-map + ids de sección añadidos (contrato:
+  obligatorio en 5+ páginas); repaginación medida 7→10 páginas (tablas
+  D7-D12 en 3+3 y Phase B en 3+1 con thead repetido). Verificado: 0
+  desbordes, mapa resuelve, 1 callout accent + 1 row-id hot (misma
+  dimensión: ad path), 10 hojas PDF con fuentes embebidas.
+- **Entrega**: backup `proposal-min-pre-brand.html`; port instalado
+  como `proposal-min.html`; `proposal-min.pdf` regenerado vía
+  localhost.
+- **Lección de adopción (la segunda en un día)**: el agente LCM ahora
+  IMITA el sistema en vez de ignorarlo — señal de que lo ve y lo
+  quiere, pero no lo carga. La promoción del skill + /design.md público
+  convierte imitación en cumplimiento.
+
 ## Port pendiente: proposal.html (LCM) — procedimiento
 
 Cuando Ronny dé la señal (contenido estable):

@@ -1,6 +1,6 @@
-# rbadillap design contract — v1.6 (light mode)
+# rbadillap design contract — v1.7 (light mode)
 
-**Version 1.6 — 2026-08-13.** The contract and the templates version
+**Version 1.7 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -302,6 +302,18 @@ prohibitions. Do not:
   components end with air.
 - Use inline `style` attributes anywhere except widths on `<col>`.
   Spacing tweaks get a published class (`.flush`) or nothing.
+- Rebuild the stylesheet by eye instead of carrying the template block —
+  a real document imitated the system at 90% and shaved ~8% of the air
+  across every padding, invented a `.compact` table modifier with an
+  off-scale 9.35pt, and renamed the diagram classes. Near-compliance IS
+  drift; only the verbatim template block is compliance.
+- Claim the brand in a provenance comment the document does not honor —
+  the same imitation opened with "rbadillap brand v1.6" while carrying
+  none of the v1.6 tokens block. The provenance comment states the
+  template + version actually copied, nothing else.
+- Substitute ASCII for the brand's typographic voice: separators are
+  `·` (never ` - `), arrows are `→` (never `>`), and Spanish keeps its
+  accents (San José, not San Jose).
 - Add gradients, shadows beyond the page sheet, rounded corners beyond
   6–7px, stock imagery, icons, emoji, or decorative SVG.
 - Use scroll-triggered reveals, hover motion, parallax, or any animation
