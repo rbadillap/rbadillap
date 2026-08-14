@@ -469,6 +469,41 @@ Demás legislación integrada:
   visual, no solo conteo — "a correct count over a broken layout has
   happened".
 
+### R6. Diagrama bajo el skill diagram-design (2026-08-13)
+
+- **Contexto corregido**: `proposal-ronny.html` EXISTE (la versión de
+  Ronny, 4 columnas, descendiente del port de 14 pág) — eso significaba
+  "mas no en ronny" en R5. Interpretación anterior inofensiva.
+- **Skill adoptado** (plugin no registrado como skill invocable — leído
+  y seguido directo: SKILL.md + style-guide.md + type-architecture.md).
+  Su skin rbadillap estaba desfasado (onboardeado del sitio
+  pre-sistema): re-sincronizado al contrato v2.2 (accent #9f4b37 con su
+  ley; JetBrains como mono de marca — desviación documentada de la
+  regla genérica del skill).
+- **Auditoría del diagrama vivo** (el agente LCM lo complejizó): annos
+  mono más anchas que sus nodos (la causa de todos los choques del
+  screenshot de Ronny), canaleta CF→Media abrazando bordes Y redundante
+  (el nodo ya anota "served through CloudFront" — regla del skill:
+  eliminar), nodos de datos angostos para 2 líneas, clases d-boundary
+  inventadas (canonizables). Lo que el agente hizo BIEN: un bridge
+  correcto, fans de attach points, acento en una sola dimensión.
+- **Fix mínimo-invasivo**: canaleta eliminada (ledger de fidelidad: la
+  semántica vive en la anno del nodo), nodos app 160→168 y datos
+  112→128 (grid de 4), 5 recortes editoriales de annos, máscara del
+  boundary-label ajustada. Verificación VISUAL en navegador: cero
+  choques, flujos trazables, hot path legal.
+- **Mismo diagrama en ambos documentos** (orden de Ronny):
+  proposal.html corregido in situ; proposal-ronny.html ganó página
+  "Architecture map" propia (+ CSS d-boundary + entrada en su
+  document-map, que completó la cuadrícula 4×2) → 15 pág; y su página
+  D1-D6 desbordaba 222px POR el contenido 4-col pre-existente → tabla
+  partida 3+3 con thead repetido (tabla sigue tabla: su decisión) → 16
+  pág. PDFs: 11 y 16 hojas, fuentes embebidas.
+- Backups: proposal-diagrama.backup.html,
+  proposal-ronny-sin-diagrama.backup.html.
+- Pendiente de canonizar en template: `.d-boundary`/`.d-boundary-label`
+  (invención del agente, funciona, dos votos aún no — registrada).
+
 ## Port pendiente: proposal.html (LCM) — procedimiento
 
 Cuando Ronny dé la señal (contenido estable):
