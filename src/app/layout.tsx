@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeKey } from "@/components/theme-key";
 import "./globals.css";
 
 const schibsted = Schibsted_Grotesk({
@@ -19,13 +20,13 @@ export const metadata: Metadata = {
     template: "%s | Ronny Badilla",
   },
   description: "Design / DevOps / AI Engineer",
-  metadataBase: new URL("https://rbadillap.dev"),
-  authors: [{ name: "Ronny Badilla", url: "https://rbadillap.dev" }],
+  metadataBase: new URL("https://ronnybadilla.com"),
+  authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
   creator: "Ronny Badilla",
   openGraph: {
     title: "Ronny Badilla",
     description: "Design / DevOps / AI Engineer",
-    url: "https://rbadillap.dev",
+    url: "https://ronnybadilla.com",
     siteName: "Ronny Badilla",
     images: "/og.jpg",
   },
@@ -55,7 +56,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`bg-background ${schibsted.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans antialiased">
+        {/* anti-FOUC: apply the persisted D-key override before first paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
         {children}
+        <ThemeKey />
         <Analytics />
       </body>
     </html>

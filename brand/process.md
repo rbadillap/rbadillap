@@ -572,6 +572,34 @@ entre sí. Auditoría con el estándar 2-votos:
   3 specimens ciegos → auditoría → juicio → canon. El proceso
   documentado funciona.
 
+### R4. El sitio con el branding adaptado → contrato v2.0 (2026-08-13)
+
+Corrección de rumbo de Ronny: la meta del branch es EL SITIO adaptado,
+no la publicación de /design.md (ese gate es suyo, sin fecha).
+
+- **Metadata alineada al dominio canónico** (decisión Ronny):
+  ronnybadilla.com en metadataBase, authors, og:url.
+- **Limpieza del canon** (decisión Ronny): eliminados
+  color-control.tsx (55 hex de escalas ajenas, no importado) y
+  components.json (shadcn sin shadcn); comment de globals.css al día.
+- **Tecla D** (decisión Ronny: "patrón común que ya ni siquiera hace
+  necesario poner el icono"): toggle light/dark sin UI — el toggle es
+  conocimiento, no chrome. Implementación: patrón 3 estados en
+  tokens.css (auto-OS default, data-theme override en ambas
+  direcciones), theme-key.tsx (ignora inputs/modificadores, persiste,
+  actualiza theme-color), anti-FOUC inline en layout.
+- **Verificado en navegador real** (dev server): D alterna
+  #0a0a0a↔#fafaf8 con persistencia; "d" dentro del input del
+  newsletter NO cambia el tema; build verde; compare light|dark del
+  build real servido para juicio.
+- Incidente menor registrado: el primer test corrió contra el dev de
+  agent-plugins.directory (puerto 3000 ocupado); su localStorage.theme
+  fue tocado y restaurado a default con removeItem. Lección: verificar
+  el TITLE de la página antes de testear.
+- Contrato v2.0. Sugerencia para Ronny (su documento, su mano): la
+  tabla-apéndice de vaults/brand.md podría ganar filas para la
+  variante dark, el favicon dual y la tecla D.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las

@@ -1,6 +1,6 @@
-# rbadillap design contract — v1.9
+# rbadillap design contract — v2.0
 
-**Version 1.9 — 2026-08-13.** The contract and the templates version
+**Version 2.0 — 2026-08-13.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -228,12 +228,16 @@ field dominates and the mark is spent sparingly, in the symbol's own
 order. That law survives unchanged; only the scarce resource changes
 hands.
 
-- Scope: the web, via `@media (prefers-color-scheme: dark)` in
-  `brand/tokens.css` — no toggle, no `[data-theme]`. **Paper is always
-  light**: print has no dark mode, and the `.paper` scope pins every
-  role so no OS scheme can flip a document. The templates' embedded
-  token blocks therefore restate the paper-relevant values only; the
-  dark block lives in `tokens.css` alone.
+- Scope: the web. The OS decides by default
+  (`@media (prefers-color-scheme: dark)`); pressing **D** overrides in
+  either direction via `data-theme`, persisted — no icon, no visible
+  control: **the toggle is knowledge, not chrome**. The key is ignored
+  while typing (inputs, textareas, editable content) and with any
+  modifier held. **Paper is always light**: print has no dark mode, and
+  the `.paper` scope pins every role so no OS scheme can flip a
+  document. The templates' embedded token blocks therefore restate the
+  paper-relevant values only; the dark blocks live in `tokens.css`
+  alone.
 - Tokens: ground `#0a0a0a` (off-ladder and UNTINTED — the unlit plane
   is not a material, so unlike the warm paper it takes no cast; the
   ground is a ground, the ink is the ladder). Strong `#d4d4d8`

@@ -39,14 +39,25 @@
  * ink is the ladder. Paper documents are ALWAYS light: print has no
  * dark mode; the .paper scope below pins every value.
  */
+/* Mechanism: the OS decides by default; the D key overrides in either
+ * direction via data-theme (no icon — the toggle is knowledge, not
+ * chrome). Three states: no attribute = follow the OS; data-theme
+ * pins. Values appear in both blocks by necessity — keep them equal. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --background: #0a0a0a;        /* the unlit plane — off-ladder, untinted */
     --foreground: #a1a1aa;        /* body — the historical dark's own body */
     --foreground-strong: #d4d4d8; /* zinc-300 — one rung short of the top; firm, never a lamp */
     --foreground-muted: #71717a;  /* zinc-500 — whispers at the same distance */
     --border: #27272a;            /* zinc-800 — the smallest step that still reads as a base */
   }
+}
+:root[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #a1a1aa;
+  --foreground-strong: #d4d4d8;
+  --foreground-muted: #71717a;
+  --border: #27272a;
 }
 
 /*

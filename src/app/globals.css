@@ -2,9 +2,8 @@
 
 /*
  * The site consumes the brand tokens directly — single source of truth,
- * no duplicated values to drift. brand/tokens.css keeps the same
- * variable names the ColorControl retention widget manipulates, so it
- * can be remounted later without changes.
+ * no duplicated values to drift. Light, dark, and the paper pins all
+ * live in brand/tokens.css.
  */
 @import "../../brand/tokens.css";
 
