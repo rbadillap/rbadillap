@@ -666,6 +666,36 @@ no la publicación de /design.md (ese gate es suyo, sin fecha).
 - Verificado: 11 páginas, 0 desbordes, mapa resuelve, 24 facetas, cero
   tablas 4-col, PDF 11 hojas con fuentes embebidas.
 
+### R7. Product, no Design — hotfix de posicionamiento → contrato v2.3 (2026-08-14)
+
+- **Origen (Ronny)**: el headline público decía "Design / DevOps / AI
+  Engineer"; la disciplina correcta es Product — "son disciplinas
+  diferentes". Corregido como hotfix desde main, sin esperar este branch.
+- **Hotfix en main** (branch `chore/metadata-cleanup`, FF-merge,
+  deployado a producción): tagline → "Product / DevOps / AI Engineer"
+  en `content/home.md`; `layout.tsx` deriva sus tres descriptions de
+  `home.tagline` (fuente única); `public/og.jpg` (texto quemado en
+  píxeles) reemplazado por `src/app/opengraph-image.tsx` — ImageResponse
+  en build que deriva nombre y tagline del content. La share card ya no
+  puede driftar del copy.
+- **Merge main → branch** (`0c54f32`): conflicto único en `layout.tsx`;
+  resolución preserva la intención de cada lado — ronnybadilla.com,
+  JetBrains Mono y ThemeKey (branch) + derivación `home.tagline` y sin
+  `og.jpg` (main).
+- **Alineación al sistema**: DESIGN.md §Context "design/DevOps/AI
+  engineer" → "product/DevOps/AI engineer" → bump v2.3. La OG route
+  cambia Geist Mono → JetBrains Mono (fetch de Google Fonts en build;
+  los woff2 de `brand/fonts/` no sirven aquí — satori no lee woff2) y
+  documenta que su paleta espeja tokens.css (#fafaf8 / #18181b /
+  #a1a1aa — los valores ya coincidían, solo faltaba la trazabilidad).
+- **Drift corregido de paso**: resume.html declaraba v1.7 pese a su
+  propia regla "any revision to either bumps both" (proposal iba en
+  v2.2). Ambos templates sincronizados a v2.3 — solo el header, cero
+  cambios de shell.
+- Verificado: build estático OK con /design.md y /opengraph-image;
+  la OG card renderiza el tagline nuevo en JetBrains Mono. Juicio
+  visual de Ronny: pendiente.
+
 ## Replay para una variante nueva (p. ej. dark mode)
 
 El contrato y la gramática NO cambian; cambian valores de tokens y las

@@ -18,9 +18,11 @@ export default async function OpengraphImage() {
   const tagline = home.tagline.toUpperCase()
   const [schibsted, mono] = await Promise.all([
     loadGoogleFont("Schibsted Grotesk", 500, home.name),
-    loadGoogleFont("Geist Mono", 400, tagline),
+    loadGoogleFont("JetBrains Mono", 400, tagline),
   ])
 
+  // palette mirrors brand/tokens.css (satori cannot read CSS vars):
+  // #fafaf8 --background, #18181b --foreground-strong, #a1a1aa --foreground-muted
   return new ImageResponse(
     (
       <div
@@ -67,7 +69,7 @@ export default async function OpengraphImage() {
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            fontFamily: "Geist Mono",
+            fontFamily: "JetBrains Mono",
             fontSize: 19,
             letterSpacing: "0.25em",
             color: "#a1a1aa",
@@ -81,7 +83,7 @@ export default async function OpengraphImage() {
       ...size,
       fonts: [
         { name: "Schibsted Grotesk", data: schibsted, weight: 500, style: "normal" },
-        { name: "Geist Mono", data: mono, weight: 400, style: "normal" },
+        { name: "JetBrains Mono", data: mono, weight: 400, style: "normal" },
       ],
     }
   )

@@ -1,6 +1,6 @@
-# rbadillap design contract — v2.2
+# rbadillap design contract — v2.3
 
-**Version 2.2 — 2026-08-13.** The contract and the templates version
+**Version 2.3 — 2026-08-14.** The contract and the templates version
 together: any revision to either bumps this line and the templates'
 header comments. An agent mid-generation must diff against the version
 it read — a generation started under one version delivers under it or
@@ -15,7 +15,7 @@ need to. Everything you may use is published here.
 
 ## Context
 
-Ronny is a design/DevOps/AI engineer. His brand voice is the same as his
+Ronny is a product/DevOps/AI engineer. His brand voice is the same as his
 engineering voice: evidence leads, claims are checkable, restraint over
 spectacle. The visual identity is **the arc symbol**: a horizontal
 baseline, an arc emerging from it, three nodes marking origin, apex, and
