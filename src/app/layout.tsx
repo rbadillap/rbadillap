@@ -28,13 +28,11 @@ export const metadata: Metadata = {
     description: home.tagline,
     url: "https://rbadillap.dev",
     siteName: "Ronny Badilla",
-    images: "/og.jpg",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ronny Badilla",
     description: home.tagline,
-    images: "/og.jpg",
   },
 };
 
