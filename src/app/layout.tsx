@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeKey } from "@/components/theme-key";
+import { home } from "#content";
 import "./globals.css";
 
 const schibsted = Schibsted_Grotesk({
@@ -19,22 +20,20 @@ export const metadata: Metadata = {
     default: "Ronny Badilla",
     template: "%s | Ronny Badilla",
   },
-  description: "Design / DevOps / AI Engineer",
+  description: home.tagline,
   metadataBase: new URL("https://ronnybadilla.com"),
   authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
   creator: "Ronny Badilla",
   openGraph: {
     title: "Ronny Badilla",
-    description: "Design / DevOps / AI Engineer",
+    description: home.tagline,
     url: "https://ronnybadilla.com",
     siteName: "Ronny Badilla",
-    images: "/og.jpg",
   },
   twitter: {
     card: "summary_large_image",
     title: "Ronny Badilla",
-    description: "Design / DevOps / AI Engineer",
-    images: "/og.jpg",
+    description: home.tagline,
   },
 };
 

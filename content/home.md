@@ -1,6 +1,6 @@
 ---
 name: Ronny Badilla
-tagline: Design / DevOps / AI Engineer
+tagline: Product / DevOps / AI Engineer
 services:
   - title: Cloud & DevOps
     description: AWS architecture, infrastructure automation, and CI/CD pipelines.
