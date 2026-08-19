@@ -1,7 +1,7 @@
 ---
 title: registry.directory
 url: https://registry.directory
-order: 1
+order: 2
 ---
 
 Discover and explore UI registries.

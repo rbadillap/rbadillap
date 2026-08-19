@@ -1,7 +1,7 @@
 ---
 title: pastecn.com
 url: https://pastecn.com
-order: 2
+order: 3
 ---
 
 pastebin + shadcn = pastecn.
