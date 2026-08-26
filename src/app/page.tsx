@@ -22,13 +22,6 @@ export default function Home() {
           <p className="mt-0.5 text-(length:--text-sm) text-muted-foreground">{home.tagline}</p>
         </header>
 
-        <div className="relative">
-          {/* the spine: one continuous base connecting every section node */}
-          <Rule
-            orientation="vertical"
-            className="absolute bottom-[56px] left-[2px] top-[96px]"
-          />
-
         <Section label="Now" className="fade-up fade-up-1">
           <div className="space-y-4">
             <ContentMarkdown>{home.now}</ContentMarkdown>
@@ -92,7 +85,7 @@ export default function Home() {
 
         <footer className="fade-up fade-up-6 mt-[88px]">
           <SectionLabel label="Elsewhere" />
-          <nav className="flex gap-6 pl-[15px] text-(length:--text-sm)">
+          <nav className="flex gap-6 text-(length:--text-sm)">
             {home.elsewhere.map((link) => (
               <FooterLink key={link.href} href={link.href}>
                 {link.label}
@@ -100,7 +93,6 @@ export default function Home() {
             ))}
           </nav>
         </footer>
-        </div>
 
         {/* the landing: the page closes where the symbol lands */}
         <div className="mt-[72px] flex items-center" aria-hidden="true">
@@ -134,7 +126,7 @@ function Section({
   return (
     <section className={`mt-[88px] ${className ?? ""}`} aria-label={label}>
       <SectionLabel label={label} />
-      <div className="pl-[15px]">{children}</div>
+      <div>{children}</div>
     </section>
   )
 }

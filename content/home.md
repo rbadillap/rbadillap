@@ -18,6 +18,6 @@ elsewhere:
     href: mailto:info@ronnybadilla.com
 ---
 
-I've worked for years helping build great products, from startups to enterprises. Now it's my turn to achieve my dreams.
+I build systems for a living. Today AI agents run most of my work.
 
 Building [Syner](https://syner.app) — the Agentic Operating System.
