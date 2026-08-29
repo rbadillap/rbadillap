@@ -2,7 +2,8 @@ Hi, I'm Ronny! 👋
 
 I'm building [**@synerops**](https://github.com/synerops), an open-source Agentic Operating System.
 
-- 🤖 [@synerops](https://github.com/synerops)
+Other tools 
+
 - 🔌 [agent-plugins.directory](https://agent-plugins.directory)
 - 🧩 [registry.directory](https://registry.directory)
 - 📋 [pastecn.com](https://pastecn.com)
