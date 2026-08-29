@@ -6,6 +6,8 @@ I'm building [**@synerops**](https://github.com/synerops), an open-source Agenti
 - 🔌 https://agent-plugins.directory
 - 🧩 https://registry.directory
 - 📋 https://pastecn.com
+- ⏱️ https://github.com/rbadillap/ai-gateways-benchmark
+- 🛡️ https://github.com/rbadillap/ai-readme-antispam
 
 <div align="center">
   <a href="https://rbadillap.dev">
