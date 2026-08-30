@@ -20,4 +20,4 @@ elsewhere:
 
 I build systems for a living. Today AI agents run most of my work.
 
-Building [Syner](https://syner.app) — the Agentic Operating System.
+Building [Syner](https://syner.app) — a Cloud for Agents.

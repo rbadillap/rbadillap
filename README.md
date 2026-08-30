@@ -1,6 +1,6 @@
 Hi, I'm Ronny! 👋
 
-I'm building [**@synerops**](https://github.com/synerops), an open-source Agentic Operating System.
+I'm building [**@synerops**](https://github.com/synerops), an open-source Cloud for Agents.
 
 Other tools 
 
