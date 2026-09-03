@@ -1,11 +1,11 @@
-import { home } from "#content"
+import { checklist, home } from "#content"
 
 import { ogContentType, ogSize, renderOgImage } from "@/lib/og"
 
-export const alt = home.name
+export const alt = checklist.title
 export const size = ogSize
 export const contentType = ogContentType
 
 export default function OpengraphImage() {
-  return renderOgImage({ title: home.name, meta: home.tagline })
+  return renderOgImage({ title: checklist.title, meta: home.name })
 }

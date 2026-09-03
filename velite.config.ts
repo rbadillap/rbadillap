@@ -41,7 +41,11 @@ const projects = defineCollection({
   pattern: "projects/*.md",
   schema: s.object({
     title: s.string(),
-    url: s.string().url().optional(),
+    // an absolute URL, or a path on this site ("/checklist")
+    url: s
+      .string()
+      .regex(/^(https?:\/\/|\/)/, "url must be absolute or a site path")
+      .optional(),
     active: s.boolean().default(true),
     order: s.number(),
     // the description is the document body
@@ -49,7 +53,32 @@ const projects = defineCollection({
   }),
 })
 
+const checklist = defineCollection({
+  name: "Checklist",
+  pattern: "checklist.md",
+  single: true,
+  schema: s.object({
+    title: s.string(),
+    tagline: s.string(),
+    // the document body is the prompt's preamble; the sections are
+    // appended to it as markdown at build time (see app/checklist)
+    prompt: s.raw(),
+  }),
+})
+
+const checklistSections = defineCollection({
+  name: "ChecklistSection",
+  pattern: "checklist/*.md",
+  schema: s.object({
+    title: s.string(),
+    slug: s.slug("checklistSections"),
+    order: s.number(),
+    // one string per item; inline markdown (links) allowed
+    items: s.array(s.string().min(1)).min(1),
+  }),
+})
+
 export default defineConfig({
   root: "content",
-  collections: { home, experience, projects },
+  collections: { home, experience, projects, checklist, checklistSections },
 })
