@@ -48,3 +48,6 @@ vaults/*
 
 # velite build artifact (content/ is the source of truth)
 .velite/
+
+# research notes for the resume (Ronny's working docs, not site content)
+docs/research/

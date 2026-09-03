@@ -33,6 +33,8 @@ const experience = defineCollection({
     company: s.string(),
     role: s.string(),
     year: s.string(),
+    // ties on year resolve by order, ascending
+    order: s.number().default(99),
   }),
 })
 
@@ -78,7 +80,29 @@ const checklistSections = defineCollection({
   }),
 })
 
+const resume = defineCollection({
+  name: "Resume",
+  pattern: "resume.md",
+  single: true,
+  schema: s.object({
+    name: s.string(),
+    positioning: s.string(),
+    expertise: s.array(s.object({ key: s.string(), value: s.string() })),
+    experience: s.array(
+      s.object({
+        organization: s.string(),
+        role: s.string(),
+        period: s.string(),
+        bullets: s.array(s.string().min(1)).min(1),
+      }),
+    ),
+    openSource: s.array(s.object({ label: s.string(), href: s.string(), note: s.string() })),
+    // the document body is the summary
+    summary: s.raw(),
+  }),
+})
+
 export default defineConfig({
   root: "content",
-  collections: { home, experience, projects, checklist, checklistSections },
+  collections: { home, experience, projects, checklist, checklistSections, resume },
 })
