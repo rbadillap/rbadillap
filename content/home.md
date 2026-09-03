@@ -2,10 +2,10 @@
 name: Ronny Badilla
 tagline: Product / DevOps / AI Engineer
 services:
-  - title: Cloud & DevOps
-    description: AWS architecture, infrastructure automation, and CI/CD pipelines.
-  - title: AI Solutions
-    description: LLM integration, RAG systems, and AI-powered tools.
+  - title: Agent Operations
+    description: Infrastructure, observability, and cost control for models and agents in production.
+  - title: AI Engineering
+    description: Harnesses, tools, and the evals that prove agents work.
 newsletterText: Occasional notes on design, infrastructure, and AI. No spam.
 elsewhere:
   - label: X
