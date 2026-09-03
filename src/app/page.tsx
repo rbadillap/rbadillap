@@ -10,7 +10,9 @@ import { Landing, Section } from "@/components/section"
 import { SiteFooter } from "@/components/site-footer"
 
 const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
-const sortedExperience = [...experience].sort((a, b) => b.year.localeCompare(a.year))
+const sortedExperience = [...experience].sort(
+  (a, b) => b.year.localeCompare(a.year) || a.order - b.order,
+)
 
 export default function Home() {
   return (
