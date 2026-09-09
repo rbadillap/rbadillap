@@ -20,9 +20,9 @@ export default function Home() {
     <main className="min-h-screen">
       <div className="mx-auto max-w-[560px] px-6 pb-16 pt-24">
         <AgentPortal
+          mark={<Mark className="text-primary" />}
           header={
             <>
-              <Mark className="mb-7 text-primary" />
               <h1 className="text-(length:--text-md) font-medium text-primary">{home.name}</h1>
               <p className="mt-0.5 text-(length:--text-sm) text-muted-foreground">{home.tagline}</p>
             </>

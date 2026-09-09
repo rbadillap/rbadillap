@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 
 const SUGGESTIONS = [
   "What is Ronny working on right now?",
-  "What did he build at TransUnion?",
+  "What is his experience with AI governance?",
   "Which open-source projects has he published?",
 ]
 
@@ -22,7 +22,7 @@ const SUGGESTIONS = [
  * nodes are muted, the agent's strong. The composer wears the newsletter
  * form's dress: one component, one dress (DESIGN.md).
  */
-export function AgentChat() {
+export function AgentChat({ active }: { active: boolean }) {
   const agent = useEveAgent()
   const [draft, setDraft] = React.useState("")
   const inputRef = React.useRef<HTMLInputElement>(null)
@@ -31,9 +31,10 @@ export function AgentChat() {
   const resuming = agent.status === "resuming"
   const messages = agent.data.messages
 
+  // The chat stays mounted while hidden; focus the composer each time it shows.
   React.useEffect(() => {
-    inputRef.current?.focus()
-  }, [])
+    if (active) inputRef.current?.focus()
+  }, [active])
 
   const submit = (text: string) => {
     const message = text.trim()
