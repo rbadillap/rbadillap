@@ -51,3 +51,6 @@ vaults/*
 
 # research notes for the resume (Ronny's working docs, not site content)
 docs/research/
+
+# eve
+.eve/

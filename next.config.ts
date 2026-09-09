@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withEve } from "eve/next";
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -21,4 +22,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// withEve mounts the agent under agent/ at same-origin /eve/v1/* routes:
+// one dev server, one Vercel deploy, no CORS (eve docs: guides/frontend/nextjs).
+export default withEve(nextConfig);
