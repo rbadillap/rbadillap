@@ -16,4 +16,13 @@ import { defineAgent } from "eve"
 export default defineAgent({
   model: "amazon/nova-lite",
   defaultTools: false,
+  // Per-session caps, counted from AI Gateway's reported usage. A runaway or
+  // abusive session stops itself; a fresh session is still free to start, so
+  // the real throttle is a rate limit at the edge (Vercel Firewall).
+  limits: {
+    maxInputTokensPerSession: 60_000,
+    maxOutputTokensPerSession: 6_000,
+    maxTokenCostUsdPerSession: 0.05,
+    sessionTimeoutMs: 24 * 60 * 60 * 1_000,
+  },
 })

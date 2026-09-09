@@ -89,8 +89,10 @@ export default function Home() {
           </Section>
 
           <NewsletterSection className="fade-up fade-up-5" />
-          <SiteFooter className="fade-up fade-up-6" />
         </AgentPortal>
+
+        {/* Elsewhere closes both views: the site and the chat share the footer. */}
+        <SiteFooter className="fade-up fade-up-6" />
 
         <Landing />
       </div>
