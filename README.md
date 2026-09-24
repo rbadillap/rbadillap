@@ -9,6 +9,7 @@ Other tools
 - 📋 [pastecn.com](https://pastecn.com)
 - ⏱️ [rbadillap/ai-gateways-benchmark](https://github.com/rbadillap/ai-gateways-benchmark)
 - 🛡️ [rbadillap/ai-readme-antispam](https://github.com/rbadillap/ai-readme-antispam)
+- ⚙️ [rbadillap/dotfiles](https://github.com/rbadillap/dotfiles)
 
 <div align="center">
   <a href="https://rbadillap.dev">
