@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 
 const SUGGESTIONS = [
   "What is Ronny working on right now?",
-  "What is his experience with AI governance?",
+  "What is his experience with reliability engineering?",
   "Which open-source projects has he published?",
 ]
 

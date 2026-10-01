@@ -1,6 +1,6 @@
 ---
 name: Ronny Badilla
-tagline: Product / DevOps / AI Engineer
+tagline: Product / SRE / AI Engineer
 services:
   - title: Agent Operations
     description: Infrastructure, observability, and cost control for models and agents in production.
