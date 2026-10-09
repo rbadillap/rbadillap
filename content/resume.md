@@ -21,13 +21,13 @@ expertise:
   - key: Languages
     value: TypeScript, Python, Go, Bash and POSIX shell.
 experience:
-  - organization: SynerOps
-    role: Founder. Agent and web technology practice
+  - organization: Syner
+    role: Founder. AI product
     period: 2025–now
     bullets:
       - Built an agent-assisted platform engineering method. Agents propose versioned playbooks, people approve, approved guidance runs in delivery and operations.
   - organization: TransUnion
-    role: Senior Site Reliability Engineer. Project-based
+    role: Senior Site Reliability Engineer
     period: 2023–2026
     bullets:
       - Built self-healing for Kubernetes workloads with a dedicated team. An agent correlated the last deployment, health checks, logs, saturation, and dependency health, then restarted, scaled, drained the node, or escalated to a person.
@@ -37,7 +37,7 @@ experience:
       - Took on an additional product engineering role bringing AI into the company. Semantic search, an analytics agent, and an agentic status page in internal production use.
       - Defined the governance program for those models and agents, with a gate at every stage from intake to retirement and an owner and evidence for every control.
   - organization: Automattic, Openverse
-    role: Infrastructure Engineer. Project-based, eleven months
+    role: Infrastructure Engineer. Contractor, eleven months
     period: "2023"
     bullets:
       - Built Openverse's AWS platform from scratch, migrated the open-source search engine to it, and introduced branch-isolated previews across code, workflows, and data.
