@@ -102,7 +102,24 @@ const resume = defineCollection({
   }),
 })
 
+const posts = defineCollection({
+  name: "Post",
+  pattern: "posts/*.md",
+  schema: s.object({
+    title: s.string(),
+    // one sentence: the index line, the meta description, the OG subtitle
+    description: s.string(),
+    date: s.isodate(),
+    slug: s.slug("posts"),
+    // a post is a draft until it says otherwise (gating: src/lib/drafts.ts)
+    draft: s.boolean().default(true),
+    // the document body, kept as raw markdown: rendered by ArticleMarkdown
+    // and served verbatim at /writing/[slug].md
+    body: s.raw(),
+  }),
+})
+
 export default defineConfig({
   root: "content",
-  collections: { home, experience, projects, checklist, checklistSections, resume },
+  collections: { home, experience, projects, checklist, checklistSections, resume, posts },
 })

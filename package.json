@@ -9,7 +9,8 @@
     "content": "velite",
     "content:watch": "velite --watch",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --test --disable-warning=MODULE_TYPELESS_PACKAGE_JSON 'src/**/*.test.mts'"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
