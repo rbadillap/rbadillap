@@ -1,8 +1,8 @@
 ---
-title: Shipping a GitHub Action with a team of Claude agents
+title: Building a GitHub Action that checks itself
 description: How a coordinator, a few implementers and a lot of throwaway pull requests took agent-plugins-validate from first commit to v1.0.0 in about twenty hours.
 date: 2026-10-18
-slug: shipping-a-github-action-with-claude
+slug: building-a-github-action-that-checks-itself
 draft: true
 ---
 
@@ -10,7 +10,7 @@ draft: true
 
 ## The problem
 
-Talking with people who publish agent plugins, I kept finding the same pattern: they all needed a middle layer to know when a plugin was failing.
+Running [agent-plugins.directory](https://agent-plugins.directory), I talk with a lot of people who publish agent plugins, and I kept finding the same pattern: they all needed a middle layer to know when a plugin was failing.
 
 <!-- assistant -->
 Agent Plugins follow a [specification](https://github.com/agentplugins/agent-plugins-spec/blob/v1.0.0/spec/1.0.0.md): a `plugin.json` and, optionally, an `mcp.json`.
@@ -19,7 +19,7 @@ I wanted something I would use myself, something with no friction, that any codi
 
 ## The team
 
-I'm building an assistant that runs the day-to-day of my projects. It holds context on many things at once, and it knows its role is to coordinate, not to execute.
+I'm building [Syner](https://syner.app), an assistant that runs the day-to-day of my projects. It holds context on many things at once, and it knows its role is to coordinate, not to execute.
 
 <!-- assistant -->
 For this Action, that meant one coordinator session, separate sessions that wrote the code, and fresh reviewers that had never seen it.
