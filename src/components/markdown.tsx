@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Markdown, { type Components } from "react-markdown"
 
+import { CodeBlock } from "@/components/code-block"
 import { ExternalLink } from "@/components/external-link"
 import { Rule } from "@/components/rule"
 import { SynerMark } from "@/components/syner-mark"
@@ -93,11 +94,7 @@ export function ArticleMarkdown({ children }: { children: string }) {
     code: ({ children }) => (
       <code className="font-mono text-(length:--text-sm) text-primary">{children}</code>
     ),
-    pre: ({ children }) => (
-      <pre className="overflow-x-auto font-mono text-(length:--text-xs) [&>code]:text-[length:inherit] [&>code]:text-foreground">
-        {children}
-      </pre>
-    ),
+    pre: ({ children }) => <CodeBlock>{children}</CodeBlock>,
     hr: () => <Rule className="my-4 block" />,
   }
 
