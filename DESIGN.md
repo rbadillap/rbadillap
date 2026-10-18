@@ -49,6 +49,25 @@ point of clarity, and the point of execution.
   page closes where the symbol lands — a hairline meeting a dot.
   Documents inherit the same grammar at paper scale.
 
+## Writing voice
+
+The Identity voice (evidence leads, claims are checkable, restraint over
+spectacle) applies to every published text. Writing published under this
+name is the founder's thinking, in the founder's words.
+
+- **Source**: every piece starts from the founder's own words: notes, a
+  conversation, an interview. An assistant may order, connect, translate
+  faithfully and add verifiable facts. It never invents opinions,
+  experiences or phrasing.
+- **Evidence**: a claim about work links to its proof (a pull request, a
+  run, an issue). A claim that can't be linked is framed as opinion.
+- **For humans and agents**: every post is also served as plain markdown
+  at its URL plus `.md`.
+- **Disclosure**: a post written from a conversation with an assistant
+  says so in one line at the end.
+- **Publishing**: a post stays a draft until the founder approves its
+  final text.
+
 ## Work passes
 
 Work in four passes, in order:
