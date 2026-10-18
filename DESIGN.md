@@ -157,6 +157,13 @@ real variants exist, no behavior dependencies):
 - **`Mark`** — the arc lockup (150×42), the only place the full symbol
   appears.
 
+**Link marks.** A link in content may carry a 15px mark before its text,
+derived from the URL and never stored in content. Two exist:
+`SynerMark` on links to syner.app, and the founder's GitHub avatar
+(`public/static/rbadillap-github.jpg`, 6px radius) on links to
+`github.com/rbadillap`. A new mark is a published addition to this list,
+never improvised.
+
 Gestures are compositions, not components: a section label is
 `Node + Meta + Rule`; the page's landing is `Rule + Node`. The
 `data-slot` attributes make the grammar auditable from the DOM: on the

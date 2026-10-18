@@ -2,13 +2,15 @@ import Link from "next/link"
 import { experience, home, projects } from "#content"
 
 import { AgentPortal } from "@/components/agent-portal"
+import { DraftTag } from "@/components/draft-tag"
 import { ExternalLink, textLinkClassName } from "@/components/external-link"
 import { ContentMarkdown } from "@/components/markdown"
 import { NewsletterSection } from "@/components/newsletter-section"
 import { Mark } from "@/components/mark"
-import { Meta } from "@/components/meta"
+import { Meta, metaVariants } from "@/components/meta"
 import { Landing, Section } from "@/components/section"
 import { SiteFooter } from "@/components/site-footer"
+import { postDate, postPath, posts } from "@/lib/posts"
 
 const sortedProjects = [...projects].sort((a, b) => a.order - b.order)
 const sortedExperience = [...experience].sort(
@@ -87,6 +89,37 @@ export default function Home() {
               ))}
             </div>
           </Section>
+
+          {posts.length > 0 && (
+            <Section
+              label="Writing"
+              className="fade-up fade-up-5"
+              aside={
+                <Link
+                  href="/writing"
+                  className={`${metaVariants({ variant: "label" })} -my-2 py-2 text-primary`}
+                >
+                  All
+                </Link>
+              }
+            >
+              <div className="space-y-3.5">
+                {posts.slice(0, 5).map((post) => (
+                  <div key={post.slug} className="flex items-baseline justify-between gap-4">
+                    <div>
+                      <Link href={postPath(post)} className={`font-medium ${textLinkClassName}`}>
+                        {post.title}
+                      </Link>
+                      {post.draft && <DraftTag />}
+                    </div>
+                    <Meta variant="data" className="shrink-0">
+                      <time dateTime={postDate(post)}>{postDate(post)}</time>
+                    </Meta>
+                  </div>
+                ))}
+              </div>
+            </Section>
+          )}
 
           <NewsletterSection className="fade-up fade-up-5" />
         </AgentPortal>

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { resume } from "#content"
 
 import { ExternalLink, textLinkClassName } from "@/components/external-link"
-import { ContentMarkdown } from "@/components/markdown"
+import { ContentMarkdown, dashItemClassName } from "@/components/markdown"
 import { Mark } from "@/components/mark"
 import { Meta } from "@/components/meta"
 import { Landing, Section } from "@/components/section"
@@ -113,10 +113,7 @@ function DashList({ items, className }: { items: string[]; className?: string })
   return (
     <ul className={`space-y-2 ${className ?? ""}`}>
       {items.map((item) => (
-        <li
-          key={item}
-          className="relative pl-4 before:absolute before:left-0 before:top-[0.85em] before:h-px before:w-[5px] before:bg-muted-foreground"
-        >
+        <li key={item} className={dashItemClassName}>
           {item}
         </li>
       ))}
