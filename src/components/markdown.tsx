@@ -3,6 +3,7 @@ import Markdown, { type Components } from "react-markdown"
 import { ExternalLink } from "@/components/external-link"
 import { Rule } from "@/components/rule"
 import { SynerMark } from "@/components/syner-mark"
+import { dropHtmlComments } from "@/lib/drop-html-comments"
 
 /** The dash-bullet item of the published `.list`: a 5px dash in muted, body-size text. */
 export const dashItemClassName =
@@ -54,7 +55,7 @@ export function InlineMarkdown({ children }: { children: string }) {
  * publishes: h2 on the reserved --text-lg rung, h3 as the site's strong
  * subheads, lists as the dash list, quotes as the callout spine, code in
  * the mono register, a thematic break as a Rule. Bold is ink, not weight
- * beyond medium.
+ * beyond medium. HTML comments are the author's notes and never render.
  */
 export function ArticleMarkdown({ children }: { children: string }) {
   const components: Components = {
@@ -86,5 +87,9 @@ export function ArticleMarkdown({ children }: { children: string }) {
     hr: () => <Rule className="my-4 block" />,
   }
 
-  return <Markdown components={components}>{children}</Markdown>
+  return (
+    <Markdown components={components} remarkPlugins={[dropHtmlComments]}>
+      {children}
+    </Markdown>
+  )
 }

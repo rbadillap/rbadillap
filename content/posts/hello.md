@@ -8,6 +8,8 @@ draft: true
 
 This post is a fixture. It stays a draft, so it renders in previews and local dev and never in production. Each block below is one element a real post can use, in the dress the site already publishes.
 
+<!-- An HTML comment: a note for the author. It never reaches the page; the .md keeps it. -->
+
 ## A section heading
 
 Body text runs at the anchor size. A [link](https://github.com/rbadillap/agent-plugins-validate) takes the prose link dress, **bold** is strong ink, and `inline code` sits in the mono register.
@@ -31,4 +33,4 @@ Body text runs at the anchor size. A [link](https://github.com/rbadillap/agent-p
 
 ---
 
-The closing paragraph sits after a rule.
+The closing paragraph sits after a rule. <!-- inline comment, also dropped --> Raw <b>HTML</b> stays escaped.
