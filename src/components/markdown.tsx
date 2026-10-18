@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Markdown, { type Components } from "react-markdown"
 
 import { ExternalLink } from "@/components/external-link"
@@ -9,15 +10,28 @@ import { dropHtmlComments } from "@/lib/drop-html-comments"
 export const dashItemClassName =
   "relative pl-4 before:absolute before:left-0 before:top-[0.85em] before:h-px before:w-[5px] before:bg-muted-foreground"
 
+/** The founder's GitHub profile, with or without a trailing slash. */
+const FOUNDER_GITHUB = /^https:\/\/github\.com\/rbadillap\/?$/
+
 /**
  * Links in content use ExternalLink; links to syner.app carry the
- * SynerMark. The mark is decoration derived from the URL — never
- * stored in content.
+ * SynerMark, and links to the founder's GitHub profile carry his GitHub
+ * avatar. Both marks are decoration derived from the URL — never stored
+ * in content.
  */
 const link: Components["a"] = ({ href, children }) => (
   <ExternalLink href={href ?? "#"}>
     {href?.includes("syner.app") && (
       <SynerMark className="mr-[5px] inline-block size-[15px] align-[-2px]" />
+    )}
+    {href && FOUNDER_GITHUB.test(href) && (
+      <Image
+        src="/static/rbadillap-github.jpg"
+        alt=""
+        width={15}
+        height={15}
+        className="mr-[5px] inline-block size-[15px] rounded-[6px] align-[-2px]"
+      />
     )}
     {children}
   </ExternalLink>

@@ -1,6 +1,6 @@
 ---
 title: Building a GitHub Action that checks itself
-description: How a coordinator, a few implementers and a lot of throwaway pull requests took agent-plugins-validate from first commit to v1.0.0 in about twenty hours.
+description: How a coordinator, a few implementers and a lot of throwaway pull requests built agent-plugins-validate, a GitHub Action that checks itself.
 date: 2026-10-18
 slug: building-a-github-action-that-checks-itself
 draft: true
@@ -104,14 +104,6 @@ Releases are [immutable and attested](https://github.com/rbadillap/agent-plugins
 gh attestation verify dist/index.js --repo rbadillap/agent-plugins-validate
 ```
 
-## The numbers
-
-<!-- assistant -->
-- About 20 hours from the first commit to [v1.0.0](https://github.com/rbadillap/agent-plugins-validate/releases/tag/v1.0.0).
-- 29 merged pull requests and 33 closed issues.
-- 14 throwaway pull requests, opened only to watch a check go red.
-- 388 tests.
-
 ---
 
-Written by Ronny, from a conversation with Claude.
+Written by [Ronny](https://github.com/rbadillap), from a conversation with Claude.
