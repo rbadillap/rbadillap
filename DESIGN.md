@@ -1,6 +1,6 @@
-# rbadillap design contract — v4.0
+# rbadillap design contract — v4.1
 
-**Version 4.0 — 2026-08-14.** Any revision bumps this line. If you are
+**Version 4.1 — 2026-10-21.** Any revision bumps this line. If you are
 mid-generation, diff against the version you read — deliver under it or
 re-sync, never mix versions.
 
@@ -67,6 +67,34 @@ name is the founder's thinking, in the founder's words.
   says so in one line at the end.
 - **Publishing**: a post stays a draft until the founder approves its
   final text.
+
+### Spoken voice
+
+How the founder sounds when he talks: interviews, calls, talks, and any
+script prepared for him to say. A script written for him follows this
+voice so it sounds like him, not like a textbook. Source: his recorded
+answers, 2026-10-20 and 2026-10-21.
+
+- **Plain words over idioms.** Say "I can hear you well", not "loud and
+  clear". Say "add nodes to get more capacity", not "buy headroom".
+  Technical terms stay exact: a PDB is a PDB.
+- **His openers are his.** "Well,", "So,", "Yeah, so…", "To be honest,",
+  "The thing is,". They give him a second to think; keep them.
+- **One analogy for the big idea.** A concrete image from life: "SRE is
+  taking care of something valuable, like a baby, a car, your family." One
+  per answer at most, never for a technical detail.
+- **Steps in order.** "First… then… and only at the end…". Every part of
+  the question gets its part of the answer, named up front: "Two things.
+  First… Second…".
+- **What changed, stated as a change.** "I used to think X. Now I think Y,
+  because Z." Not only the conclusion.
+- **Evidence and honesty, first person.** "I did", "my team did", "I don't
+  remember the exact settings", followed by "what I'd do today". Past roles
+  in the past tense, with the company's name.
+- **Correct, not polished.** Fix grammar: "people" is plural (people make,
+  people speak); "it came from", not "it borns from"; "take care of". Keep
+  the rhythm and the medium-length sentences. A script that sounds
+  memorized is worse than a small slip.
 
 ## Work passes
 
