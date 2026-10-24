@@ -2,14 +2,16 @@ Hi, I'm Ronny! 👋
 
 I'm building [**@synerops**](https://github.com/synerops), an open-source Cloud for Agents.
 
-Other tools 
+Recent work, newest first
 
+- 🛟 [rbadillap/sre](https://github.com/rbadillap/sre): a senior SRE's method, packaged as agent skills
 - 🔌 [agent-plugins.directory](https://agent-plugins.directory)
 - 🧩 [registry.directory](https://registry.directory)
-- 📋 [pastecn.com](https://pastecn.com)
-- ⏱️ [rbadillap/ai-gateways-benchmark](https://github.com/rbadillap/ai-gateways-benchmark)
-- 🛡️ [rbadillap/ai-readme-antispam](https://github.com/rbadillap/ai-readme-antispam)
+- ✅ [rbadillap/agent-plugins-validate](https://github.com/rbadillap/agent-plugins-validate): check `plugin.json` and `mcp.json` against the Agent Plugins spec
 - ⚙️ [rbadillap/dotfiles](https://github.com/rbadillap/dotfiles)
+- ⏱️ [rbadillap/ai-gateways-benchmark](https://github.com/rbadillap/ai-gateways-benchmark)
+- 📋 [pastecn.com](https://pastecn.com)
+- 🛡️ [rbadillap/ai-readme-antispam](https://github.com/rbadillap/ai-readme-antispam)
 
 <div align="center">
   <a href="https://rbadillap.dev">
