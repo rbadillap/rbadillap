@@ -18,7 +18,7 @@ Recent work, newest first
     me
   </a>
   &nbsp;&middot;&nbsp;
-  <a href="https://rbadillap.dev">
+  <a href="https://linkedin.com/in/rbadillap">
     linkedin
   </a>
   &nbsp;&middot;&nbsp;
@@ -26,8 +26,8 @@ Recent work, newest first
     x
   </a>
   &nbsp;&middot;&nbsp;
-  <a href="https://rbadillap.dev/blog">
-    blog
+  <a href="https://rbadillap.dev/writing">
+    writing
   </a>
 </div>
 
