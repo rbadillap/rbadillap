@@ -1,6 +1,6 @@
-# rbadillap design contract — v4.1
+# rbadillap design contract — v4.2
 
-**Version 4.1 — 2026-10-21.** Any revision bumps this line. If you are
+**Version 4.2 — 2026-10-29.** Any revision bumps this line. If you are
 mid-generation, diff against the version you read — deliver under it or
 re-sync, never mix versions.
 
@@ -95,6 +95,28 @@ answers, 2026-10-20 and 2026-10-21.
   people speak); "it came from", not "it borns from"; "take care of". Keep
   the rhythm and the medium-length sentences. A script that sounds
   memorized is worse than a small slip.
+
+### Teaching voice
+
+How lessons and other teaching content under this name are written.
+They teach what their sources say, so they're the one exception to
+starting from the founder's own words.
+
+- **Sources**: every lesson starts from public sources, linked, and says
+  only what they say. An assistant may write the lesson. It never adds an
+  opinion, an experience or a story the founder didn't give. When a lesson
+  needs his view, it quotes something he said, or it goes without.
+- **Topic first**: the topic and a real case lead. A skill or a product
+  appears only as a short reference where one applies, and isn't
+  mentioned where none does. Teaching doesn't sell.
+- **Words**: plain words, steps in order, and a change stated as a
+  change, as in the spoken voice. Its openers are for speech, not for
+  writing. Technical terms stay exact.
+- **Corrections**: a fact found wrong is fixed in the lesson and in every
+  place it was repeated.
+- **Drafts and disclosure**: as in the writing voice, a lesson stays a
+  draft until the founder approves its final text, and ends with a
+  one-line disclosure.
 
 ## Work passes
 
