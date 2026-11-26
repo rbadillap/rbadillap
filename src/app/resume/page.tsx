@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${resume.name} · Resume`,
     description: resume.positioning,
-    url: "https://ronnybadilla.com/resume",
+    url: "https://www.rbadillap.dev/resume",
     siteName: "Ronny Badilla",
   },
   twitter: {

@@ -4,7 +4,7 @@ import { visiblePosts } from "@/lib/drafts"
 
 export type Post = (typeof allPosts)[number]
 
-const siteUrl = "https://ronnybadilla.com"
+const siteUrl = "https://www.rbadillap.dev"
 
 /** Every post this build publishes, newest first (drafts per src/lib/drafts.ts). */
 export const posts = visiblePosts(allPosts)

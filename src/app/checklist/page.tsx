@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: checklist.title,
     description: checklist.tagline,
-    url: "https://ronnybadilla.com/checklist",
+    url: "https://www.rbadillap.dev/checklist",
     siteName: "Ronny Badilla",
   },
   twitter: {

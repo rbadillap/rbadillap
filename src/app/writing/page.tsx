@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Writing",
     description: `Writing by ${home.name}.`,
-    url: "https://ronnybadilla.com/writing",
+    url: "https://www.rbadillap.dev/writing",
     siteName: "Ronny Badilla",
   },
   twitter: {
