@@ -21,13 +21,13 @@ export const metadata: Metadata = {
     template: "%s | Ronny Badilla",
   },
   description: home.tagline,
-  metadataBase: new URL("https://ronnybadilla.com"),
-  authors: [{ name: "Ronny Badilla", url: "https://ronnybadilla.com" }],
+  metadataBase: new URL("https://www.rbadillap.dev"),
+  authors: [{ name: "Ronny Badilla", url: "https://www.rbadillap.dev" }],
   creator: "Ronny Badilla",
   openGraph: {
     title: "Ronny Badilla",
     description: home.tagline,
-    url: "https://ronnybadilla.com",
+    url: "https://www.rbadillap.dev",
     siteName: "Ronny Badilla",
   },
   twitter: {
